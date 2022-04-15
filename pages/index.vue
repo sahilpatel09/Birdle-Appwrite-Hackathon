@@ -1,31 +1,17 @@
 <template>
-<NavHero />
-
-<TrendingPosts />
-
-<hr class="border border-gray-50 mb-10">
-
-<LoginModel :class="{ hidden: ishidden }" class="mb-16"/>
-
-<PostwithSidebar />
-
-
-
-
-
-
+  <div>
+    <NavHero />
+    <TrendingPosts />
+    <hr class="border border-gray-50 mb-10" />
+    <LoginModel :class="{ hidden: isMenuOpen }" class="mb-16" />
+    <PostwithSidebar />
+  </div>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
-  const ishidden = ref(true)
-
-  const openIt = () =>{
-    ishidden = false
-  }
-
+const isMenuOpen = useState("open", () => {
+  return true;
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
