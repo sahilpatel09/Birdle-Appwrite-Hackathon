@@ -12,6 +12,9 @@
 const isMenuOpen = useState("open", () => {
   return true;
 });
+
+// const config = useRuntimeConfig();
+// console.log(config.API_BASE_URL)
 </script>
 
 <style scoped></style>
