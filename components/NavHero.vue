@@ -56,7 +56,7 @@
   </div>
 </template>
 <script setup>
-const { hpToggler, toggleHp } = stateManager()
+const { hpToggler, toggleHp } = stateManager();
 </script>
 <style scoped>
 .bo {

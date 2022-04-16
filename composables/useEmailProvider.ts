@@ -1,3 +1,3 @@
 export const useEmailProvider = () => {
-  return useState('state', () => true)
-}
+  return useState("state", () => true);
+};

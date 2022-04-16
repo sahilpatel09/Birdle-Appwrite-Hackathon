@@ -1,6 +1,5 @@
 <template>
   <NuxtLayout name="authmodel">
-
     <span class="flex flex-row-reverse">
       <button @Click="toggleHp">
         <svg class="iy" width="29" height="29">
@@ -12,10 +11,9 @@
       </button>
     </span>
 
-    <LoginView v-if="loginwith"/>
-    <Emailauth v-else-if="emailSent"/>
-    <MagicLinkSent v-else/>
-
+    <LoginView v-if="loginwith" />
+    <Emailauth v-else-if="emailSent" />
+    <MagicLinkSent v-else />
   </NuxtLayout>
 </template>
 <style scoped>
@@ -30,10 +28,7 @@
 </style>
 
 <script setup>
-
-const { hpToggler, toggleHp } = stateManager()
-const loginwith = useEmailProvider()
-const emailSent = isEmailSent()
-
-
+const { hpToggler, toggleHp } = stateManager();
+const loginwith = useEmailProvider();
+const emailSent = isEmailSent();
 </script>

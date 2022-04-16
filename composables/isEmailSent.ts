@@ -1,3 +1,3 @@
 export const isEmailSent = () => {
-  return useState('emailsent', () => true)
-}
+  return useState("emailsent", () => true);
+};
