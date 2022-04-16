@@ -17,10 +17,7 @@
       autofocus
     />
 
-    <button
-      @click="sendLink"
-      class="my-4 px-10 py-2 bg-black rounded-full text-white mx-auto"
-    >
+    <button @Click="sendLink" class="focus:bg-red-200 my-4 px-10 py-2 bg-black rounded-full text-white mx-auto">
       Continue
     </button>
 
@@ -51,6 +48,7 @@ function toggleEmail() {
 }
 
 function sendLink() {
+  
   let promise = appwrite.account.createMagicURLSession(
     "unique()",
     emailValue.value,
