@@ -2,8 +2,9 @@
   <h2 class="modelTitle mt-20 font-sans text-4xl">Join Medium.</h2>
 
   <div class="flex flex-col gap-3 items-center justify-center py-20">
-    <div
-      class="flex px-10 py-2 justify-center rounded-full border border-gray-400 w-72"
+    <button
+    @click="loginwithGoogle"
+    class="flex px-10 py-2 justify-center rounded-full border border-gray-400 w-72"
     >
       <svg width="25" height="25" class="gn y">
         <g fill="none" fill-rule="evenodd">
@@ -27,9 +28,9 @@
       </svg>
 
       Sign up with Google
-    </div>
+    </button>
 
-    <div
+    <button
       class="flex px-10 py-2 justify-center rounded-full border border-gray-400 w-72"
     >
       <svg width="25" height="25" fill="#3B5998" class="gn y">
@@ -40,7 +41,7 @@
       </svg>
 
       Sign up with Facebook
-    </div>
+    </button>
 
     <button
       class="flex px-10 py-2 rounded-full justify-center w-72 border border-gray-400"
@@ -79,8 +80,16 @@
 </style>
 <script setup>
 const loginwith = useEmailProvider()
+const { appwrite } = useAppwrite()
+const config = useRuntimeConfig()
 
   function toggle(){
     loginwith._object.state = false
+  }
+
+  function loginwithGoogle(){
+
+      appwrite.account.createOAuth2Session('google',config.public.siteBase+"/me/");
+
   }
 </script>

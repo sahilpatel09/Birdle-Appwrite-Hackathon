@@ -21,7 +21,7 @@
 
 	</div>
 </template>
-<style>
+<style scoped>
 	.modelTitle {
   font-family: gt-super, Georgia, Cambria, "Times New Roman", Times, serif;
   font-weight: 400;
@@ -32,18 +32,29 @@
 }
 </style>
 <script setup>
-import { Appwrite } from "appwrite";
 	const emailValue = ref('')
 	const changeEmail = useEmailProvider()
-	const appwrite = useAppwrite()
+	const emailSent = isEmailSent()
+	const { appwrite } = useAppwrite()
+	const { userMagicEmail } = getUser()
 
   function toggleEmail(){
     changeEmail._object.state = true
   }
+ 
+  
   function sendLink(){
-  	console.log(emailValue.value)
+  	
+  	let promise = appwrite.account.createMagicURLSession('unique()', emailValue.value,"http://localhost:3000/me");
 
-  	appwrite.account.createOAuth2Session('google');
+  	promise.then(function (response) {
+  	    console.log(response); // Success
+  	    userMagicEmail.value = emailValue.value
+  	    emailSent._object.emailsent = false
+
+  	}, function (error) {
+  	    console.log(error); // Failure
+  	});
 
 
   }

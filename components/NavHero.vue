@@ -22,7 +22,7 @@
           </div>
 
           <button
-            @click="changeIt"
+            @click="toggleHp"
             class="px-4 py-2 text-white bg-black rounded-full"
           >
             Get Started
@@ -56,15 +56,7 @@
   </div>
 </template>
 <script setup>
-const val = useState();
-
-function changeIt() {
-  if (val._object.open == false) {
-    val._object.open = true;
-  } else {
-    val._object.open = false;
-  }
-}
+const { hpToggler, toggleHp } = stateManager()
 </script>
 <style scoped>
 .bo {
