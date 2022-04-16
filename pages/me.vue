@@ -235,3 +235,22 @@
   display: inline-block;
 }
 </style>
+<script setup>
+
+
+  const appwrite = useAppwrite()
+
+  appwrite
+          .account.get()
+          .then((user) => {
+            
+            console.log(user)
+
+          })
+          .catch((err) => {
+            console.log(err)
+          });
+
+
+  console.log('Hello')
+</script>
