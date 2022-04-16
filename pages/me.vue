@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div class="flex" v-if="user">
+  <div class="flex" v-if="loggedin">
     <div
       class="menu bg-indigo-300 w-full h-20 bottom-0 left-0 right-0 fixed lg:w-20 lg:h-screen lg:relative"
     ></div>
@@ -217,7 +217,11 @@
 
     <div class="sidebar bg-yellow-200 hidden lg:block lg:w-4/12"></div>
   </div>
-  <Loading v-else/>
+  <div v-else>
+    <Loading />
+    <h2 class="flex">{{ errorval }}</h2>    
+  </div>
+
   </div>
 </template>
 
@@ -239,12 +243,64 @@
 }
 </style>
 <script setup>
-const { appwrite, user } = useAppwrite();
-
-const userData = ref(user)
-console.log("USER DATA", userData)
+const route = useRoute();
+const router = useRouter();
+const errorval = ref('')
+const loggedin = ref(false)
+const appwrite = useAppwrite();
+const { user } = stateManager();
 // setTimeout(()=>{
 //   console.log(user)
 // }, 500);
+
+
+function getUser(){
+
+let promise = appwrite.account.get();
+promise.then(function (response) {
+    console.log(response); // Success
+    user.value = response
+    loggedin.value = true
+}, function (error) {
+    router.push('/')
+});
+
+
+}
+
+
+function authenticateUser(id, secret){
+
+let promise = appwrite.account.updateMagicURLSession(id, secret);
+promise.then(function (response) {
+    console.log(response); // Success
+    getUser();
+}, function (error) {
+    console.log(error); // Failure
+    errorval.value = error
+});
+
+
+}
+
+const uid= route.query.userId
+const secretsauce = route.query.secret
+
+if(uid && secretsauce){
+  
+  authenticateUser(uid, secretsauce);
+
+}else{
+  
+  console.log("No parameters")
+  getUser();
+
+}
+
+
+
+
+
+
 
 </script>

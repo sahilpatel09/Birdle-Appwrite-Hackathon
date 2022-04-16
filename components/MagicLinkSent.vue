@@ -4,7 +4,7 @@
       Check your inbox.
     </h2>
     <p class="text-center w-52">
-      Click the link we sent to {{ userMagicEmail }} to complete your account
+      Click the link we sent to {{ useMagicEmail }} to complete your account
       set-up.
     </p>
 
@@ -27,6 +27,6 @@
 }
 </style>
 <script setup>
-const { userMagicEmail } = getUser();
+const { useMagicEmail } = stateManager();
 const { toggleHp } = stateManager();
 </script>

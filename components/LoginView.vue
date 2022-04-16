@@ -80,14 +80,15 @@
 }
 </style>
 <script setup>
-const loginwith = useEmailProvider();
-const { appwrite } = useAppwrite();
+const { loginwith } = stateManager();
 const config = useRuntimeConfig();
 
 function toggle() {
   loginwith._object.state = false;
 }
 
+
+const appwrite = useAppwrite();
 function loginwithGoogle() {
   appwrite.account.createOAuth2Session(
     "google",

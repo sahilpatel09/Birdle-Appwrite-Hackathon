@@ -29,6 +29,6 @@
 
 <script setup>
 const { hpToggler, toggleHp } = stateManager();
-const loginwith = useEmailProvider();
+const {loginwith} = stateManager();
 const emailSent = isEmailSent();
 </script>

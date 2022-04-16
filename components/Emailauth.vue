@@ -38,27 +38,31 @@
 </style>
 <script setup>
 const emailValue = ref("");
-const changeEmail = useEmailProvider();
+const {loginwith} = stateManager();
 const emailSent = isEmailSent();
-const { appwrite } = useAppwrite();
-const { userMagicEmail } = getUser();
+
+const { useMagicEmail } = stateManager();
 
 function toggleEmail() {
-  changeEmail._object.state = true;
+  loginwith._object.state = true;
 }
+
+
+
+const appwrite = useAppwrite()
 
 function sendLink() {
   
   let promise = appwrite.account.createMagicURLSession(
     "unique()",
     emailValue.value,
-    "http://localhost:3000/me"
+    "http://localhost:3000/me/"
   );
 
   promise.then(
     function (response) {
       console.log(response); // Success
-      userMagicEmail.value = emailValue.value;
+      useMagicEmail.value = emailValue.value;
       emailSent._object.emailsent = false;
     },
     function (error) {

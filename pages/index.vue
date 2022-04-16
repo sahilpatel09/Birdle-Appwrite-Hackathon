@@ -12,20 +12,22 @@
 </template>
 
 <script setup>
-const { isLoggedin } = useAppwrite();
-
 const { hpToggler } = stateManager();
-const router = useRouter();
+const router = useRouter()
 const loggedin = ref(false)
+const appwrite = useAppwrite();
 
-setTimeout(()=>{
+let promise = appwrite.account.get();
 
-   if(isLoggedin){
+promise.then(function (response) {
+
+    console.log(response); // Success
+    router.push('/me')
+
+}, function (error) {
+
     loggedin.value = true
-   }
 
- }, 200);
+});
 
 </script>
-
-<style scoped></style>
