@@ -91,7 +91,7 @@ function toggle() {
 function loginwithGoogle() {
   appwrite.account.createOAuth2Session(
     "google",
-    config.public.siteBase + "/me/"
+    "http://localhost:3000/me/"
   );
 }
 </script>

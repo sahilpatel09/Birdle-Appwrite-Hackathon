@@ -7,30 +7,25 @@
     <LoginModel :class="{ hidden: hpToggler }" class="mb-16" />
     <PostwithSidebar />
   </div>
-  <div v-else class="flex items-center justify-center fixed inset-0 left-0 right-0 top-0 bottom-0">
-    <img src="@/assets/img/medium-logo.png" class="w-20" alt="">
-  </div>
+  <Loading v-else/>
   </div>
 </template>
 
 <script setup>
-const { appwrite } = useAppwrite();
-const router = useRouter();
-const loggedin = ref(false);
+const { isLoggedin } = useAppwrite();
 
 const { hpToggler } = stateManager();
+const router = useRouter();
+const loggedin = ref(false)
 
-onBeforeMount(() => {
-  appwrite.account
-    .get()
-    .then((user) => {
-      router.push("/me");
-    })
-    .catch((err) => {
-      loggedin.value = true;
-      console.log(loggedin.value);
-    });
-});
+setTimeout(()=>{
+
+   if(isLoggedin){
+    loggedin.value = true
+   }
+
+ }, 200);
+
 </script>
 
 <style scoped></style>

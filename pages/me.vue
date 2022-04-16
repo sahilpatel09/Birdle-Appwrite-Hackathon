@@ -1,5 +1,6 @@
 <template>
-  <div class="flex">
+  <div>
+  <div class="flex" v-if="user">
     <div
       class="menu bg-indigo-300 w-full h-20 bottom-0 left-0 right-0 fixed lg:w-20 lg:h-screen lg:relative"
     ></div>
@@ -216,6 +217,8 @@
 
     <div class="sidebar bg-yellow-200 hidden lg:block lg:w-4/12"></div>
   </div>
+  <Loading v-else/>
+  </div>
 </template>
 
 <style scoped>
@@ -236,16 +239,12 @@
 }
 </style>
 <script setup>
-const appwrite = useAppwrite();
+const { appwrite, user } = useAppwrite();
 
-appwrite.account
-  .get()
-  .then((user) => {
-    console.log(user);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+const userData = ref(user)
+console.log("USER DATA", userData)
+// setTimeout(()=>{
+//   console.log(user)
+// }, 500);
 
-console.log("Hello");
 </script>
