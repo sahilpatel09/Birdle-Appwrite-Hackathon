@@ -24,8 +24,8 @@
             <div class="flex justify-center">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Notifications"><path d="M15 18.5a3 3 0 1 1-6 0" stroke="currentColor" stroke-linecap="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"></path><path d="M5.5 10.53V9a6.5 6.5 0 0 1 13 0v1.53c0 1.42.56 2.78 1.57 3.79l.03.03c.26.26.4.6.4.97v2.93c0 .14-.11.25-.25.25H3.75a.25.25 0 0 1-.25-.25v-2.93c0-.37.14-.71.4-.97l.03-.03c1-1 1.57-2.37 1.57-3.79z" stroke="currentColor" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"></path></svg>
 
-              <div class="w-3 h-3 bg-green-600 rounded-full -ml-3.5 -mt-1" :class="{ hidden: !haveNotifications }">
-              </div>
+              <div class="w-5 h-5 bg-green-600 rounded-full -ml-3.5 -mt-1 text-xs flex items-center justify-center text-white" :class="{ hidden: !haveNotifications }">
+              12</div>
 
             </div>
 
@@ -45,7 +45,7 @@
 
           </div>
 
-          <div class="profile">
+          <div class="profile" @click="openIt">
             <img src="https://miro.medium.com/fit/c/32/32/1*Er7O8VRVE5TGeJfowJDM1w.png" class="rounded-full w-20" alt="user_image">
           </div>
 
@@ -221,7 +221,7 @@
 
               <!-- PostList -->
 
-            <div class="my-3 space-y-10">
+            <div class="my-3 space-y-10" v-for="index in 6">
               <div class="flex justify-between gap-5">
                 <div class="space-y-4 pt-3">
                   
@@ -327,7 +327,7 @@
             <div class="min-h-full flex flex-col pt-10">
 
               <!-- SEARCH -->
-              <div class="w-full border border-gray-400 p-2 rounded-full flex">
+              <div class="w-full border border-gray-300 p-2 rounded-full flex">
 
                 <svg width="25" height="25" viewBox="0 0 25 25" fill="rgba(8, 8, 8, 1)" data-darkreader-inline-fill="" style="--darkreader-inline-fill:#ffffff;"><path d="M20.07 18.93l-4.16-4.15a6 6 0 1 0-.88.88l4.15 4.16a.62.62 0 1 0 .89-.89zM6.5 11a4.75 4.75 0 1 1 9.5 0 4.75 4.75 0 0 1-9.5 0z"></path></svg>
                 <input type="text" name="" placeholder="Search">
@@ -351,7 +351,7 @@
 
                 <p class="text-center text-md py-3 max-w-[190px] mx-auto">Discover Medium writers you already follow on Twitter.</p>
 
-                <div class="w-4/5 mx-auto border border-gray-400 items-center py-1 px-2 rounded-full flex">
+                <div class="w-4/5 mx-auto border border-gray-300 justify-center py-1 px-2 rounded-full flex">
 
                   <svg width="29" height="29" class="oz"><path d="M22.05 7.54a4.47 4.47 0 0 0-3.3-1.46 4.53 4.53 0 0 0-4.53 4.53c0 .35.04.7.08 1.05A12.9 12.9 0 0 1 5 6.89a5.1 5.1 0 0 0-.65 2.26c.03 1.6.83 2.99 2.02 3.79a4.3 4.3 0 0 1-2.02-.57v.08a4.55 4.55 0 0 0 3.63 4.44c-.4.08-.8.13-1.21.16l-.81-.08a4.54 4.54 0 0 0 4.2 3.15 9.56 9.56 0 0 1-5.66 1.94l-1.05-.08c2 1.27 4.38 2.02 6.94 2.02 8.3 0 12.86-6.9 12.84-12.85.02-.24 0-.43 0-.65a8.68 8.68 0 0 0 2.26-2.34c-.82.38-1.7.62-2.6.72a4.37 4.37 0 0 0 1.95-2.51c-.84.53-1.81.9-2.83 1.13z"></path></svg>
                   <h3 class="">Connect to Twitter</h3>
@@ -403,6 +403,9 @@
 
     </div>
 
+    <UserBottomLeftMenu :class="{ hidden: menu }"/>
+
+
   </div>
   <div v-else>
     <Loading />
@@ -413,10 +416,12 @@
 </template>
 
 <script setup>
-const haveNotifications = ref(false)
-
+const haveNotifications = ref(true)
+const menu = ref(true)
+function openIt(){
+  menu.value = !menu.value
+}
 </script>
-
 
 
 
@@ -444,6 +449,6 @@ const haveNotifications = ref(false)
     color: rgba(41, 41, 41, 1);
 }
 .oz {
-    fill: rgb(90, 255, 255);
+    fill: #00acee;
 }
 </style>
