@@ -17,7 +17,10 @@
       autofocus
     />
 
-    <button @Click="sendLink" class="focus:bg-red-200 my-4 px-10 py-2 bg-black rounded-full text-white mx-auto">
+    <button
+      @Click="sendLink"
+      class="focus:bg-red-200 my-4 px-10 py-2 bg-black rounded-full text-white mx-auto"
+    >
       Continue
     </button>
 
@@ -38,7 +41,7 @@
 </style>
 <script setup>
 const emailValue = ref("");
-const {loginwith} = stateManager();
+const { loginwith } = stateManager();
 const emailSent = isEmailSent();
 
 const { useMagicEmail } = stateManager();
@@ -47,12 +50,9 @@ function toggleEmail() {
   loginwith._object.state = true;
 }
 
-
-
-const appwrite = useAppwrite()
+const appwrite = useAppwrite();
 
 function sendLink() {
-  
   let promise = appwrite.account.createMagicURLSession(
     "unique()",
     emailValue.value,

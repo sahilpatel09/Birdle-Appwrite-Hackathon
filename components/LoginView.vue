@@ -87,12 +87,8 @@ function toggle() {
   loginwith._object.state = false;
 }
 
-
 const appwrite = useAppwrite();
 function loginwithGoogle() {
-  appwrite.account.createOAuth2Session(
-    "google",
-    "http://localhost:3000/me/"
-  );
+  appwrite.account.createOAuth2Session("google", "http://localhost:3000/me/");
 }
 </script>
