@@ -1,11 +1,21 @@
 <template>
   <div>
-  <div class="flex" v-if="loggedin">
+  <div class="flex h-screen overflow-hidden" v-if="loggedin">
     <div
-      class="menu bg-indigo-300 w-full h-20 bottom-0 left-0 right-0 fixed lg:w-20 lg:h-screen lg:relative"
-    ></div>
+      class="menu bg-indigo-300 w-full h-20 bottom-0 left-0 right-0 fixed lg:w-20 lg:h-screen lg:relative
+      z-10"
+    >
+      
+    </div>
 
-    <div class="middlebar lg:w-9/12 w-full h-screen lg:px-14">
+
+
+
+
+    <div class="middlebar lg:w-9/12 w-full lg:px-14
+    lg:flex-1 lg:flex overflow-hidden">
+        <div class="flex-1 overflow-y-scroll rel">
+          
       <div
         class="lg:hidden w-full py-4 px-6 h-14 bg-white shadow flex justify-between items-center"
       >
@@ -213,13 +223,35 @@
 
         <!-- End of PostList -->
       </div>
+      </div>
     </div>
 
-    <div class="sidebar bg-yellow-200 hidden lg:block lg:w-4/12"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="sidebar bg-yellow-200 hidden lg:block lg:w-4/12 fixed top-0 right-0 bottom-0 relative">
+      
+    </div>
+
   </div>
   <div v-else>
     <Loading />
-    <h2 class="flex">{{ errorval }}</h2>    
+    <h2 class="flex">{{ errorval }} </h2>    
   </div>
 
   </div>

@@ -31,3 +31,8 @@ promise.then(function (response) {
 });
 
 </script>
+<style>
+.globalfont {
+  font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+</style>
