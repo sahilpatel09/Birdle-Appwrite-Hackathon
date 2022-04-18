@@ -152,6 +152,7 @@
 
               <hr class="bg-gray-900 w-1/2 h-0.5 hidden lg:block" />
 
+              <NuxtLink to="/new-story">
               <svg
                 width="24"
                 height="24"
@@ -173,6 +174,7 @@
                   style="--darkreader-inline-stroke: currentColor"
                 ></path>
               </svg>
+              </NuxtLink>
 
               <div class="profile lg:hidden" @click="openIt">
                 <img
@@ -348,7 +350,7 @@ function getUser() {
   let promise = appwrite.account.get();
   promise.then(
     function (response) {
-      console.log(response); // Success
+//      console.log(response); // Success
       user.value = response;
       loggedin.value = true;
     },
@@ -362,7 +364,7 @@ function authenticateUser(id, secret) {
   let promise = appwrite.account.updateMagicURLSession(id, secret);
   promise.then(
     function (response) {
-      console.log(response); // Success
+      // console.log(response); // Success
       getUser();
     },
     function (error) {
