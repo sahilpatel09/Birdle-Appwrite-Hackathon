@@ -357,19 +357,37 @@ sdk.setEndpoint('https://medium.termshel.com/v1') // Your Appwrite Endpoint
 //   console.log(user)
 // }, 500);
 
+function updatePrefs(){
+  console.log("EMAIL SENT", user.value.email.split("@")[0].toString())
+  const userPrefs = { userName: "@"+user.value.email.split("@")[0].toString() } 
+  let promise = sdk.account.updatePrefs(userPrefs);
+
+  promise.then(function (response) {
+      console.log("Added the prefs for username")
+      console.log(response); // Success
+  }, function (error) {
+      console.log(error); // Failure
+  });
+
+}
+
+
 function getUser() {
   let promise = sdk.account.get();
   promise.then(
     function (response) {
-//      console.log(response); // Success
+      console.log("GET USER", response.email.split("@")[0]); // Success
       user.value = response;
       loggedin.value = true;
+      
     },
     function (error) {
       router.push("/");
     }
   );
 }
+
+
 
 function authenticateUser(id, secret) {
   
@@ -382,6 +400,10 @@ function authenticateUser(id, secret) {
     function (response) {
       console.log(response); // Success
       getUser();
+    setTimeout(()=>{
+      updatePrefs();
+ }, 300);
+      
     },
 
     function (error) {
