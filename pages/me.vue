@@ -375,7 +375,7 @@ function authenticateUser(id, secret) {
   
   console.log(id, secret);
 
-  let promise = sdk.account.updateMagicURLSession("625edd56050ac896383a", "555ab18459508cf36364875bacf7ab3b48f82a2d3797944f42ea97dd33999455239c787e832348b82aabff5c17d5ae733de72a906895acb01fc9e2ba0ebe0209837738c5ce5cab409ceff0fd02596828e1a2f4cf26aa9ed850a684cf95b38d750bf23c9e941f7605df6c485e6238e9f7c7eafcb9b9aaa7a4e0058fc1f87777d6");
+  let promise = sdk.account.updateMagicURLSession(id.toString(), secret.toString());
   
   promise.then(
     
