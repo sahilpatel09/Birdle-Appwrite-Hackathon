@@ -1,6 +1,13 @@
 <template>
+	<client-only>
 	<div>
-		
-	<h2>Hello world of New Sotry</h2>
+	<div class="container mx-auto">
+	
+	</div>		
 	</div>
+</client-only>
 </template>
+<script>
+
+
+</script>

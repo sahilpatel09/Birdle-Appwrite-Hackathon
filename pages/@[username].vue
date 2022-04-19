@@ -222,46 +222,30 @@
 
                   <!-- TWITTER SECTION -->
                   <section class="my-5">
-                    <div class="flex gap-1 items-center justify-center">
-                      <svg viewBox="0 0 1043.63 592.71" class="bo hu">
-                        <g data-name="Layer 2">
-                          <g data-name="Layer 1">
-                            <path
-                              d="M588.67 296.36c0 163.67-131.78 296.35-294.33 296.35S0 460 0 296.36 131.78 0 294.34 0s294.33 132.69 294.33 296.36M911.56 296.36c0 154.06-65.89 279-147.17 279s-147.17-124.94-147.17-279 65.88-279 147.16-279 147.17 124.9 147.17 279M1043.63 296.36c0 138-23.17 249.94-51.76 249.94s-51.75-111.91-51.75-249.94 23.17-249.94 51.75-249.94 51.76 111.9 51.76 249.94"
-                            ></path>
-                          </g>
-                        </g>
-                      </svg>
 
-                      <svg width="19" height="19" class="ki">
-                        <path
-                          d="M9 9H3v1h6v6h1v-6h6V9h-6V3H9v6z"
-                          fill-rule="evenodd"
-                        ></path>
-                      </svg>
+                    <div class="dataholder">
 
-                      <svg width="29" height="29" class="oz">
-                        <path
-                          d="M22.05 7.54a4.47 4.47 0 0 0-3.3-1.46 4.53 4.53 0 0 0-4.53 4.53c0 .35.04.7.08 1.05A12.9 12.9 0 0 1 5 6.89a5.1 5.1 0 0 0-.65 2.26c.03 1.6.83 2.99 2.02 3.79a4.3 4.3 0 0 1-2.02-.57v.08a4.55 4.55 0 0 0 3.63 4.44c-.4.08-.8.13-1.21.16l-.81-.08a4.54 4.54 0 0 0 4.2 3.15 9.56 9.56 0 0 1-5.66 1.94l-1.05-.08c2 1.27 4.38 2.02 6.94 2.02 8.3 0 12.86-6.9 12.84-12.85.02-.24 0-.43 0-.65a8.68 8.68 0 0 0 2.26-2.34c-.82.38-1.7.62-2.6.72a4.37 4.37 0 0 0 1.95-2.51c-.84.53-1.81.9-2.83 1.13z"
-                        ></path>
-                      </svg>
+                      <img src="https://miro.medium.com/fit/c/176/176/1*Er7O8VRVE5TGeJfowJDM1w.png" class="rounded-full w-20">
+                      <h2 class="globalfont font-bold mt-4 capitalize">{{ user.name }}</h2>
+                      <h3 class="py-2 text-base text-gray-500">1.5K Followers</h3>
+                      <p class="text-gray-600 text-sm">3× Top Writer in Poetry| Reading | Inspiration. Support my writing by joining Medium https://smppatel999.medium.com/membership (Affiliate link)</p>
+                      
+                      <!-- If use is self -->
+                      <h4 class="mt-5 text-gray-700">Edit Profile</h4>
+                      <!-- else -->
+                      <div class="flex gap-3 mt-4 items-center">
+                        <button class="px-4 py-1 text-green-500 border border-green-500 rounded-full">Following</button>
+
+                        <button class="px-4 py-1 bg-green-700 text-white rounded-full">Follow</button>
+                        <button class="rounded-full bg-green-700 w-16 h-10 py-2 h-fit flex items-center justify-center" title="Subscribe to get a newsletter.">
+                          <img src="@/assets/img/get-email.svg" class="w-5">
+                        </button>
+
+
+                      </div>
                     </div>
 
-                    <p class="text-center text-md py-3 max-w-[190px] mx-auto">
-                      Discover Medium writers you already follow on Twitter.
-                    </p>
-
-                    <div
-                      class="w-4/5 mx-auto border border-gray-300 justify-center py-1 px-2 rounded-full flex"
-                    >
-                      <svg width="29" height="29" class="oz">
-                        <path
-                          d="M22.05 7.54a4.47 4.47 0 0 0-3.3-1.46 4.53 4.53 0 0 0-4.53 4.53c0 .35.04.7.08 1.05A12.9 12.9 0 0 1 5 6.89a5.1 5.1 0 0 0-.65 2.26c.03 1.6.83 2.99 2.02 3.79a4.3 4.3 0 0 1-2.02-.57v.08a4.55 4.55 0 0 0 3.63 4.44c-.4.08-.8.13-1.21.16l-.81-.08a4.54 4.54 0 0 0 4.2 3.15 9.56 9.56 0 0 1-5.66 1.94l-1.05-.08c2 1.27 4.38 2.02 6.94 2.02 8.3 0 12.86-6.9 12.84-12.85.02-.24 0-.43 0-.65a8.68 8.68 0 0 0 2.26-2.34c-.82.38-1.7.62-2.6.72a4.37 4.37 0 0 0 1.95-2.51c-.84.53-1.81.9-2.83 1.13z"
-                        ></path>
-                      </svg>
-                      <h3 class="">Connect to Twitter</h3>
-                    </div>
-                    <hr class="my-5" />
+                     <hr class="my-5" />
 
                     <div class="w-full px-2">
                       <h2 class="text-gray-800 font-bold">
@@ -333,6 +317,7 @@ const errorval = ref("");
 const loggedin = ref(false);
 const appwrite = useAppwrite();
 const { user } = stateManager();
+console.log(user)
 // setTimeout(()=>{
 //   console.log(user)
 // }, 500);

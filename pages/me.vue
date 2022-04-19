@@ -341,14 +341,24 @@ const route = useRoute();
 const router = useRouter();
 const errorval = ref("");
 const loggedin = ref(false);
-const appwrite = useAppwrite();
+
 const { user } = stateManager();
+
+
+import { Appwrite } from "appwrite";
+
+const sdk = new Appwrite();
+
+sdk.setEndpoint('https://medium.termshel.com/v1') // Your Appwrite Endpoint
+    .setProject('6259163355147c1f4364');
+
+
 // setTimeout(()=>{
 //   console.log(user)
 // }, 500);
 
 function getUser() {
-  let promise = appwrite.account.get();
+  let promise = sdk.account.get();
   promise.then(
     function (response) {
 //      console.log(response); // Success
@@ -362,24 +372,35 @@ function getUser() {
 }
 
 function authenticateUser(id, secret) {
-  let promise = appwrite.account.updateMagicURLSession(id, secret);
+  
+  console.log(id, secret);
+
+  let promise = sdk.account.updateMagicURLSession("625edd56050ac896383a", "555ab18459508cf36364875bacf7ab3b48f82a2d3797944f42ea97dd33999455239c787e832348b82aabff5c17d5ae733de72a906895acb01fc9e2ba0ebe0209837738c5ce5cab409ceff0fd02596828e1a2f4cf26aa9ed850a684cf95b38d750bf23c9e941f7605df6c485e6238e9f7c7eafcb9b9aaa7a4e0058fc1f87777d6");
+  
   promise.then(
+    
     function (response) {
-      // console.log(response); // Success
+      console.log(response); // Success
       getUser();
     },
+
     function (error) {
+
       console.log(error); // Failure
       errorval.value = error;
     }
   );
+
+
 }
 
 const uid = route.query.userId;
-const secretsauce = route.query.secret;
+const ss = route.query.secret;
 
-if (uid && secretsauce) {
-  authenticateUser(uid, secretsauce);
+if (uid && ss) {
+  
+  authenticateUser(uid, ss);
+
 } else {
   console.log("No parameters");
   getUser();

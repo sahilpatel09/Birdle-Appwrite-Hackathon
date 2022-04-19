@@ -4,14 +4,29 @@
       <div class="flex items-center justify-between py-4">
     
       <h3
-        class="text-gray-900 font-extrabold text-left text-5xl tracking-tight globalfont p-3"
+        class="text-gray-900 font-extrabold text-left text-5xl tracking-tight globalfont p-3 capitalize"
       >
-        Sahil Patel
+        {{ user.name }}
       </h3>
 
       <div class="flex gap-4 items-center justify-center">
-        <button class="bg-green-700 px-4 py-2 rounded-full text-white text-sm font-semibold"> Write a story </button>
-        <button class="border border-gray-400 px-4 py-2 rounded-full text-sm font-semibold"> Import a story </button>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" @click="openDrawer">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M4.39 12c0 .55.2 1.02.59 1.41.39.4.86.59 1.4.59.56 0 1.03-.2 1.42-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.6-1.41A1.93 1.93 0 0 0 6.4 10c-.55 0-1.02.2-1.41.59-.4.39-.6.86-.6 1.41zM10 12c0 .55.2 1.02.58 1.41.4.4.87.59 1.42.59.54 0 1.02-.2 1.4-.59.4-.39.6-.86.6-1.41 0-.55-.2-1.02-.6-1.41a1.93 1.93 0 0 0-1.4-.59c-.55 0-1.04.2-1.42.59-.4.39-.58.86-.58 1.41zm5.6 0c0 .55.2 1.02.57 1.41.4.4.88.59 1.43.59.57 0 1.04-.2 1.43-.59.39-.39.57-.86.57-1.41 0-.55-.2-1.02-.57-1.41A1.93 1.93 0 0 0 17.6 10c-.55 0-1.04.2-1.43.59-.38.39-.57.86-.57 1.41z"
+            fill="#000"
+            data-darkreader-inline-fill=""
+            style="--darkreader-inline-fill: #ffffff"
+          ></path>
+        </svg>
+
+        <div class="inline-block left-48 top-28 absolute lg:relative lg:left-0 lg:top-0 fadeIn" :class="{ hidden: drawer} ">
+          <div class="absolute z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800">
+            <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Edit draft </a>
+            <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Email to subscribers </a>
+            </div>
+        </div>
       </div>
 
       </div>
@@ -46,14 +61,14 @@
       </div>
 
 
-      <div class="my-3 space-y-10" v-for="index in 6">
+      <div class="my-3 space-y-10" v-for="(post, index) in posts">
         <div class="flex justify-between gap-5">
           <div class="space-y-4 pt-3">
             <div class="flex gap-1 items-center justify-start text-xs lg:text-sm">
               <img src="@/assets/img/user.png" class="w-5 h-5" alt="" />
               <p>Published in <span class="font-bold">ILLUMINATION</span></p>
-              <p class="text-gray-400"><span class="rm">·</span> 1 day ago</p>
-              <p class="text-gray-600"><span class="rm">·</span> Pinned</p>
+              <p class="text-gray-400 hidden lg:block"><span class="rm">·</span> 1 day ago</p>
+              <p class="text-gray-600 hidden lg:block"><span class="rm">·</span> Pinned</p>
 
               <svg
                     class="star-15px_svg__svgIcon-use"
@@ -69,13 +84,12 @@
             </div>
 
             <h2
-              class="font-bold lg:text-[22px] text-[16px] capitalize leading-5 font-bold postTitle leading-10"
+              class="font-bold lg:text-[22px] text-[16px] capitalize leading-5 font-bold postTitle lg:leading-7 leading-6"
             >
-              The Rivor of Love & Joy of Tears. How are you doing?
+              {{ post.name }}
             </h2>
             <p class="hidden lg:block postDescription">
-              A transcendental drowning — “Oh Khusrau, the river of love Runs in
-              strange directions. One who jumps into it drowns,
+              {{ post.subtitle }}
             </p>
 
             <div class="flex justify-between items-center">
@@ -114,7 +128,7 @@
                   ></path>
                 </svg>
 
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" @click="toggleDropDown(post)">
                   <path
                     fill-rule="evenodd"
                     clip-rule="evenodd"
@@ -124,6 +138,27 @@
                     style="--darkreader-inline-fill: #ffffff"
                   ></path>
                 </svg>
+
+
+                <div class="inline-block" :class="{ hidden: !post.showDropDown }">
+                  <div class="absolute z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800">
+                    <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Edit story </a>
+
+                    <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Email to subscribers </a>
+
+                    <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Story Settings </a>
+
+                    <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Story Stats </a>
+
+
+                    <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Delete story </a>
+                    </div>
+                </div>
+
+
+
+
+
               </div>
             </div>
           </div>
@@ -147,3 +182,68 @@
     </div>
   </div>
 </template>
+<script setup>
+  const drawer = ref(true)
+  const { user } = stateManager()
+
+  const posts = ref({})
+
+  function openDrawer(){
+    console.log("Drawer clicked")
+    drawer.value = !drawer.value
+  }
+
+  function toggleDropDown(post){
+    post['showDropDown'] = !post.showDropDown
+  }
+
+  const appwrite  = useAppwrite()
+  import { Query } from "appwrite";
+
+
+  let promise = appwrite.database.listDocuments("625a2f5e86376aefffe6", [
+      Query.equal('user_id', '625e4e995984fc4dd586')
+  ]);
+
+
+  promise.then(function (response) {
+      console.log(response.documents); // Success
+      posts.value = response.documents
+  }, function (error) {
+      console.log(error); // Failure
+  });
+
+
+</script>
+<style scoped>
+.animated {
+
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+  -webkit-animation-duration: 300ms;
+  animation-duration: 300ms;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+</style>
