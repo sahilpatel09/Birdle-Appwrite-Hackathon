@@ -7,16 +7,6 @@
             class="lg:min-h-screen lg:shrink lg:w-[80px] block lg:left-0 lg:top-0 lg:bottom-0 fixed lg:py-10 lg:px-5 flex lg:flex-col lg:justify-between border-r border-gray-200 items-center justify-center bottom-0 left-0 right-0 bg-white px-2.5 py-4 shadow-2xl"
           >
           <img src="@/assets/img/3.png" alt="" class="hidden lg:block">
-           <!--  <svg viewBox="0 0 1043.63 592.71" class="jy hu hidden lg:block">
-              <g data-name="Layer 2">
-                <g data-name="Layer 1">
-                  <path
-                    d="M588.67 296.36c0 163.67-131.78 296.35-294.33 296.35S0 460 0 296.36 131.78 0 294.34 0s294.33 132.69 294.33 296.36M911.56 296.36c0 154.06-65.89 279-147.17 279s-147.17-124.94-147.17-279 65.88-279 147.16-279 147.17 124.9 147.17 279M1043.63 296.36c0 138-23.17 249.94-51.76 249.94s-51.75-111.91-51.75-249.94 23.17-249.94 51.75-249.94 51.76 111.9 51.76 249.94"
-                  ></path>
-                </g>
-              </g>
-            </svg> -->
-
             <div
               class="leftMenu flex lg:flex-col items-center justify-around lg:justify-center lg:gap-10 w-full"
             >
@@ -347,6 +337,7 @@ const { user } = stateManager();
 //   console.log(user)
 // }, 500);
 
+
 function getUser() {
   let promise = appwrite.account.get();
   promise.then(
@@ -374,6 +365,8 @@ function authenticateUser(id, secret) {
     }
   );
 }
+
+
 
 const uid = route.query.userId;
 const secretsauce = route.query.secret;
