@@ -357,17 +357,52 @@ sdk.setEndpoint('https://medium.termshel.com/v1') // Your Appwrite Endpoint
 //   console.log(user)
 // }, 500);
 
-function updatePrefs(){
-  console.log("EMAIL SENT", user.value.email.split("@")[0].toString())
-  const userPrefs = { userName: "@"+user.value.email.split("@")[0].toString() } 
-  let promise = sdk.account.updatePrefs(userPrefs);
 
-  promise.then(function (response) {
-      console.log("Added the prefs for username")
+function updatePrefs(){
+   
+  const name = user.value.name.toString()
+  let imgUrl = "https://ui-avatars.com/api/?background=random&&name=B&rounded=true&bold=true&size=128&font-size=0.5"
+  if(name){
+
+    imgUrl = "https://ui-avatars.com/api/?background=random&&name=+"+ name.toString() +"&rounded=true&bold=true&size=128"
+      
+  }
+  
+  const payload = {
+    userid: user.value.$id.toString(),
+    username: user.value.email.split("@")[0].toString(),
+    name: name,
+    img: imgUrl,
+    bio: "",
+    member: true
+  }
+
+  console.log("PAYLOAD", payload )
+
+  let updateUserData = sdk.database.createDocument('625a2fc009e1c2051230', 'unique()', payload);
+
+  updateUserData.then(function (response) {
       console.log(response); // Success
+      console.log("Payload uploaded.")
   }, function (error) {
       console.log(error); // Failure
   });
+
+  // const userPrefs = { userName: "@"+user.value.email.split("@")[0].toString() } 
+  
+  // let promise = sdk.account.updatePrefs(userPrefs);
+
+  // promise.then(function (response) {
+  //     console.log("Added the prefs for username")
+  //     console.log(response); // Success
+  // }, function (error) {
+  //     console.log(error); // Failure
+  // });
+
+
+
+
+
 
 }
 
@@ -376,9 +411,14 @@ function getUser() {
   let promise = sdk.account.get();
   promise.then(
     function (response) {
+      console.log(response)
       console.log("GET USER", response.email.split("@")[0]); // Success
       user.value = response;
       loggedin.value = true;
+
+      // setTimeout(()=>{
+      //   updatePrefs();
+      // }, 300);
       
     },
     function (error) {
@@ -400,9 +440,6 @@ function authenticateUser(id, secret) {
     function (response) {
       console.log(response); // Success
       getUser();
-    setTimeout(()=>{
-      updatePrefs();
- }, 300);
       
     },
 
@@ -422,6 +459,9 @@ const ss = route.query.secret;
 if (uid && ss) {
   
   authenticateUser(uid, ss);
+  setTimeout(()=>{
+    updatePrefs();
+  }, 300);
 
 } else {
   console.log("No parameters");
