@@ -416,9 +416,9 @@ function getUser() {
       user.value = response;
       loggedin.value = true;
 
-      // setTimeout(()=>{
-      //   updatePrefs();
-      // }, 300);
+      setTimeout(()=>{
+        updatePrefs();
+      }, 300);
       
     },
     function (error) {
@@ -459,9 +459,6 @@ const ss = route.query.secret;
 if (uid && ss) {
   
   authenticateUser(uid, ss);
-  setTimeout(()=>{
-    updatePrefs();
-  }, 300);
 
 } else {
   console.log("No parameters");

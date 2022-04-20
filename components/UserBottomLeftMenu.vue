@@ -11,7 +11,7 @@
         <hr class="mt-5 w-full" />
         <div class="px-8 py-8">
           <ul class="flex flex-col gap-5 text-sm leading-5">
-            <li>Sign out</li>
+            <li><button @click="signMeOut">Sign out</button></li>
             <li>Medium Partner Program</li>
             <li>Refine reccmmendations</li>
             <li>Stats</li>
@@ -70,6 +70,28 @@
     </div>
   </div>
 </template>
+<script setup>
+  
+  const appwrite = useAppwrite()
+  const router = useRouter()
+  function signMeOut(){
+    console.log("Sign out clicked.")
+
+    let promise = appwrite.account.deleteSession('current');
+
+    promise.then(function (response) {
+        console.log(response); // Success
+        console.log("Signed out")
+        router.push('/')
+
+    }, function (error) {
+        console.log(error); // Failure
+    });
+
+
+  }
+
+</script>
 <style>
 .animated {
   background-repeat: no-repeat;
