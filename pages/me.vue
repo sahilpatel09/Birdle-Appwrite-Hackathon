@@ -359,12 +359,14 @@ sdk.setEndpoint('https://medium.termshel.com/v1') // Your Appwrite Endpoint
 
 
 function updatePrefs(){
-   
-  const name = user.value.name.toString()
+  
+  const namedata = user.value.name.toString().split(' ')
+  const name = namedata[0]+"+"+namedata[1]
+  console.log("LOCAL NAME", user.value.name.toString())
   let imgUrl = "https://ui-avatars.com/api/?background=random&&name=B&rounded=true&bold=true&size=128&font-size=0.5"
   if(name){
 
-    imgUrl = "https://ui-avatars.com/api/?background=random&&name=+"+ name.toString() +"&rounded=true&bold=true&size=128"
+    imgUrl = "https://ui-avatars.com/api/?background=random&&name="+ name.toString() +"&rounded=true&bold=true&size=128"
       
   }
   
@@ -376,6 +378,7 @@ function updatePrefs(){
     member: true
   }
 
+  console.log(payload)
 
   let updateUserData = sdk.database.createDocument('625a2fc009e1c2051230', user.value.$id.toString(), payload);
 
@@ -407,13 +410,19 @@ function updatePrefs(){
 }
 
 
-function getUser() {
+function getUser(name) {
   let promise = sdk.account.get();
   promise.then(
     function (response) {
       // console.log(response)
       user.value = response;
       loggedin.value = true;
+      console.log("BEFORE USER NAME", user.value.name)
+      if(name){
+        user.value.name = name
+      }
+      console.log("AFTER USER NAME", user.value.name)
+      
 
       setTimeout(()=>{
         updatePrefs();
@@ -439,7 +448,7 @@ function authenticateUser(id, secret) {
     function (response) {
       //console.log(response); // Success
       // if success we update the current user by getting and setting the current user
-      getUser();
+      getUser(name = null);
       
     },
 
@@ -465,8 +474,23 @@ if (uid && ss) {
   
   authenticateUser(uid, ss);
 
-} else {
+} 
+else {
   console.log("No parameters");
-  getUser();
+  let promise = sdk.account.get();
+
+  promise.then(
+    function (response) {
+      console.log(response); // Success
+      getUser(response.name.toString());
+      
+    },
+    function (error) {
+      loggedin.value = true;
+    }
+  );
+  
+
+
 }
 </script>
