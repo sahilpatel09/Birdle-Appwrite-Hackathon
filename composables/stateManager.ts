@@ -2,7 +2,9 @@ export default () => {
   const hpToggler = useState("toggler", () => true);
   const loginwith = useState("state", () => true);
   const useMagicEmail = useState("useMagicEmail", () => "default@email.com");
+  
   const user = useState("user", () => null);
+  const userData = useState("userdata", () => null);
 
   const toggleHp = () => {
     if (hpToggler.value == false) {
@@ -23,5 +25,6 @@ export default () => {
     setMagicEmail,
     loginwith,
     user,
+    userData
   };
 };

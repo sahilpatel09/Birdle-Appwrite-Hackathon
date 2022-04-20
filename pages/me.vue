@@ -342,7 +342,7 @@ const router = useRouter();
 const errorval = ref("");
 const loggedin = ref(false);
 
-const { user } = stateManager();
+const { user, userData } = stateManager();
 
 
 import { Appwrite } from "appwrite";
@@ -377,13 +377,14 @@ function updatePrefs(){
     member: true
   }
 
-  console.log("PAYLOAD", payload )
 
   let updateUserData = sdk.database.createDocument('625a2fc009e1c2051230', 'unique()', payload);
 
   updateUserData.then(function (response) {
       console.log(response); // Success
       console.log("Payload uploaded.")
+      userData.value = response
+      console.log("userData", userData.value)
   }, function (error) {
       console.log(error); // Failure
   });
@@ -411,8 +412,7 @@ function getUser() {
   let promise = sdk.account.get();
   promise.then(
     function (response) {
-      console.log(response)
-      console.log("GET USER", response.email.split("@")[0]); // Success
+      // console.log(response)
       user.value = response;
       loggedin.value = true;
 
@@ -428,7 +428,7 @@ function getUser() {
 }
 
 
-
+//authenticating the current user's token 
 function authenticateUser(id, secret) {
   
   console.log(id, secret);
@@ -438,24 +438,30 @@ function authenticateUser(id, secret) {
   promise.then(
     
     function (response) {
-      console.log(response); // Success
+      //console.log(response); // Success
+      // if success we update the current user by getting and setting the current user
       getUser();
       
     },
 
     function (error) {
-
+      //else show an erroe
       console.log(error); // Failure
-      errorval.value = error;
+      errorval.value = error + "Please Try to login again.";
     }
   );
 
 
 }
 
+//getting the routes userid and secret
 const uid = route.query.userId;
 const ss = route.query.secret;
 
+//if there are parameters available
+//we authenticate them and validate the user token
+
+//if no then simply get the current user
 if (uid && ss) {
   
   authenticateUser(uid, ss);
