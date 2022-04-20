@@ -369,7 +369,6 @@ function updatePrefs(){
   }
   
   const payload = {
-    userid: user.value.$id.toString(),
     username: user.value.email.split("@")[0].toString(),
     name: name,
     img: imgUrl,
@@ -378,7 +377,7 @@ function updatePrefs(){
   }
 
 
-  let updateUserData = sdk.database.createDocument('625a2fc009e1c2051230', 'unique()', payload);
+  let updateUserData = sdk.database.createDocument('625a2fc009e1c2051230', user.value.$id.toString(), payload);
 
   updateUserData.then(function (response) {
       console.log(response); // Success
