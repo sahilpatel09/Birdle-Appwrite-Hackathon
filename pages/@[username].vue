@@ -186,97 +186,9 @@
           </div>
 
           <!-- Main Section -->
+          <NuxtChild />
 
-          <div
-            class="flex-auto mb-0 min-w-0 block bg-white pt-2 lg:pl-10 justify-center items-center lg:ml-20 lg:max-w-[790px] w-full"
-          >
-            <div class="block">
-              <NuxtChild />
-            </div>
-          </div>
-
-          <div
-            class="hidden lg:block w-[400px] block min-h-screen border-l-2 px-10 box-border"
-          >
-            <div class="h-full relative inline-block w-full">
-              <div class="sticky mt-0 block">
-                <div class="min-h-full flex flex-col pt-10">
-                  <!-- SEARCH -->
-                  <div
-                    class="w-full border border-gray-300 p-2 rounded-full flex"
-                  >
-                    <svg
-                      width="25"
-                      height="25"
-                      viewBox="0 0 25 25"
-                      fill="rgba(8, 8, 8, 1)"
-                      data-darkreader-inline-fill=""
-                      style="--darkreader-inline-fill: #ffffff"
-                    >
-                      <path
-                        d="M20.07 18.93l-4.16-4.15a6 6 0 1 0-.88.88l4.15 4.16a.62.62 0 1 0 .89-.89zM6.5 11a4.75 4.75 0 1 1 9.5 0 4.75 4.75 0 0 1-9.5 0z"
-                      ></path>
-                    </svg>
-                    <input type="text" name="" placeholder="Search" />
-                  </div>
-
-                  <!-- TWITTER SECTION -->
-                  <section class="my-5">
-
-                    <div class="dataholder">
-
-                      <img src="https://miro.medium.com/fit/c/176/176/1*Er7O8VRVE5TGeJfowJDM1w.png" class="rounded-full w-20">
-                      <h2 class="globalfont font-bold mt-4 capitalize">{{ user.name }}</h2>
-                      <h3 class="py-2 text-base text-gray-500">1.5K Followers</h3>
-                      <p class="text-gray-600 text-sm">3× Top Writer in Poetry| Reading | Inspiration. Support my writing by joining Medium https://smppatel999.medium.com/membership (Affiliate link)</p>
-                      
-                      <!-- If use is self -->
-                      <h4 class="mt-5 text-gray-700">Edit Profile</h4>
-                      <!-- else -->
-                      <div class="flex gap-3 mt-4 items-center">
-                        <button class="px-4 py-1 text-green-500 border border-green-500 rounded-full">Following</button>
-
-                        <button class="px-4 py-1 bg-green-700 text-white rounded-full">Follow</button>
-                        <button class="rounded-full bg-green-700 w-16 h-10 py-2 h-fit flex items-center justify-center" title="Subscribe to get a newsletter.">
-                          <img src="@/assets/img/get-email.svg" class="w-5">
-                        </button>
-
-
-                      </div>
-                    </div>
-
-                     <hr class="my-5" />
-
-                    <div class="w-full px-2">
-                      <h2 class="text-gray-800 font-bold">
-                        Recommended topics
-                      </h2>
-
-                      <div class="flex flex-wrap gap-2 my-3">
-                        <p
-                          class="px-4 py-1 border border-gray-200 w-fit rounded antialiased text-gray-600"
-                          v-for="item in [
-                            'Data Science',
-                            'Relationships',
-                            'Self',
-                            'Programming',
-                            'Productivity',
-                            'Javascript',
-                            'React',
-                            'Appwrite',
-                            'Hackathon',
-                            'Dev.to',
-                          ]"
-                        >
-                          {{ item }}
-                        </p>
-                      </div>
-                    </div>
-                  </section>
-                </div>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </div>
 
@@ -306,6 +218,8 @@
 }
 </style>
 <script setup>
+
+
 const haveNotifications = ref(true);
 const menu = ref(true);
 function openIt() {
@@ -314,52 +228,51 @@ function openIt() {
 const route = useRoute();
 const router = useRouter();
 const errorval = ref("");
-const loggedin = ref(false);
+const loggedin = ref(true);
 const appwrite = useAppwrite();
-const { user } = stateManager();
-console.log(user)
+
 // setTimeout(()=>{
 //   console.log(user)
 // }, 500);
 
 
-function getUser() {
-  let promise = appwrite.account.get();
-  promise.then(
-    function (response) {
-//      console.log(response); // Success
-      user.value = response;
-      loggedin.value = true;
-    },
-    function (error) {
-      router.push("/");
-    }
-  );
-}
+// function getUser() {
+//   let promise = appwrite.account.get();
+//   promise.then(
+//     function (response) {
+// //      console.log(response); // Success
+//       user.value = response;
+//       loggedin.value = true;
+//     },
+//     function (error) {
+//       router.push("/");
+//     }
+//   );
+// }
 
-function authenticateUser(id, secret) {
-  let promise = appwrite.account.updateMagicURLSession(id, secret);
-  promise.then(
-    function (response) {
-      // console.log(response); // Success
-      getUser();
-    },
-    function (error) {
-      console.log(error); // Failure
-      errorval.value = error;
-    }
-  );
-}
+// function authenticateUser(id, secret) {
+//   let promise = appwrite.account.updateMagicURLSession(id, secret);
+//   promise.then(
+//     function (response) {
+//       // console.log(response); // Success
+//       getUser();
+//     },
+//     function (error) {
+//       console.log(error); // Failure
+//       errorval.value = error;
+//     }
+//   );
+// }
 
 
 
-const uid = route.query.userId;
-const secretsauce = route.query.secret;
+// const uid = route.query.userId;
+// const secretsauce = route.query.secret;
 
-if (uid && secretsauce) {
-  authenticateUser(uid, secretsauce);
-} else {
-  console.log("No parameters");
-  getUser();
-}
+// if (uid && secretsauce) {
+//   authenticateUser(uid, secretsauce);
+// } else {
+//   console.log("No parameters");
+//   getUser();
+// }
 </script>
