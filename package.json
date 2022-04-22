@@ -14,8 +14,8 @@
     "tailwindcss": "^3.0.24"
   },
   "dependencies": {
-    "@tinymce/tinymce-vue": "^4",
+    "@tinymce/tinymce-vue": "4",
     "appwrite": "^7.0.0",
-    "tinymce": "^6.0.1"
+    "tinymce": "^5.10.3"
   }
 }
