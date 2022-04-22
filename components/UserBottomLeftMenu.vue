@@ -15,7 +15,9 @@
             <li>Medium Partner Program</li>
             <li>Refine reccmmendations</li>
             <li>Stats</li>
-            <li>Settings</li>
+            <li>
+              <NuxtLink to="/me/settings"><button>Settings</button></NuxtLink>
+            </li>
           </ul>
         </div>
 
@@ -71,26 +73,24 @@
   </div>
 </template>
 <script setup>
-  
-  const appwrite = useAppwrite()
-  const router = useRouter()
-  function signMeOut(){
-    console.log("Sign out clicked.")
+const appwrite = useAppwrite();
+const router = useRouter();
+function signMeOut() {
+  console.log("Sign out clicked.");
 
-    let promise = appwrite.account.deleteSession('current');
+  let promise = appwrite.account.deleteSession("current");
 
-    promise.then(function (response) {
-        console.log(response); // Success
-        console.log("Signed out")
-        router.push('/')
-
-    }, function (error) {
-        console.log(error); // Failure
-    });
-
-
-  }
-
+  promise.then(
+    function (response) {
+      console.log(response); // Success
+      console.log("Signed out");
+      router.push("/");
+    },
+    function (error) {
+      console.log(error); // Failure
+    }
+  );
+}
 </script>
 <style>
 .animated {
