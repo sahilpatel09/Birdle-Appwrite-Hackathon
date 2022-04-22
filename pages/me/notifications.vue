@@ -9,11 +9,11 @@
 
       <div class="my-1 flex gap-3 p-3">
         <div class="globalfont text-sm">
-          <h3>Following</h3>
+          <h3>All</h3>
         </div>
 
         <div class="globalfont text-sm">
-          <h3>Recommended</h3>
+          <h3>Responses</h3>
         </div>
       </div>
 

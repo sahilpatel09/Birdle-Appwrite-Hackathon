@@ -34,19 +34,32 @@
 
       <hr class="bg-gray-200 w-full h-0.5" />
 
-
-      <div class="w-full">
+      
+      <div class="w-full" v-for="index in 4">
 
         <h2 class="globalfont font-bold text-lg">The Choice</h2>
         <p class="text-gray-400 globalfont">Poetry on streoids.</p>
-        <p class="text-sm">Last Edited about 2 hours ago <span class="rm">·</span> 1 min read (250 words) so far</p>
-        <div class="inline-block">
-          <div class="absolute z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800">
-            <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Edit draft </a>
-            <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Email to subscribers </a>
-            <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Delete draft </a>
-            </div>
-        </div>
+        <p class="text-sm flex gap-1 items-center">Last Edited about 2 hours ago <span class="rm">·</span> 1 min read (250 words) so far
+
+          <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" @click="openStoryMenuHandler"
+             width="20px" height="20px" viewBox="0 0 199.404 199.404" style="enable-background:new 0 0 199.404 199.404;"
+             xml:space="preserve">
+          <g>
+            <polygon points="199.404,63.993 171.12,35.709 99.702,107.127 28.284,35.709 0,63.993 99.702,163.695  "/>
+          </g>
+          </svg>
+
+
+          <div class="inline-block relative top-0" :class="{ hidden: openStoryMenu }">
+            <div class="absolute z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800">
+              <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Edit draft </a>
+              <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Email to subscribers </a>
+              <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Delete draft </a>
+              </div>
+          </div>
+        </p>
+
+        
         
       </div>
 
@@ -54,3 +67,10 @@
     </div>
   </div>
 </template>
+<script setup>
+  const openStoryMenu = ref(true)
+
+  function openStoryMenuHandler(){
+    openStoryMenu.value = !openStoryMenu.value
+  }
+</script>
