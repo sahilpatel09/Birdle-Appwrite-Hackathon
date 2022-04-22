@@ -178,10 +178,11 @@
 
             <div class="profile hidden lg:block" @click="openIt">
               <img
-                src="https://miro.medium.com/fit/c/32/32/1*Er7O8VRVE5TGeJfowJDM1w.png"
+                :src="userData.img"
                 class="rounded-full lg:w-20 w-10"
                 alt="user_image"
               />
+              
             </div>
           </div>
 
@@ -218,8 +219,6 @@
 }
 </style>
 <script setup>
-
-
 const haveNotifications = ref(true);
 const menu = ref(true);
 function openIt() {
@@ -228,9 +227,18 @@ function openIt() {
 const route = useRoute();
 const router = useRouter();
 const errorval = ref("");
-const loggedin = ref(true);
-const appwrite = useAppwrite();
+const loggedin = ref(false);
+const service = userService();
+const { userData } = stateManager()
+async function getUserData(){
+  const data = await service.currentUserData();
+  console.log(userData.value)
+  userData.value = data
+  console.log(userData.value)
+  loggedin.value = true
+}
 
+getUserData()
 // setTimeout(()=>{
 //   console.log(user)
 // }, 500);

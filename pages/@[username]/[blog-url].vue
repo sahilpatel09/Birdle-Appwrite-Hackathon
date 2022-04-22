@@ -33,7 +33,7 @@
           <div class="flex itens-center justify-between w-full h-14 mt-5">
             <div class="flex items-center gap-3 globalfont">
               <img
-                src="https://miro.medium.com/fit/c/176/176/1*Er7O8VRVE5TGeJfowJDM1w.png"
+                :src="user.img"
                 class="w-14 rounded-full"
               />
 
@@ -142,9 +142,7 @@
             </h3>
   
             <p class="text-lg py-2">
-              Was it at the end or a secret message is hidden within the book?
-              Because I missed the mark. I thought the book was a guidebook, not
-              a fun novel to read. Was that just me?
+              {{ postItem.subtitle }}
             </p>
           </div>
           <div

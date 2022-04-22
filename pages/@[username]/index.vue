@@ -91,7 +91,7 @@
                         </svg>
                   </div>
 
-                  <NuxtLink :to="{ path: './'+post.postUrl }">
+                  <NuxtLink :to="{ path: '/'+post.postUrl }">
                   
                   <h2
                     class="font-bold lg:text-[22px] text-[16px] capitalize leading-5 font-bold postTitle lg:leading-7 leading-6"
@@ -253,7 +253,7 @@
 
                     <div class="w-full px-2">
                       <h2 class="text-gray-800 font-bold">
-                        Recommended topics
+                        Recommended topics{{ route.fullPath }}
                       </h2>
 
                       <div class="flex flex-wrap gap-2 my-3">
@@ -299,10 +299,10 @@
   async function getStuff(){
     const { posts, info } = await service.getUserWithPosts(route.params.username);
     
-    console.log("POSTS RECEIVED", posts, info);
+//    console.log("POSTS RECEIVED", posts, info);
     user.value = info
     postList.value = posts.documents;
-    console.log(posts.documents)
+ //   console.log(posts.documents)
     loading.value = true 
   }
 

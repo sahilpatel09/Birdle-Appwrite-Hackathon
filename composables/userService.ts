@@ -20,6 +20,7 @@ appwrite
 
 
 export const userService = () => {
+
   async function getAuthStatus(): Promise<boolean> {
     try {
       await appwrite.account.get();
@@ -44,7 +45,9 @@ export const userService = () => {
   ): Promise<boolean> {
     console.log(url, img)
     try {
-      const { $id: userId } = await appwrite.account.get();
+      const { $id: userId, } = await appwrite.account.get();
+      const currentUserData = await getUserNameFromUserID(userId.toString())
+      
       await appwrite.database.createDocument(
         "625a2f5e86376aefffe6",
         "unique()",
@@ -55,7 +58,7 @@ export const userService = () => {
           content: content.toString(),
           status: status.toString(),
           pub_id: pub.toString(),
-          postUrl: url,
+          postUrl: "@"+currentUserData.username+"/"+url,
           imgUrl: img,
           readTime: readingTime,
           created_at: Math.round(Date.now() / 1000).toString(),
@@ -81,16 +84,15 @@ export const userService = () => {
     }
   }
 
-  async function getUserWithPosts(userName: string): Promise<PostWithoutContent> {
+  async function getUserWithPosts(userName: string) {
     try {
 
       const info = await getuserIdFromUsername(userName);
       const id = info.$id.toString();
-      const posts = await appwrite.database.listDocuments<PostWithoutContent>(
+      const posts = await appwrite.database.listDocuments(
         "625a2f5e86376aefffe6",
         [Query.equal("user_id", id)]
       );
-      console.log("MODELED", posts)
 
       return { posts, info };
     } catch (err: any) {
@@ -103,17 +105,21 @@ export const userService = () => {
 
   async function getAuthorPost(userName: string, blogurl: string) {
     try {
-      console.log(userName, blogurl)
+      console.log("PRINTING USERNAME BLOGURL",userName, blogurl)
+      
       const info = await getuserIdFromUsername(userName);
       const id = info.$id.toString();
+      console.log(id)
+
       const post = await appwrite.database.listDocuments(
         "625a2f5e86376aefffe6",
         [
-        Query.equal("postUrl", blogurl),
+        Query.equal("postUrl", "@"+userName+"/"+blogurl),
         
         ]
       );
 
+      console.log("POS AFTER",post)
       if(post.documents[0].user_id === id){
         console.log("SAME ID")
         return { post, info };
@@ -129,10 +135,37 @@ export const userService = () => {
     }
   }
 
+  async function getUserNameFromUserID(id: string): string {
+    try {
+      const userData = await appwrite.database.listDocuments(
+        "625a2fc009e1c2051230",
+        [Query.equal("$id", id)]
+      );
+      return userData.documents[0];
+    } catch (err: any) {
+      alert(err.message);
+      return false;
+    }
+  }
+
+  async function currentUserData(){
+    try{
+    
+    const user = await appwrite.account.get();
+    const currentUserData = await getUserNameFromUserID(user.$id.toString())
+    return currentUserData;
+
+    } catch (err: any) {
+      alert(err.message);
+      return false;
+    }
+
+  }
 
 
 
 
 
-  return { appwrite, getAuthStatus, publishThePost, getUserWithPosts, getAuthorPost };
+
+  return { appwrite, getAuthStatus, publishThePost, getUserWithPosts, getAuthorPost, currentUserData };
 };
