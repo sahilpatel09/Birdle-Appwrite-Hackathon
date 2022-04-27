@@ -1,6 +1,5 @@
 import { Appwrite, Models,  Query } from "appwrite";
-console.log(window.__NUXT__.config.public.apiRoot)
-console.log()
+console.log(window)
 
 const appwrite = new Appwrite();
 appwrite
