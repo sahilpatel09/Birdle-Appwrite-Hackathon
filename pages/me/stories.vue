@@ -68,6 +68,11 @@
   </div>
 </template>
 <script setup>
+  definePageMeta({
+  middleware: ["auth","pageload"],
+  // or middleware: 'auth'
+});
+
   const openStoryMenu = ref(true)
 
   function openStoryMenuHandler(){

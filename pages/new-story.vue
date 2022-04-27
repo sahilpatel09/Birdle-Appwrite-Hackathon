@@ -6,7 +6,7 @@
           <div>
             <img src="@/assets/img/3.png" class="w-10" alt="" />
           </div>
-          <h3 class="textfont font-medium text-base">Draft in Sahil Patel {{ readtingTime }}</h3>
+          <h3 class="textfont font-medium text-base">Draft in Sahil Patel - {{ readtingTime }} min read time</h3>
         </div>
         <div class="flex items-center gap-4">
           <button
@@ -125,14 +125,19 @@
 </template>
 
 <script setup>
+  definePageMeta({
+  middleware: ["auth","pageload"],
+  // or middleware: 'auth'
+});
 
+const router = useRouter()
 const postName = ref("");
 const content = ref("Tell your story...");
 const subtitle = ref("");
 const status = ref("self");
 const pub = ref("false");
 const uuid = (Math.random() + 1).toString(16).substring(2)
-const { user } = stateManager();
+const { user, userData } = stateManager();
 const service = userService();
 const img = ref("")
 const readtingTime = ref(0)
@@ -165,14 +170,19 @@ async function printIt() {
       pub.value,
       url,
       img.value,
-      readtingTime.value
+      readtingTime.value,
+      user.value.$id,
+      userData.value.username
     );
     if (creatPost) {
       console.log("CREATED");
+      const routeTo = "/@"+userData.value.username+"/"+url
+      console.log(routeTo)
+      router.push(routeTo)
+
     } else {
       console.log("COULD NOT CREATE THE POST");
     }
-    console.log(content.value);
 
 
 

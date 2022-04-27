@@ -1,6 +1,8 @@
 import { Appwrite, Models,  Query } from "appwrite";
-const appwrite = new Appwrite();
 
+console.log(process)
+
+const appwrite = new Appwrite();
 appwrite
   .setEndpoint("https://medium.termshel.com/v1") // Your Appwrite Endpoint
   .setProject("6259163355147c1f4364");
@@ -18,9 +20,15 @@ appwrite
     readTime: string,
   } & Models.Document;
 
+  export type UserData = {
+  username: string,
+  img: string,
+} & Models.Document;
+
+
 
 export const userService = () => {
-
+  const profileCollection = "625f78027b24b0de372e";
   async function getAuthStatus(): Promise<boolean> {
     try {
       await appwrite.account.get();
@@ -41,12 +49,14 @@ export const userService = () => {
     pub: string,
     url: string,
     img: string,
-    readingTime: string
+    readingTime: string,
+    userId: string,
+    username: string
   ): Promise<boolean> {
     console.log(url, img)
     try {
-      const { $id: userId, } = await appwrite.account.get();
-      const currentUserData = await getUserNameFromUserID(userId.toString())
+      // const { $id: userId, } = await appwrite.account.get();
+      // const currentUserData = await getUserNameFromUserID(userId.toString())
       
       await appwrite.database.createDocument(
         "625a2f5e86376aefffe6",
@@ -58,7 +68,7 @@ export const userService = () => {
           content: content.toString(),
           status: status.toString(),
           pub_id: pub.toString(),
-          postUrl: "@"+currentUserData.username+"/"+url,
+          postUrl: "@"+username+"/"+url,
           imgUrl: img,
           readTime: readingTime,
           created_at: Math.round(Date.now() / 1000).toString(),
@@ -149,6 +159,7 @@ export const userService = () => {
   }
 
   async function currentUserData(){
+    
     try{
     
     const user = await appwrite.account.get();
@@ -156,16 +167,97 @@ export const userService = () => {
     return currentUserData;
 
     } catch (err: any) {
-      alert(err.message);
       return false;
     }
 
   }
 
+async function uploadImage(file){
+
+  try{
+
+    const sendImage = appwrite.storage.createFile(
+    "625f78027b24b0de372e",
+    "unique()",
+    file
+  );
+    return sendImage
+
+  }catch (err: any) {
+      alert(err.message);
+      return false;
+    }
+
+}
+
+async function updateProfileDocument(id, obj){
+
+  try{
+
+
+    const updateDoc = appwrite.database.updateDocument('625a2fc009e1c2051230', id.toString(), obj);
+    return true
+
+  }catch (err: any) {
+      alert(err.message);
+      return false;
+    }
+
+}
+
+
+async function test(): Promise<UserData>{
+
+  const user = await appwrite.account.get()
+  console.log(user.$id)
+  const userData: Models.DocuementList<UserData> = await appwrite.database.listDocuments<UserData>(
+    "625a2fc009e1c2051230",
+    [Query.equal("$id", user.$id)]
+  );
+  return userData.documents[0]
+
+}
+
+async function setUpUserForPageReload(){
+
+
+  try{
+  
+  const userInfo = await appwrite.account.get();
+  const currentUserData = await getUserNameFromUserID(userInfo.$id.toString())
+  return { userInfo, currentUserData };
+
+  } catch (err: any) {
+    return false;
+  }
 
 
 
 
+}
 
-  return { appwrite, getAuthStatus, publishThePost, getUserWithPosts, getAuthorPost, currentUserData };
+
+async function getThumbnail(imageId: string): URL {
+    return appwrite.storage.getFilePreview(profileCollection,imageId, 500, undefined, "top", undefined, undefined, undefined, undefined, undefined, undefined, undefined, "webp");
+  }
+
+async function getUserNameThumbnail(name): string{
+  return appwrite.avatars.getInitials(name, 50, 50);
+}
+
+
+
+
+  return {  appwrite, 
+            getAuthStatus, 
+            publishThePost, 
+            getUserWithPosts, 
+            getAuthorPost, 
+            currentUserData, 
+            uploadImage, 
+            getThumbnail,
+            getUserNameThumbnail,
+            updateProfileDocument,
+            setUpUserForPageReload,
+            test };
 };

@@ -6,8 +6,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     baseSiteURL: "https://medium.termshel.com",
     public: {
-      apiBase: process.env.APPWRITE_URL,
-      siteBase: process.env.SITE_BASE,
+      apiBase: process.env.NUXT_APPWRITE_URL,
+      siteBase: process.env.NUXT_SITE_BASE,
     },
   },
   css: ["~/assets/css/tail.css"],

@@ -166,25 +166,22 @@
                 ></path>
               </svg>
               </NuxtLink>
-
-              <div class="profile lg:hidden" @click="openIt">
-                <img
-                  src="https://miro.medium.com/fit/c/32/32/1*Er7O8VRVE5TGeJfowJDM1w.png"
-                  class="rounded-full lg:w-20 w-10"
-                  alt="user_image"
-                />
-              </div>
+            
+            <div class="profile lg:hidden" @click="openIt" v-if="user || userData">
+              <UsersUserAvatar v-if="userData.img" :fileid="userData.img" class="w-10" /> 
+              <UsersUserNameAvatar :name="user.name" v-else />
             </div>
 
-            <div class="profile hidden lg:block" @click="openIt">
-              <img
-                :src="userData.img"
-                class="rounded-full lg:w-20 w-10"
-                alt="user_image"
-              />
-              
-            </div>
           </div>
+
+          <div class="profile hidden lg:block" @click="openIt" v-if="user || userData">
+            <UsersUserAvatar v-if="userData.img" :fileid="userData.img" /> 
+            <UsersUserNameAvatar :name="user.name" v-else />
+          </div>
+          <div v-else class="w-10 h-10">
+            
+          </div>
+        </div>
 
           <!-- Main Section -->
           <NuxtChild />
@@ -229,12 +226,17 @@ const router = useRouter();
 const errorval = ref("");
 const loggedin = ref(false);
 const service = userService();
-const { userData } = stateManager()
+const { user, userData } = stateManager()
+
+
 async function getUserData(){
-  const data = await service.currentUserData();
-  console.log(userData.value)
-  userData.value = data
-  console.log(userData.value)
+  const logged = await service.getAuthStatus();
+  if(logged){
+  const { userInfo, currentUserData } = await service.setUpUserForPageReload();
+  user.value = userInfo
+  userData.value = currentUserData    
+  }
+
   loggedin.value = true
 }
 

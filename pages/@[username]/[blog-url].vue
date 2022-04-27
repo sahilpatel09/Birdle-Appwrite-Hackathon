@@ -32,10 +32,10 @@
           <!-- Main User Info Container -->
           <div class="flex itens-center justify-between w-full h-14 mt-5">
             <div class="flex items-center gap-3 globalfont">
-              <img
-                :src="user.img"
-                class="w-14 rounded-full"
-              />
+              <div class="profile hidden lg:block w-12" @click="openIt" v-if="user">
+                <UsersUserAvatar v-if="user.img" :fileid="user.img" /> 
+                <UsersUserNameAvatar :name="user.name" v-else />
+              </div>
 
               <div class="flex flex-col justify-between">
                 <h2 class="text-base">{{ user.name }}</h2>
@@ -186,7 +186,10 @@
 
                   <div class="dataholder">
 
-                    <img :src="user.img" class="w-20 rounded-full">
+                      <div class="profile hidden lg:block" @click="openIt" v-if="user">
+                        <UsersUserAvatar v-if="user.img" :fileid="user.img" /> 
+                        <UsersUserNameAvatar :name="user.name" v-else />
+                      </div>
                     <h2 class="globalfont font-bold mt-4 capitalize">{{ user.name }}</h2>
                     <h3 class="py-2 text-base text-gray-500">1.5K Followers</h3>
                     <p class="text-gray-600 text-sm">{{ user.bio }}</p>

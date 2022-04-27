@@ -229,7 +229,11 @@
 
                     <div class="dataholder">
 
-                      <img :src="user.img" class="w-20 rounded-full">
+                      <div class="profile hidden lg:block" @click="openIt" v-if="user">
+                        <UsersUserAvatar v-if="user.img" :fileid="user.img" /> 
+                        <UsersUserNameAvatar :name="user.name" v-else />
+                      </div>
+
                       <h2 class="globalfont font-bold mt-4 capitalize">{{ user.name }}</h2>
                       <h3 class="py-2 text-base text-gray-500">1.5K Followers</h3>
                       <p class="text-gray-600 text-sm">{{ user.bio }}</p>
