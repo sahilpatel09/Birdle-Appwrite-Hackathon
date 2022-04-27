@@ -8,6 +8,8 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.NUXT_APPWRITE_URL,
       siteBase: process.env.NUXT_SITE_BASE,
+      apiRoot: process.env.NUXT_APPWRITE_API,
+      birdle: process.env.NUXT_APPWRITE_BIRDLE,
     },
   },
   css: ["~/assets/css/tail.css"],

@@ -16,6 +16,7 @@
   "dependencies": {
     "@tinymce/tinymce-vue": "4",
     "appwrite": "^7.0.0",
+    "dotenv": "^16.0.0",
     "tinymce": "^5.10.3"
   }
 }

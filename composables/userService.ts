@@ -1,11 +1,11 @@
 import { Appwrite, Models,  Query } from "appwrite";
-
-console.log(process)
+console.log(window.__NUXT__.config.public.apiRoot)
+console.log()
 
 const appwrite = new Appwrite();
 appwrite
-  .setEndpoint("https://medium.termshel.com/v1") // Your Appwrite Endpoint
-  .setProject("6259163355147c1f4364");
+  .setEndpoint(window.__NUXT__.config.public.apiRoot) // Your Appwrite Endpoint
+  .setProject(window.atob(window.__NUXT__.config.public.birdle));
 
 
   export type PostWithoutContent = {
