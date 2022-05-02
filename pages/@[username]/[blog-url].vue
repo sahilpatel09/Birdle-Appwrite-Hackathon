@@ -12,10 +12,15 @@
           <div class="flex items-center justify-between py-2">
             <div class="w-full flex items-center justify-start gap-4">
               
+              
               <div class="profile hidden lg:block w-12" @click="openIt" v-if="user">
+                <NuxtLink :to='"/@"+user.username'>
                 <UsersUserAvatar v-if="user.img" :fileid="user.img" /> 
                 <UsersUserNameAvatar :name="user.name" v-else />
+                </NuxtLink>
               </div>
+            
+            
 
               <h4 class="text-sm text-gray-600 globalfont">
                 Published in <span class="text-gray-800">
@@ -194,22 +199,39 @@
                         <UsersUserNameAvatar :name="user.name" v-else />
                       </div>
                     <h2 class="globalfont font-bold mt-4 capitalize">{{ user.name }}</h2>
-                    <h3 class="py-2 text-base text-gray-500">1.5K Followers</h3>
+                    <h3 class="py-2 text-base text-gray-500">{{user.followers_count}} Followers</h3>
                     <p class="text-gray-600 text-sm">{{ user.bio }}</p>
                     
                     <!-- If use is self -->
-                    <h4 class="mt-5 text-gray-700">Edit Profile</h4>
-                    <!-- else -->
-                    <div class="flex gap-3 mt-4 items-center">
-                      <button class="px-4 py-1 text-green-500 border border-green-500 rounded-full">Following</button>
+<div v-if="userData">
+                      <h4 class="mt-5 text-gray-700" v-if="user.$id == userData.$id">
+                      <NuxtLink to="/me/settings">
+                      Edit Profile
+                    </NuxtLink>
+                    </h4>                        
+                      </div>
 
-                      <button class="px-4 py-1 bg-green-700 text-white rounded-full">Follow</button>
+                    <!-- else -->
+                    
+                    <div v-if="user && following && userData">
+                      <div class="flex gap-3 mt-4 items-center" v-if="user.$id != userData.$id">
+                      <button v-if="following.includes(user.$id)" class="px-4 py-1 text-green-500 border border-green-500 rounded-full"
+                      @click="unfollowUser(user.$id)">Following</button>
+
+                      <button 
+                      v-else 
+                      class="px-4 py-1 bg-green-700 text-white rounded-full"
+                      @click="followUser(user.$id)"
+                      >Follow</button>
+
                       <button class="rounded-full bg-green-700 w-16 h-10 py-2 h-fit flex items-center justify-center" title="Subscribe to get a newsletter.">
                         <img src="@/assets/img/get-email.svg" class="w-5">
                       </button>
 
 
                     </div>
+                    </div>
+
                   </div>
 
                    <hr class="my-5" />
@@ -271,7 +293,8 @@ const user = ref("")
 const service = userService()
 const show = ref(false)
 const postDate = ref()
-
+const { userData } = stateManager()
+const following = ref()
 console.log(route.params.username, route.params.blogurl)
 async function getSinglePost(){
 

@@ -44,17 +44,11 @@
           Your Topics
         </h3>
 
-        <div class="flex my-2 gap-1">
+        <div class="flex my-2 gap-1" v-if="tags">
           <button
-            class="bg-gray-100 lg:px-3 lg:py-1 px-2 py-1.5 rounded-full text-sm"
-          >
-            Machine Learning
-          </button>
-          <button class="bg-gray-100 px-4 py-1 rounded-full text-sm">
-            Productivity
-          </button>
-          <button class="bg-gray-100 px-4 py-1 rounded-full text-sm">
-            Digital Life
+            class="capitalize bg-gray-100 lg:px-3 lg:py-1 px-2 py-1.5 rounded-full text-sm"
+          v-for="tag in tags">
+            {{tag}}
           </button>
         </div>
       </div>
@@ -275,7 +269,7 @@ const postList = ref({})
 const recommendedPostList = ref({})
 const { user, userData } = stateManager();
 const service = userService()
-
+const tags = ref([])
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const getDate = (timestamp)=>{
@@ -300,6 +294,23 @@ async function getPosts(){
   const posts = await service.getPosts();
   console.log("PAGE POSTS",posts.documents)
   postList.value = posts.documents
+  let publictags = []
+  let val = 0
+  while(val <posts.documents.length){
+    if(val<6){
+    let item = posts.documents[val].tags[0]
+    if(!publictags.includes(item))
+    publictags.push(item)
+    val++;      
+    }
+    else{
+      //
+    }
+
+  }
+  tags.value = publictags
+
+
 }
 getPosts()
 </script>

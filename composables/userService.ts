@@ -349,6 +349,30 @@ async function getPosts() {
   }
 }
 
+async function addFollower(id: string, type:string){
+
+ try{
+    let getDocument = await appwrite.database.getDocument(userDataCollection, id.toString())
+    console.log("RECEIVED DOC", getDocument)
+    if(type === "increase"){
+        getDocument['followers_count']+=1      
+    }else{
+        getDocument['followers_count']-=1
+    }
+
+
+    console.log("OBJECT", getDocument)  
+    const updateDoc = await appwrite.database.updateDocument(userDataCollection, id.toString(), getDocument);
+    console.log(updateDoc)
+    return true
+
+  }catch (err: any) {
+      alert(err.message);
+      console.log(err)
+      return false;
+    }
+
+}
 
 
 
@@ -368,5 +392,6 @@ async function getPosts() {
             getPostWithPubAuthorData,
             getPubsForAuthor,
             getPosts,
+            addFollower,
             test };
 };

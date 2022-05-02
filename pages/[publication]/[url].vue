@@ -11,9 +11,11 @@
         <div class="lg:flex flex-col lg:gap-2 justify-center">
           <div class="flex items-center justify-between py-2">
             <div class="w-full flex items-center justify-start gap-4">
-              <div class="profile hidden lg:block w-10" @click="openIt" v-if="pubinfo">
+              <div class="profile lg:block w-10" @click="openIt" v-if="pubinfo">
+                <NuxtLink :to='"/"+pubinfo.url'>
                 <UsersUserAvatar v-if="pubinfo.img" :fileid="pubinfo.img" /> 
                 <UsersUserNameAvatar :name="pubinfo.name" v-else />
+              </NuxtLink>
               </div>
 
               <h4 class="text-sm text-gray-600 globalfont">
@@ -32,9 +34,12 @@
           <!-- Main User Info Container -->
           <div class="flex itens-center justify-between w-full h-14 mt-5">
             <div class="flex items-center gap-3 globalfont">
+              
               <div class="profile hidden lg:block w-12" @click="openIt" v-if="postUser">
+                <NuxtLink :to='"/@"+postUser.username'>  
                 <UsersUserAvatar v-if="postUser.img" :fileid="postUser.img" /> 
                 <UsersUserNameAvatar :name="postUser.name" v-else />
+                </NuxtLink>
               </div>
 
               <div class="flex flex-col justify-between">

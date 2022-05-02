@@ -73,9 +73,21 @@
               <div class="flex justify-between gap-5">
                 <div class="space-y-4 pt-3">
                   <div class="flex gap-1 items-center justify-start text-xs lg:text-sm">
-                    <img src="@/assets/img/user.png" class="w-5 h-5" alt="" />
-                    <p>Published in <span class="font-bold">ILLUMINATION</span></p>
-                    <p class="text-gray-400 hidden lg:block"><span class="rm">·</span> 1 day ago</p>
+                    
+                    <div v-if="post.pubname" class="flex gap-2">
+              <UsersUserAvatar :fileid="post.pubimg" class="w-5 h-5"/>
+              <p>{{ post.username }} in {{ post.pubname }}</p>                
+              </div>
+              <div v-else class="flex gap-2">
+
+              <UsersUserAvatar :fileid="post.userimg" class="w-5 h-5"/>
+              <p>Published in {{ post.username }}.</p>                
+              </div>
+
+                    
+
+
+                    <p class="text-gray-400 hidden lg:block"><span class="rm">·</span> {{getDateDiff(post.created_at)}} day ago</p>
                     <p class="text-gray-600 hidden lg:block"><span class="rm">·</span> Pinned</p>
 
                     <svg
@@ -91,7 +103,7 @@
                         </svg>
                   </div>
 
-                  <NuxtLink :to="{ path: '/'+post.postUrl }">
+                  <NuxtLink :to="{ path: post.postUrl }">
                   
                   <h2
                     class="font-bold lg:text-[22px] text-[16px] capitalize leading-5 font-bold postTitle lg:leading-7 leading-6"
@@ -112,7 +124,7 @@
                       <button
                         class="hidden md:block py-0.5 px-2 pill rounded-full whitespace-nowrap"
                       >
-                        Politics
+                        {{ post.tags[0] }}
                       </button>
                       <span class="text-base fill-gray-400">
                         <svg
@@ -235,21 +247,38 @@
                       </div>
 
                       <h2 class="globalfont font-bold mt-4 capitalize">{{ user.name }}</h2>
-                      <h3 class="py-2 text-base text-gray-500">1.5K Followers</h3>
+                      <h3 class="py-2 text-base text-gray-500">{{user.followers_count}} Followers</h3>
                       <p class="text-gray-600 text-sm">{{ user.bio }}</p>
-                      
                       <!-- If use is self -->
-                      <h4 class="mt-5 text-gray-700">Edit Profile</h4>
-                      <!-- else -->
-                      <div class="flex gap-3 mt-4 items-center">
-                        <button class="px-4 py-1 text-green-500 border border-green-500 rounded-full">Following</button>
+                      <div v-if="userData">
+                      <h4 class="mt-5 text-gray-700" v-if="user.$id == userData.$id">
+                      <NuxtLink to="/me/settings">
+                      Edit Profile
+                    </NuxtLink>
+                    </h4>                        
+                      </div>
 
-                        <button class="px-4 py-1 bg-green-700 text-white rounded-full">Follow</button>
+                      
+                      <!-- else -->
+                      
+                      <div v-if="user && following">
+                        <div class="flex gap-3 mt-4 items-center" v-if="user.$id != userData.$id">
+                        <button v-if="following.includes(user.$id)" class="px-4 py-1 text-green-500 border border-green-500 rounded-full"
+                        @click="unfollowUser(user.$id)">Following</button>
+
+                        <button 
+                        v-else 
+                        class="px-4 py-1 bg-green-700 text-white rounded-full"
+                        @click="followUser(user.$id)"
+                        >Follow</button>
+
                         <button class="rounded-full bg-green-700 w-16 h-10 py-2 h-fit flex items-center justify-center" title="Subscribe to get a newsletter.">
                           <img src="@/assets/img/get-email.svg" class="w-5">
                         </button>
 
 
+                      </div>
+                      
                       </div>
                     </div>
 
@@ -257,7 +286,7 @@
 
                     <div class="w-full px-2">
                       <h2 class="text-gray-800 font-bold">
-                        Recommended topics{{ route.fullPath }}
+                        Recommended topics
                       </h2>
 
                       <div class="flex flex-wrap gap-2 my-3">
@@ -296,14 +325,23 @@
   const drawer = ref(true)
   const user = ref("")
   const route = useRoute()
+  const router = useRouter()
   const postList = ref({})
   const loading = ref(false)
-
+  const following = ref(false)
+  const { userData } = stateManager()
   const service = userService()
+
+  if(userData.value){
+  following.value = userData.value.follow_user_id    
+  }
+
+
+  
   async function getStuff(){
     const { posts, info } = await service.getUserWithPosts(route.params.username);
     
-//    console.log("POSTS RECEIVED", posts, info);
+    console.log("POSTS RECEIVED", posts, info);
     user.value = info
     postList.value = posts.documents;
  //   console.log(posts.documents)
@@ -324,7 +362,55 @@
     post['showDropDown'] = !post.showDropDown
   }
 
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+const getDate = (timestamp)=>{
+  const d = new Date(timestamp*1000)
+  return (months[d.getMonth()])  + " " + d.getDate();
+
+}
+
+const getDateDiff = (timestamp) => {
+
+  const postDate = new Date(timestamp*1000)
+  const today = new Date()
+  const diffTime = Math.abs(today - postDate);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays
+
+
+}
+
+function followUser(id){
+
+if(following.value.push(id)){
+  userData.value.followers_count = following.value.length
+  updateData(userData.value.$id, userData.value,"increase")
+  }
+
+}
+
+function unfollowUser(id){
+  following.value = following.value.filter(item => item !== id)
+  userData.value.follow_user_id = following.value
+  userData.value.followers_count = following.value.length
+  updateData(userData.value.$id, userData.value,"decrease")
+}
+
+async function updateData(id, obj,type){
+  console.log("Entered UpdateData")
+  const update = await service.updateProfileDocument(id, obj)
+  const follower = await service.addFollower(user.value.$id,type)
+  console.log("UPDATE FOLLOWER", update, follower)
+  if(update && follower){
+    console.log("ROUTING")
+    
+    setTimeout(()=>{
+      router.go('')
+    }, 300)
+  }
+
+}
 </script>
 <style scoped>
 .animated {
