@@ -329,6 +329,7 @@ const router = useRouter();
 const errorval = ref("");
 const loggedin = ref(false);
 
+
 const { user, userData } = stateManager();
 const service = userService()
 async function setData(){
@@ -348,6 +349,7 @@ sdk
 // setTimeout(()=>{
 //   console.log(user)
 // }, 500);
+
 
 function setPrefs() {
   const userPrefs = { userSet: true };

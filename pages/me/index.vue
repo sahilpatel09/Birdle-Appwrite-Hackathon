@@ -153,36 +153,47 @@
 
       <!-- PostList -->
 
-      <div class="my-3 space-y-10" v-for="index in 6">
+      <div class="my-3 space-y-10" v-for="post in postList">
         <div class="flex justify-between gap-5">
           <div class="space-y-4 pt-3">
             <div
               class="flex gap-1 items-center justify-start text-xs lg:text-sm"
             >
-              <img src="@/assets/img/user.png" class="w-5 h-5" alt="" />
-              <p>Dina Ley in Medpage</p>
-              <p class="text-gray-400"><span class="rm">·</span> 1 day ago</p>
+<!--               <img src="@/assets/img/user.png" class="w-5 h-5" alt="" /> -->
+              <div v-if="post.pubname" class="flex gap-2">
+              <UsersUserAvatar :fileid="post.pubimg" class="w-5 h-5"/>
+              <p>{{ post.username }} in {{ post.pubname }}</p>                
+              </div>
+              <div v-else class="flex gap-2">
+
+              <UsersUserAvatar :fileid="post.userimg" class="w-5 h-5"/>
+              <p>Published in {{ post.username }}.</p>                
+              </div>
+
+              <p class="text-gray-400"><span class="rm">·</span> {{getDateDiff(post.created_at)}} day ago</p>
             </div>
 
             <h2
-              class="font-bold lg:text-[22px] text-[16px] capitalize leading-5 font-bold postTitle"
+              class="font-bold lg:text-[22px] text-[16px] capitalize leading-5 font-bold postTitle lg:leading-7"
             >
-              The Rivor of Love & Joy of Tears. How are you doing?
+            <NuxtLink :to="{ path: post.postUrl }">
+            {{ post.name }}
+          </NuxtLink>
+            
             </h2>
             <p class="hidden lg:block postDescription max-w-lg">
-              A transcendental drowning — “Oh Khusrau, the river of love Runs in
-              strange directions. One who jumps into it drowns,
+              {{ post.subtitle }}
             </p>
 
             <div class="flex justify-between items-center">
               <div class="flex gap-2 items-center">
                 <p class="text-gray-400 text-left text-sm">
-                  Apr 13 · 4 min read
+                  {{ getDate(post.created_at) }} · {{ post.readTime }}min read
                 </p>
                 <button
                   class="hidden md:block py-0.5 px-2 pill rounded-full whitespace-nowrap"
                 >
-                  Politics
+                  {{ post.tags[0] }}
                 </button>
                 <span class="text-base fill-gray-400">
                   <svg
@@ -228,7 +239,7 @@
           </div>
 
           <img
-            src="https://miro.medium.com/fit/c/112/112/1*gnJj9BVZCZtSgGzCVWWlsQ.jpeg"
+            :src="post.imgUrl"
             class="lg:w-[220px] lg:h-[160px] w-[110px] object-cover rounded mt-10"
             alt=""
           />
@@ -259,3 +270,36 @@
   display: inline-block;
 }
 </style>
+<script setup>
+const postList = ref({})
+const recommendedPostList = ref({})
+const { user, userData } = stateManager();
+const service = userService()
+
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+const getDate = (timestamp)=>{
+  const d = new Date(timestamp*1000)
+  return (months[d.getMonth()])  + " " + d.getDate();
+
+}
+
+const getDateDiff = (timestamp) => {
+
+  const postDate = new Date(timestamp*1000)
+  const today = new Date()
+  const diffTime = Math.abs(today - postDate);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays
+
+
+}
+
+
+async function getPosts(){
+  const posts = await service.getPosts();
+  console.log("PAGE POSTS",posts.documents)
+  postList.value = posts.documents
+}
+getPosts()
+</script>

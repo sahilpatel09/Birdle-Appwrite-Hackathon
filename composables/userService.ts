@@ -1,9 +1,8 @@
 import { Appwrite, Models,  Query } from "appwrite";
-console.log(window)
 
 const appwrite = new Appwrite();
 appwrite
-  .setEndpoint(window.__NUXT__.config.public.apiRoot) // Your Appwrite Endpoint
+  .setEndpoint(window.__NUXT__.config.public.apiRoot)
   .setProject(window.atob(window.__NUXT__.config.public.birdle));
 
 
@@ -28,6 +27,11 @@ appwrite
 
 export const userService = () => {
   const profileCollection = "625f78027b24b0de372e";
+  const userDataCollection = "625a2fc009e1c2051230"; 
+  const publicationCollection = "625a2f9bd24e2f85461b";
+  const postsCollection = "625a2f5e86376aefffe6";
+  const userStorageBucket = "625f78027b24b0de372e";
+
   async function getAuthStatus(): Promise<boolean> {
     try {
       await appwrite.account.get();
@@ -50,7 +54,12 @@ export const userService = () => {
     img: string,
     readingTime: string,
     userId: string,
-    username: string
+    username: string,
+    tagsArray: Array,
+    pubName: string,
+    postUserName: string,
+    userImage: string,
+    pubImage: string,
   ): Promise<boolean> {
     console.log(url, img)
     try {
@@ -58,7 +67,7 @@ export const userService = () => {
       // const currentUserData = await getUserNameFromUserID(userId.toString())
       
       await appwrite.database.createDocument(
-        "625a2f5e86376aefffe6",
+        postsCollection,
         "unique()",
         {
           user_id: userId,
@@ -67,10 +76,15 @@ export const userService = () => {
           content: content.toString(),
           status: status.toString(),
           pub_id: pub.toString(),
-          postUrl: "@"+username+"/"+url,
+          postUrl: url,
           imgUrl: img,
           readTime: readingTime,
+          tags: tagsArray,
           created_at: Math.round(Date.now() / 1000).toString(),
+          username: postUserName.toString(),
+          pubname: pubName.toString(),
+          userimg: userImage.toString(),
+          pubimg: pubImage.toString()
         }
       );
       return true;
@@ -83,7 +97,7 @@ export const userService = () => {
   async function getuserIdFromUsername(userName: string): string {
     try {
       const userData = await appwrite.database.listDocuments(
-        "625a2fc009e1c2051230",
+        userDataCollection,
         [Query.equal("username", userName)]
       );
       return userData.documents[0];
@@ -99,7 +113,7 @@ export const userService = () => {
       const info = await getuserIdFromUsername(userName);
       const id = info.$id.toString();
       const posts = await appwrite.database.listDocuments(
-        "625a2f5e86376aefffe6",
+        postsCollection,
         [Query.equal("user_id", id)]
       );
 
@@ -121,9 +135,9 @@ export const userService = () => {
       console.log(id)
 
       const post = await appwrite.database.listDocuments(
-        "625a2f5e86376aefffe6",
+        postsCollection,
         [
-        Query.equal("postUrl", "@"+userName+"/"+blogurl),
+        Query.equal("postUrl", "/@"+userName+"/"+blogurl),
         
         ]
       );
@@ -147,7 +161,7 @@ export const userService = () => {
   async function getUserNameFromUserID(id: string): string {
     try {
       const userData = await appwrite.database.listDocuments(
-        "625a2fc009e1c2051230",
+        userDataCollection,
         [Query.equal("$id", id)]
       );
       return userData.documents[0];
@@ -176,7 +190,7 @@ async function uploadImage(file){
   try{
 
     const sendImage = appwrite.storage.createFile(
-    "625f78027b24b0de372e",
+    userStorageBucket,
     "unique()",
     file
   );
@@ -194,7 +208,7 @@ async function updateProfileDocument(id, obj){
   try{
 
 
-    const updateDoc = appwrite.database.updateDocument('625a2fc009e1c2051230', id.toString(), obj);
+    const updateDoc = appwrite.database.updateDocument(userDataCollection, id.toString(), obj);
     return true
 
   }catch (err: any) {
@@ -210,7 +224,7 @@ async function test(): Promise<UserData>{
   const user = await appwrite.account.get()
   console.log(user.$id)
   const userData: Models.DocuementList<UserData> = await appwrite.database.listDocuments<UserData>(
-    "625a2fc009e1c2051230",
+    userDataCollection,
     [Query.equal("$id", user.$id)]
   );
   return userData.documents[0]
@@ -246,6 +260,98 @@ async function getUserNameThumbnail(name): string{
 
 
 
+async function getPub(pubName: string) {
+  try {
+
+    const pub = await appwrite.database.listDocuments(
+      publicationCollection,
+      [Query.equal("url", pubName.toString())]
+    );
+    return pub.documents[0];
+  } catch (err: any) {
+    alert(err.message);
+    return false;
+  }
+}
+
+
+
+
+
+
+async function getPubWithPosts(pubName: string) {
+  try {
+
+    const pub = await getPub(pubName);
+    const id = pub.$id.toString();
+    console.log(id)
+    const posts = await appwrite.database.listDocuments(
+      postsCollection,
+      [Query.equal("pub_id", id)]
+    );
+
+    return { pub, posts } ;
+  } catch (err: any) {
+    alert(err.message);
+    return false;
+  }
+}
+
+
+async function getPostWithPubAuthorData(publication, url){
+      const urlString = "/"+publication+"/"+url 
+      console.log(urlString)
+      const pubInfo = await getPub(publication)
+
+      const post = await appwrite.database.listDocuments(
+        postsCollection,
+        [
+        Query.equal("postUrl", urlString),
+        
+        ]
+      );
+
+      const postInfo = post.documents[0]
+      console.log("POST INFO",post)
+      const userInfo = await getUserNameFromUserID(postInfo.user_id)
+      return { pubInfo, userInfo, postInfo }
+
+
+}
+
+
+async function getPubsForAuthor(username: string) {
+  try {
+
+    const pub = await appwrite.database.listDocuments(
+      publicationCollection,
+      [Query.search("writers", [username.toString()])]
+    );
+    return pub;
+  } catch (err: any) {
+    alert(err.message);
+    return false;
+  }
+}
+
+
+async function getPosts() {
+  try {
+
+    const postList = await appwrite.database.listDocuments(
+      postsCollection,
+      [],20,undefined,undefined,undefined,undefined,['DESC']
+    );
+    return postList;
+  } catch (err: any) {
+    alert(err.message);
+    return false;
+  }
+}
+
+
+
+
 
   return {  appwrite, 
             getAuthStatus, 
@@ -258,5 +364,9 @@ async function getUserNameThumbnail(name): string{
             getUserNameThumbnail,
             updateProfileDocument,
             setUpUserForPageReload,
+            getPubWithPosts,
+            getPostWithPubAuthorData,
+            getPubsForAuthor,
+            getPosts,
             test };
 };

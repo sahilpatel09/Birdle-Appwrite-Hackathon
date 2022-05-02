@@ -11,16 +11,13 @@
         <div class="lg:flex flex-col lg:gap-2 justify-center">
           <div class="flex items-center justify-between py-2">
             <div class="w-full flex items-center justify-start gap-4">
-              
-              <div class="profile hidden lg:block w-12" @click="openIt" v-if="user">
-                <UsersUserAvatar v-if="user.img" :fileid="user.img" /> 
-                <UsersUserNameAvatar :name="user.name" v-else />
+              <div class="profile hidden lg:block w-10" @click="openIt" v-if="pubinfo">
+                <UsersUserAvatar v-if="pubinfo.img" :fileid="pubinfo.img" /> 
+                <UsersUserNameAvatar :name="pubinfo.name" v-else />
               </div>
 
               <h4 class="text-sm text-gray-600 globalfont">
-                Published in <span class="text-gray-800">
-                {{ user.name}}
-              </span>
+                Published in <span class="text-gray-800">{{ pubinfo.name }}</span>
               </h4>
             </div>
           </div>
@@ -35,13 +32,13 @@
           <!-- Main User Info Container -->
           <div class="flex itens-center justify-between w-full h-14 mt-5">
             <div class="flex items-center gap-3 globalfont">
-              <div class="profile hidden lg:block w-12" @click="openIt" v-if="user">
-                <UsersUserAvatar v-if="user.img" :fileid="user.img" /> 
-                <UsersUserNameAvatar :name="user.name" v-else />
+              <div class="profile hidden lg:block w-12" @click="openIt" v-if="postUser">
+                <UsersUserAvatar v-if="postUser.img" :fileid="postUser.img" /> 
+                <UsersUserNameAvatar :name="postUser.name" v-else />
               </div>
 
               <div class="flex flex-col justify-between">
-                <h2 class="text-base">{{ user.name }}</h2>
+                <h2 class="text-base">{{ postUser.name }}</h2>
                 <p class="text-sm">{{ postDate }} · {{ postItem.readTime }} min read</p>
               </div>
             </div>
@@ -189,13 +186,13 @@
 
                   <div class="dataholder">
 
-                      <div class="profile hidden lg:block" @click="openIt" v-if="user">
-                        <UsersUserAvatar v-if="user.img" :fileid="user.img" /> 
-                        <UsersUserNameAvatar :name="user.name" v-else />
+                      <div class="profile hidden lg:block" @click="openIt" v-if="postUser">
+                        <UsersUserAvatar v-if="postUser.img" :fileid="postUser.img" /> 
+                        <UsersUserNameAvatar :name="postUser.name" v-else />
                       </div>
-                    <h2 class="globalfont font-bold mt-4 capitalize">{{ user.name }}</h2>
+                    <h2 class="globalfont font-bold mt-4 capitalize">{{ postUser.name }}</h2>
                     <h3 class="py-2 text-base text-gray-500">1.5K Followers</h3>
-                    <p class="text-gray-600 text-sm">{{ user.bio }}</p>
+                    <p class="text-gray-600 text-sm">{{ postUser.bio }}</p>
                     
                     <!-- If use is self -->
                     <h4 class="mt-5 text-gray-700">Edit Profile</h4>
@@ -222,18 +219,7 @@
                     <div class="flex flex-wrap gap-2 my-3">
                       <p
                         class="px-4 py-1 border border-gray-200 w-fit rounded antialiased text-gray-600"
-                        v-for="item in [
-                          'Data Science',
-                          'Relationships',
-                          'Self',
-                          'Programming',
-                          'Productivity',
-                          'Javascript',
-                          'React',
-                          'Appwrite',
-                          'Hackathon',
-                          'Dev.to',
-                        ]"
+                        v-for="item in postItem.tags"
                       >
                         {{ item }}
                       </p>
@@ -265,28 +251,59 @@
 </template>
 
 <script setup>
+ definePageMeta({
+  middleware: ["pageload"],
+  // or middleware: 'auth'
+});
 const route = useRoute()
-const postItem = ref('');
-const user = ref("")
 const service = userService()
 const show = ref(false)
+
+const pubinfo = ref({})
+const postItem = ref('');
+const postUser = ref("")
 const postDate = ref()
+const { user, userData } = stateManager()
 
-console.log(route.params.username, route.params.blogurl)
-async function getSinglePost(){
 
-    const { post, info } = await service.getAuthorPost(route.params.username, route.params.blogurl);
-    console.log("RECEIVED IN PAGE",post);
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+console.log(route.params)
+console.log("DATA", user, userData)
 
-    const d = new Date(post.documents[0].created_at*1000)
-    postDate.value = (months[d.getMonth()])  + " " + d.getDate() + ", " + d.getFullYear();
 
-    postItem.value = post.documents[0]
-    user.value = info
-    show.value = true
+async function getPostFromPublication(){
+
+  const { pubInfo, userInfo, postInfo } = await service.getPostWithPubAuthorData(route.params.publication, route.params.url);
+  console.log("RECEIVED DATA IN PAGE", pubInfo, userInfo, postInfo);
+
+
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  const d = new Date(postInfo.created_at*1000)
+  postDate.value = (months[d.getMonth()])  + " " + d.getDate() + ", " + d.getFullYear();
+
+      pubinfo.value = pubInfo
+      postItem.value = postInfo
+      postUser.value = userInfo
+      show.value = true
+
 }
-getSinglePost();
+
+getPostFromPublication()
+
+// async function getSinglePost(){
+
+//     const { post, info } = await service.getAuthorPost(route.params.username, route.params.blogurl);
+//     console.log("RECEIVED IN PAGE",post);
+//     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+//     const d = new Date(post.documents[0].created_at*1000)
+//     postDate.value = (months[d.getMonth()])  + " " + d.getDate() + ", " + d.getFullYear();
+
+//     postItem.value = post.documents[0]
+//     user.value = info
+//     show.value = true
+// }
+// getSinglePost();
 
 
 </script>
