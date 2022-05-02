@@ -29,6 +29,7 @@
 
               <div class="inline-block left-48 top-28 absolute lg:relative lg:left-0 lg:top-0 fadeIn" :class="{ hidden: drawer} ">
                 <div class="absolute z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800">
+
                   <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Edit draft </a>
                   <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Email to subscribers </a>
                   </div>
@@ -122,7 +123,7 @@
                     <div class="flex gap-2 items-center">
                       <p class="text-gray-400 text-left text-sm">{{ post.readTime }} min read</p>
                       <button
-                        class="hidden md:block py-0.5 px-2 pill rounded-full whitespace-nowrap"
+                        class="capitalize hidden md:block py-0.5 px-2 pill rounded-full whitespace-nowrap"
                       >
                         {{ post.tags[0] }}
                       </button>

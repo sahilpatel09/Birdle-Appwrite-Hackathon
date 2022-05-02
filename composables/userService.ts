@@ -376,6 +376,33 @@ async function addFollower(id: string, type:string){
 
 
 
+async function addPubFollower(id: string, type:string){
+
+ try{
+    let getDocument = await appwrite.database.getDocument(publicationCollection, id.toString())
+    console.log("RECEIVED DOC", getDocument)
+    if(type === "increase"){
+        getDocument['followers_count']+=1      
+    }else{
+        getDocument['followers_count']-=1
+    }
+
+
+    console.log("OBJECT", getDocument)  
+    const updateDoc = await appwrite.database.updateDocument(publicationCollection, id.toString(), getDocument);
+    console.log(updateDoc)
+    return true
+
+  }catch (err: any) {
+      alert(err.message);
+      console.log(err)
+      return false;
+    }
+
+}
+
+
+
 
   return {  appwrite, 
             getAuthStatus, 
@@ -393,5 +420,6 @@ async function addFollower(id: string, type:string){
             getPubsForAuthor,
             getPosts,
             addFollower,
+            addPubFollower,
             test };
 };

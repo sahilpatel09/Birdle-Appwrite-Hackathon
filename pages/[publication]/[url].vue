@@ -196,13 +196,13 @@
                         <UsersUserNameAvatar :name="postUser.name" v-else />
                       </div>
                     <h2 class="globalfont font-bold mt-4 capitalize">{{ postUser.name }}</h2>
-                    <h3 class="py-2 text-base text-gray-500">1.5K Followers</h3>
+                    <h3 class="py-2 text-base text-gray-500">{{postUser.followers_count}} Followers</h3>
                     <p class="text-gray-600 text-sm">{{ postUser.bio }}</p>
                     
                     <!-- If use is self -->
-                    <h4 class="mt-5 text-gray-700">Edit Profile</h4>
+                    <!-- <h4 class="mt-5 text-gray-700">Edit Profile</h4> -->
                     <!-- else -->
-                    <div class="flex gap-3 mt-4 items-center">
+                   <!--  <div class="flex gap-3 mt-4 items-center">
                       <button class="px-4 py-1 text-green-500 border border-green-500 rounded-full">Following</button>
 
                       <button class="px-4 py-1 bg-green-700 text-white rounded-full">Follow</button>
@@ -211,7 +211,7 @@
                       </button>
 
 
-                    </div>
+                    </div> -->
                   </div>
 
                    <hr class="my-5" />
