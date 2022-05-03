@@ -5,16 +5,16 @@
     >
       <div class="overflow-y-scroll w-full h-full">
         <div class="px-8 my-5 text-sm">
-          <h2 class="text-green-500">Gift a membership</h2>
+          <h2 class="text-green-500 line-through">Gift a membership</h2>
         </div>
 
         <hr class="mt-5 w-full" />
         <div class="px-8 py-8">
           <ul class="flex flex-col gap-5 text-sm leading-5">
             <li><button @click="signMeOut">Sign out</button></li>
-            <li>Medium Partner Program</li>
-            <li>Refine reccmmendations</li>
-            <li>Stats</li>
+            <li class="line-through">Medium Partner Program</li>
+            <li class="line-through">Refine reccmmendations</li>
+            <li class="line-through">Stats</li>
             <li>
               <NuxtLink to="/me/settings"><button>Settings</button></NuxtLink>
             </li>
@@ -23,49 +23,62 @@
 
         <hr class="w-full" />
 
-        <div class="px-8 py-8 text-sm">
+        <div class="px-8 py-8 text-sm" v-if="pubList">
           <h2 class="text-sm">Manage Publications</h2>
           <div class="flex flex-col gap-1 py-2">
-            <div class="flex items-center px-3 py-2 gap-3">
-              <img
-                src="https://miro.medium.com/fit/c/32/32/1*w4v49zQwQYxikMN4OZ5dYw.jpeg"
-                class="rounded-full"
-              />
-              <h3>Inner Poetry</h3>
+
+            <div v-if="pubList == ''">
+              You are not part of any publication yet.
             </div>
 
-            <div class="flex items-center px-3 py-2 gap-3">
-              <img
-                src="https://miro.medium.com/fit/c/32/32/1*w4v49zQwQYxikMN4OZ5dYw.jpeg"
-                class="rounded-full"
-              />
-              <h3>STwGK</h3>
+            <div class="flex items-center px-3 py-2 gap-3" v-for="pub in pubList" :key="pub.$id">
+              <NuxtLink :to="'/'+pub.url">  
+              <div class="profile lg:block w-12" v-if="pub">
+                <UsersUserAvatar v-if="pub.img" :fileid="pub.img" /> 
+                <UsersUserNameAvatar :name="pub.name" v-else />
+                
+              </div>
+
+              </NuxtLink>
+              <NuxtLink :to="'/'+pub.url">  
+              <h3>{{ pub.name }}</h3>
+            </NuxtLink>
+
             </div>
 
-            <div class="flex items-center px-3 py-2 gap-3">
-              <img
-                src="https://miro.medium.com/fit/c/32/32/1*w4v49zQwQYxikMN4OZ5dYw.jpeg"
-                class="rounded-full"
-              />
-              <h3>Inspired Motivation</h3>
-            </div>
+
+
+
           </div>
         </div>
 
         <hr class="w-full" />
 
         <div class="w-full flex gap-2 justify-center py-6">
-          <img
+          <!-- <img
             src="https://miro.medium.com/fit/c/32/32/1*Er7O8VRVE5TGeJfowJDM1w.png"
             class="w-10 h-10 rounded-full"
-          />
+          /> -->
+          {{  }}
+          <div class="profile lg:block w-12" @click="openIt" v-if="userData">
+            <NuxtLink :to='"/@"+userData.username'>
+            <UsersUserAvatar v-if="userData.img" :fileid="userData.img" /> 
+            <UsersUserNameAvatar :name="userData.name" v-else />
+            </NuxtLink>
+          </div>
+
           <div class="flex flex-col">
-            <h2>Sahil Patel</h2>
-            <h3>@smppatel999</h3>
+            <h2>{{ userData.name }}</h2>
+
+            <h3>
+            <a :href="'/'+userData.username" :title="userData.name">
+            @{{ userData.username }}
+            </a>
+          </h3>
           </div>
 
           <div class="flex flex-col-reverse items-center justify-center">
-            <div class="border border-gray-400 text-xs px-2 py-1">Member</div>
+            <div class="border border-gray-400 text-xs px-2 py-1" v-if="userData.member">Member</div>
           </div>
         </div>
       </div>
@@ -75,6 +88,18 @@
 <script setup>
 const appwrite = useAppwrite();
 const router = useRouter();
+const { userData } = stateManager()
+const service = userService()
+const pubList = ref()
+async function getPubs(){
+  const pubs = await service.getPubsForAuthor(userData.value.username);
+  if(pubs){
+    pubList.value = pubs.documents
+    console.log(pubList.value)
+  }
+}
+getPubs()
+
 function signMeOut() {
   console.log("Sign out clicked.");
 

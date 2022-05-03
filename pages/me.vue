@@ -6,7 +6,9 @@
         <div
           class="lg:min-h-screen lg:shrink lg:w-[80px] block lg:left-0 lg:top-0 lg:bottom-0 fixed lg:py-10 lg:px-5 flex lg:flex-col lg:justify-between border-r border-gray-200 items-center justify-center bottom-0 left-0 right-0 bg-white px-2.5 py-4 shadow-2xl"
         >
+        <NuxtLink to="/me/">
           <img src="@/assets/img/3.png" alt="" class="hidden lg:block" />
+        </NuxtLink>
           <!--  <svg viewBox="0 0 1043.63 592.71" class="jy hu hidden lg:block">
               <g data-name="Layer 2">
                 <g data-name="Layer 1">
