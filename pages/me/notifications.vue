@@ -17,6 +17,12 @@
         </div>
       </div>
 
+      <h2
+        class="text-gray-900 font-extrabold text-left text-3xl tracking-tight globalfont p-3"
+      >
+        Not implemented yet. :(
+      </h2>
+
       <hr class="bg-gray-200 w-full h-0.5" />
     </div>
   </div>

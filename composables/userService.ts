@@ -60,6 +60,7 @@ export const userService = () => {
     postUserName: string,
     userImage: string,
     pubImage: string,
+    tag
   ): Promise<boolean> {
     console.log(url, img)
     try {
@@ -84,7 +85,8 @@ export const userService = () => {
           username: postUserName.toString(),
           pubname: pubName.toString(),
           userimg: userImage.toString(),
-          pubimg: pubImage.toString()
+          pubimg: pubImage.toString(),
+          published: tag
         }
       );
       return true;
@@ -114,7 +116,9 @@ export const userService = () => {
       const id = info.$id.toString();
       const posts = await appwrite.database.listDocuments(
         postsCollection,
-        [Query.equal("user_id", id)]
+        [
+        Query.equal('user_id', id),
+        ]
       );
 
       return { posts, info };
@@ -402,6 +406,158 @@ async function addPubFollower(id: string, type:string){
 }
 
 
+async function getCurrentUserPosts(userID: string){
+
+  try{
+
+    const posts = await appwrite.database.listDocuments(
+      postsCollection,
+      [Query.equal("user_id", userID.toString())],
+      20,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      ['DESC'],
+    );
+    return posts;
+  }catch(err){
+
+    alert(err.message);
+    console.log(err)
+    return false;
+
+  }
+
+
+
+}
+
+
+
+
+async function deletePost(ID: string){
+
+  try{
+
+    const posts = await appwrite.database.deleteDocument(
+      postsCollection,ID);
+    return true;
+  }catch(err){
+
+    alert(err.message);
+    console.log(err)
+    return false;
+
+  }
+
+
+
+}
+
+
+
+async function getSinglePostDoc(ID: string){
+
+  try{
+
+    const post = await appwrite.database.getDocument(
+      postsCollection,ID);
+    return post;
+  }catch(err){
+
+    alert(err.message);
+    console.log(err)
+    return false;
+
+  }
+
+
+
+}
+
+
+
+
+
+
+async function updateThePost(
+    postName: string,
+    content: string,
+    subtitle: string,
+    status: string,
+    pub: string,
+    url: string,
+    img: string,
+    readingTime: string,
+    userId: string,
+    username: string,
+    tagsArray: Array,
+    pubName: string,
+    postUserName: string,
+    userImage: string,
+    pubImage: string,
+    tag,
+    post_id,
+  ): Promise<boolean> {
+    console.log(url, img)
+    try {
+      // const { $id: userId, } = await appwrite.account.get();
+      // const currentUserData = await getUserNameFromUserID(userId.toString())
+      console.log("DATA", {
+          user_id: userId,
+          name: postName.toString(),
+          subtitle: subtitle.toString(),
+          content: content.toString(),
+          status: status.toString(),
+          pub_id: pub.toString(),
+          postUrl: url,
+          imgUrl: img,
+          readTime: readingTime,
+          tags: tagsArray,
+          created_at: Math.round(Date.now() / 1000).toString(),
+          username: postUserName.toString(),
+          pubname: pubName,
+          userimg: userImage.toString(),
+          pubimg: pubImage,
+          published: tag
+        })
+
+
+
+
+      await appwrite.database.updateDocument(
+        postsCollection,
+        post_id,
+        {
+          user_id: userId,
+          name: postName.toString(),
+          subtitle: subtitle.toString(),
+          content: content.toString(),
+          status: status.toString(),
+          pub_id: pub.toString(),
+          postUrl: url,
+          imgUrl: img,
+          readTime: readingTime,
+          tags: tagsArray,
+          created_at: Math.round(Date.now() / 1000).toString(),
+          username: postUserName.toString(),
+          pubname: pubName,
+          userimg: userImage.toString(),
+          pubimg: pubImage,
+          published: tag
+        }
+      );
+      return true;
+    } catch (err: any) {
+      alert(err.message);
+      console.log(err)
+      return false;
+    }
+  }
+
+
+
 
 
   return {  appwrite, 
@@ -421,5 +577,9 @@ async function addPubFollower(id: string, type:string){
             getPosts,
             addFollower,
             addPubFollower,
+            getCurrentUserPosts,
+            deletePost,
+            getSinglePostDoc,
+            updateThePost,
             test };
 };

@@ -203,7 +203,7 @@
   middleware: ["auth","pageload"],
   // or middleware: 'auth'
 });
-
+const route = useRoute()
 const router = useRouter()
 const postName = ref("");
 const content = ref("Tell your story...");
@@ -221,6 +221,31 @@ const tagsArray = ref(['Science','Fiction'])
 const tagInput = ref("")
 const pubName = ref("")
 const pubImage = ref("")
+const postdata = ref("")
+
+
+
+async function getPost(){
+	const post = await service.getSinglePostDoc(route.params.post_id);
+	if(post){
+		console.log(post)
+		postdata.value = post
+		postName.value = post.name
+		content.value = post.content
+		subtitle.value = post.subtitle
+		status.value = post.status
+		pub.value = post.pub_id
+		img.value = post.imgUrl
+		readtingTime.value = post.readTime
+		tagsArray.value = post.tags
+		pubName.value = post.pubname
+		pubImage.value = post.pubimg
+
+
+	}
+}
+getPost()
+
 
 function getTime(event, editor){
   var wordcount = tinymce.activeEditor.plugins.wordcount;
@@ -285,7 +310,7 @@ async function printIt(publishedTag) {
   let url = ""
   const posturl = postName.value.split(" ").join("-")+"--"+uuid.toString()
 
-  if(pub.value){
+  if(pub.value !== "false"){
     console.log("IS PUB")
     status.value = "pub"
     url = "/"+pubName.value+"/"+posturl
@@ -304,7 +329,7 @@ async function printIt(publishedTag) {
 
   }else{
 
-    const creatPost = await service.publishThePost(
+    const creatPost = await service.updateThePost(
       postName.value,
       content.value,
       subtitle.value,
@@ -321,10 +346,11 @@ async function printIt(publishedTag) {
       userData.value.img,
       pubImage.value,
       publishedTag,
+      route.params.post_id.toString()
 
     );
     if (creatPost) {
-      console.log("CREATED");
+      console.log("POST UPDATED.");
       console.log("ROUTING URL",url)
       router.push(url)
 

@@ -71,7 +71,7 @@
               
         
             <div class="my-3 space-y-10" v-for="(post, index) in postList">
-              <div class="flex justify-between gap-5">
+              <div class="flex justify-between gap-5" v-if="post.published">
                 <div class="space-y-4 pt-3">
                   <div class="flex gap-1 items-center justify-start text-xs lg:text-sm">
                     
