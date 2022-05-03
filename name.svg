@@ -62,21 +62,16 @@
 				}
 
 h1 {
-  font-size: 72px;
-  background: -webkit-linear-gradient(#eee, #333);
+  font-size: 90px;
+  background: -webkit-linear-gradient(to right bottom,#FF6347,#ff005f,#f7008a,#c500c3,#0000FF);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-				p {
-					font-size: 20px;
-					text-shadow: 0 1px 0 #efefef;
-					animation: 5s ease 0s normal forwards 1 fadeIn;
-				}
+				
 			</style>
 			<div class="container">
 				<h1>Birdle</h1>
-				<p>Click to see the source</p>
 			</div>
 		</div>
 	</foreignObject>
