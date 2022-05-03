@@ -62,6 +62,10 @@
 				}
 
 h1 {
+font-family:'Brush Script MT';
+				font-style:italic;
+				
+
   font-size: 150px;
   background: -webkit-linear-gradient(#FF6347, #0000FF);
   -webkit-background-clip: text;
