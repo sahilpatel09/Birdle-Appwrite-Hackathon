@@ -504,26 +504,7 @@ async function updateThePost(
     try {
       // const { $id: userId, } = await appwrite.account.get();
       // const currentUserData = await getUserNameFromUserID(userId.toString())
-      console.log("DATA", {
-          user_id: userId,
-          name: postName.toString(),
-          subtitle: subtitle.toString(),
-          content: content.toString(),
-          status: status.toString(),
-          pub_id: pub.toString(),
-          postUrl: url,
-          imgUrl: img,
-          readTime: readingTime,
-          tags: tagsArray,
-          created_at: Math.round(Date.now() / 1000).toString(),
-          username: postUserName.toString(),
-          pubname: pubName,
-          userimg: userImage.toString(),
-          pubimg: pubImage,
-          published: tag
-        })
-
-
+   
 
 
       await appwrite.database.updateDocument(
@@ -558,6 +539,23 @@ async function updateThePost(
 
 
 
+async function getFollowers(list){
+
+try{
+  const userData = await appwrite.database.listDocuments(
+    userDataCollection,
+    [Query.equal("$id", list)]
+  );
+  return userData
+}catch(err: any){
+        alert(err.message);
+      console.log(err)
+      return false;
+}
+
+}
+
+
 
 
   return {  appwrite, 
@@ -581,5 +579,6 @@ async function updateThePost(
             deletePost,
             getSinglePostDoc,
             updateThePost,
+            getFollowers,
             test };
 };

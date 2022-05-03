@@ -145,7 +145,7 @@
           <!-- Info end -->
           <div class="mt-3">
             
-            <h3 class="globalfont text-4xl font-extrabold" v-if="postItem">
+            <h3 class="capitalize  globalfont text-4xl font-extrabold" v-if="postItem">
               {{ postItem.name }}
             </h3>
   
@@ -155,7 +155,7 @@
           </div>
           <div
             v-html="postItem.content"
-            class="globalfont text-lg"
+            class="globalfont text-[18px] font-sans"
           ></div>
         </div>
       </div>

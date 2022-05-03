@@ -53,84 +53,27 @@
         </div>
       </div>
 
-      <div class="flex my-6 gap-2">
-        <div class="flex">
-          <img
-            src="https://miro.medium.com/fit/c/176/176/1*vIP_u1C6d94hJP14kKqY4g@2x.jpeg"
-            alt="user-image"
-            class="w-14 rounded-full"
-          />
+
+      <div class="flex my-6 gap-2" v-if="followerUsers">
+        <div class="flex" v-for="user in followerUsers">
+          
+          <div class="profile hidden lg:block w-16" @click="openIt" v-if="user">
+                <NuxtLink :to='"/@"+user.username'>
+                <UsersUserAvatar v-if="user.img" :fileid="user.img" /> 
+                <UsersUserNameAvatar :name="user.name" v-else />
+                </NuxtLink>
+              </div>
+          
           <div
             class="rounded-full bg-black w-5 h-5 -ml-4 text-white flex items-center justify-center text-sm border border-gray-50"
           >
-            1
+            {{user.followers_count}}
           </div>
         </div>
 
-        <div class="flex">
-          <img
-            src="https://miro.medium.com/fit/c/48/48/2*U2ZUukbFMiQh0ttTGM1gdA.jpeg"
-            alt="user-image"
-            class="w-14 rounded-full"
-          />
-          <div
-            class="rounded-full bg-black w-5 h-5 -ml-4 text-white flex items-center justify-center text-sm border border-gray-50"
-          >
-            4
-          </div>
-        </div>
 
-        <div class="flex">
-          <img
-            src="https://miro.medium.com/fit/c/48/48/1*9nCxu0p1hNUE59oO9_3LAg.jpeg"
-            alt="user-image"
-            class="w-14 rounded-full"
-          />
-          <div
-            class="rounded-full bg-black w-5 h-5 -ml-4 text-white flex items-center justify-center text-sm border border-gray-50"
-          >
-            1
-          </div>
-        </div>
 
-        <div class="flex">
-          <img
-            src="https://miro.medium.com/fit/c/48/48/2*U2ZUukbFMiQh0ttTGM1gdA.jpeg"
-            alt="user-image"
-            class="w-14 rounded-full"
-          />
-          <div
-            class="rounded-full bg-black w-5 h-5 -ml-4 text-white flex items-center justify-center text-sm border border-gray-50"
-          >
-            2
-          </div>
-        </div>
 
-        <div class="flex">
-          <img
-            src="https://miro.medium.com/fit/c/48/48/1*9nCxu0p1hNUE59oO9_3LAg.jpeg"
-            alt="user-image"
-            class="w-14 rounded-full"
-          />
-          <div
-            class="rounded-full bg-black w-5 h-5 -ml-4 text-white flex items-center justify-center text-sm border border-gray-50"
-          >
-            1
-          </div>
-        </div>
-
-        <div class="flex">
-          <img
-            src="https://miro.medium.com/fit/c/48/48/1*9nCxu0p1hNUE59oO9_3LAg.jpeg"
-            alt="user-image"
-            class="w-14 rounded-full"
-          />
-          <div
-            class="rounded-full bg-black w-5 h-5 -ml-4 text-white flex items-center justify-center text-sm border border-gray-50"
-          >
-            1
-          </div>
-        </div>
       </div>
 
       <div class="my-2 flex gap-3">
@@ -270,6 +213,8 @@ const recommendedPostList = ref({})
 const { user, userData } = stateManager();
 const service = userService()
 const tags = ref([])
+const followerUsers = ref()
+
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const getDate = (timestamp)=>{
@@ -289,6 +234,14 @@ const getDateDiff = (timestamp) => {
 
 }
 
+async function getfollowerimages(list) {
+  const follower = await service.getFollowers(list);
+  if(follower){
+    console.log("FOLLOWERS",follower.documents)
+    followerUsers.value = follower.documents
+  }
+}
+getfollowerimages(userData.value.follow_user_id)
 
 async function getPosts(){
   const posts = await service.getPosts();
@@ -311,6 +264,8 @@ async function getPosts(){
   tags.value = publictags
 
 
+
 }
 getPosts()
+
 </script>
