@@ -56,7 +56,7 @@ function sendLink() {
   let promise = appwrite.account.createMagicURLSession(
     "unique()",
     emailValue.value,
-    "http://localhost:3000/me/"
+    "https://medium-lac.vercel.app/me/"
   );
 
   promise.then(

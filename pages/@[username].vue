@@ -169,17 +169,19 @@
               </svg>
               </NuxtLink>
             
-            <div class="profile lg:hidden" @click="openIt" v-if="user || userData">
+            <div class="profile lg:hidden" @click="openIt" v-if="userData">
               <UsersUserAvatar v-if="userData.img" :fileid="userData.img" class="w-10" /> 
               <UsersUserNameAvatar :name="user.name" v-else />
             </div>
 
           </div>
 
-          <div class="profile hidden lg:block" @click="openIt" v-if="user || userData">
+          <div class="profile hidden lg:block" @click="openIt" v-if="userData">
             <UsersUserAvatar v-if="userData.img" :fileid="userData.img" /> 
             <UsersUserNameAvatar :name="user.name" v-else />
           </div>
+
+
           <div v-else class="w-10 h-10">
             
           </div>

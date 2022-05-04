@@ -14,7 +14,7 @@
       </svg>
 
       <div class="flex gap-2">
-        <button class="text-green-600 text-sm font-medium">Open in app</button>
+        <a href="https://rsci.app.link/s1cSf8zJT3?~feature=LiOpenInAppButton&~channel=ShowHome&~stage=mobileNavBar" class="text-green-600 text-sm font-medium">Open in app</a>
 
         <svg
           width="30"
@@ -57,7 +57,7 @@
       <div class="flex my-6 gap-2" v-if="followerUsers">
         <div class="flex" v-for="user in followerUsers">
           
-          <div class="profile hidden lg:block w-16" @click="openIt" v-if="user">
+          <div class="profile lg:block w-16" @click="openIt" v-if="user">
                 <NuxtLink :to='"/@"+user.username'>
                 <UsersUserAvatar v-if="user.img" :fileid="user.img" /> 
                 <UsersUserNameAvatar :name="user.name" v-else />
@@ -250,7 +250,7 @@ async function getPosts(){
   let publictags = []
   let val = 0
   while(val <posts.documents.length){
-    if(val<6){
+    if(val<5){
     let item = posts.documents[val].tags[0]
     if(!publictags.includes(item))
     publictags.push(item)

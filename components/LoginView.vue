@@ -89,6 +89,6 @@ function toggle() {
 
 const appwrite = useAppwrite();
 function loginwithGoogle() {
-  appwrite.account.createOAuth2Session("google", "http://localhost:3000/me/");
+  appwrite.account.createOAuth2Session("google", "https://medium-lac.vercel.app/me/");
 }
 </script>
