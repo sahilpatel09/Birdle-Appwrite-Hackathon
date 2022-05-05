@@ -509,6 +509,20 @@ export const userService = () => {
     }
   }
 
+  async function currentAuthorPubs(userID: string, username: string) {
+    try {
+      const pub = await appwrite.database.listDocuments(publicationCollection, [
+        
+        Query.search("writers", [username.toString()]),
+        Query.equal("user_id", userID.toString()),
+
+      ]);
+      return pub;
+    } catch (err: any) {
+      alert(err.message);
+      return false;
+    }
+  }
 
 
   return {
@@ -536,6 +550,7 @@ export const userService = () => {
     getFollowers,
     getPostsWithTag,
     getzHomeFreePosts,
+    currentAuthorPubs,
     test,
   };
 };
