@@ -14,7 +14,11 @@
       </svg>
 
       <div class="flex gap-2">
-        <a href="https://rsci.app.link/s1cSf8zJT3?~feature=LiOpenInAppButton&~channel=ShowHome&~stage=mobileNavBar" class="text-green-600 text-sm font-medium">Open in app</a>
+        <a
+          href="https://rsci.app.link/s1cSf8zJT3?~feature=LiOpenInAppButton&~channel=ShowHome&~stage=mobileNavBar"
+          class="text-green-600 text-sm font-medium"
+          >Open in app</a
+        >
 
         <svg
           width="30"
@@ -47,33 +51,28 @@
         <div class="flex my-2 gap-1" v-if="tags">
           <button
             class="capitalize bg-gray-100 lg:px-3 lg:py-1 px-2 py-1.5 rounded-full text-sm"
-          v-for="tag in tags">
-            {{tag}}
+            v-for="tag in tags"
+          >
+            {{ tag }}
           </button>
         </div>
       </div>
 
-
       <div class="flex my-6 gap-2" v-if="followerUsers">
         <div class="flex" v-for="user in followerUsers">
-          
           <div class="profile lg:block w-16" @click="openIt" v-if="user">
-                <NuxtLink :to='"/@"+user.username'>
-                <UsersUserAvatar v-if="user.img" :fileid="user.img" /> 
-                <UsersUserNameAvatar :name="user.name" v-else />
-                </NuxtLink>
-              </div>
-          
+            <NuxtLink :to="'/@' + user.username">
+              <UsersUserAvatar v-if="user.img" :fileid="user.img" />
+              <UsersUserNameAvatar :name="user.name" v-else />
+            </NuxtLink>
+          </div>
+
           <div
             class="rounded-full bg-black w-5 h-5 -ml-4 text-white flex items-center justify-center text-sm border border-gray-50"
           >
-            {{user.followers_count}}
+            {{ user.followers_count }}
           </div>
         </div>
-
-
-
-
       </div>
 
       <div class="my-2 flex gap-3">
@@ -96,34 +95,37 @@
             <div
               class="flex gap-1 items-center justify-start text-xs lg:text-sm"
             >
-<!--               <img src="@/assets/img/user.png" class="w-5 h-5" alt="" /> -->
               <div v-if="post.pubname" class="flex gap-2">
-              <UsersUserAvatar :fileid="post.pubimg" class="w-5 h-5"/>
-              <p>{{ post.username }} in {{ post.pubname }}</p>                
+                <UsersUserAvatar :fileid="post.pubimg" class="w-5 h-5" />
+                <p>{{ post.username }} in {{ post.pubname }}</p>
               </div>
               <div v-else class="flex gap-2">
-
-              <UsersUserAvatar :fileid="post.userimg" class="w-5 h-5"/>
-              <p>Published in {{ post.username }}.</p>                
+                <UsersUserAvatar :fileid="post.userimg" class="w-5 h-5" />
+                <p>Published in {{ post.username }}.</p>
               </div>
 
-              <p class="text-gray-400"><span class="rm">·</span> {{getDateDiff(post.created_at)}} day ago</p>
+              <p class="text-gray-400">
+                <span class="rm">·</span> {{ getDateDiff(post.created_at) }} day
+                ago
+              </p>
+
+
+
             </div>
 
             <h2
-              class="font-bold lg:text-[22px] text-[16px] capitalize leading-5 font-bold postTitle lg:leading-7"
+              class="font-bold lg:text-[22px] text-[16px] capitalize leading-5 font-bold postTitle lg:leading-7 max-w-lg"
             >
-            <NuxtLink :to="{ path: post.postUrl }">
-            {{ post.name }}
-          </NuxtLink>
-            
+              <NuxtLink :to="{ path: post.postUrl }">
+                {{ post.name }}
+              </NuxtLink>
             </h2>
             <p class="hidden lg:block postDescription max-w-lg">
               {{ post.subtitle }}
             </p>
 
-            <div class="flex justify-between items-center">
-              <div class="flex gap-2 items-center">
+            <div class="flex justify-between items-center lg:w-[600px]">
+              <div class="flex gap-2 items-center justify-between">
                 <p class="text-gray-400 text-left text-sm">
                   {{ getDate(post.created_at) }} · {{ post.readTime }}min read
                 </p>
@@ -138,7 +140,6 @@
                     width="15"
                     height="15"
                     viewBox="0 0 15 15"
-                    aria-label="Member only content"
                   >
                     <path
                       d="M7.44 2.32c.03-.1.09-.1.12 0l1.2 3.53a.29.29 0 0 0 .26.2h3.88c.11 0 .13.04.04.1L9.8 8.33a.27.27 0 0 0-.1.29l1.2 3.53c.03.1-.01.13-.1.07l-3.14-2.18a.3.3 0 0 0-.32 0L4.2 12.22c-.1.06-.14.03-.1-.07l1.2-3.53a.27.27 0 0 0-.1-.3L2.06 6.16c-.1-.06-.07-.12.03-.12h3.89a.29.29 0 0 0 .26-.19l1.2-3.52z"
@@ -160,19 +161,9 @@
                     fill="#292929"
                   ></path>
                 </svg>
-
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M4.39 12c0 .55.2 1.02.59 1.41.39.4.86.59 1.4.59.56 0 1.03-.2 1.42-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.6-1.41A1.93 1.93 0 0 0 6.4 10c-.55 0-1.02.2-1.41.59-.4.39-.6.86-.6 1.41zM10 12c0 .55.2 1.02.58 1.41.4.4.87.59 1.42.59.54 0 1.02-.2 1.4-.59.4-.39.6-.86.6-1.41 0-.55-.2-1.02-.6-1.41a1.93 1.93 0 0 0-1.4-.59c-.55 0-1.04.2-1.42.59-.4.39-.58.86-.58 1.41zm5.6 0c0 .55.2 1.02.57 1.41.4.4.88.59 1.43.59.57 0 1.04-.2 1.43-.59.39-.39.57-.86.57-1.41 0-.55-.2-1.02-.57-1.41A1.93 1.93 0 0 0 17.6 10c-.55 0-1.04.2-1.43.59-.38.39-.57.86-.57 1.41z"
-                    fill="#000"
-                    data-darkreader-inline-fill=""
-                    style="--darkreader-inline-fill: #ffffff"
-                  ></path>
-                </svg>
               </div>
             </div>
+
           </div>
 
           <img
@@ -208,64 +199,69 @@
 }
 </style>
 <script setup>
-const postList = ref({})
-const recommendedPostList = ref({})
+const postList = ref({});
+const recommendedPostList = ref({});
 const { user, userData } = stateManager();
-const service = userService()
-const tags = ref([])
-const followerUsers = ref()
+const service = userService();
+const tags = ref([]);
+const followerUsers = ref();
 
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
-const getDate = (timestamp)=>{
-  const d = new Date(timestamp*1000)
-  return (months[d.getMonth()])  + " " + d.getDate();
-
-}
+const getDate = (timestamp) => {
+  const d = new Date(timestamp * 1000);
+  return months[d.getMonth()] + " " + d.getDate();
+};
 
 const getDateDiff = (timestamp) => {
-
-  const postDate = new Date(timestamp*1000)
-  const today = new Date()
+  const postDate = new Date(timestamp * 1000);
+  const today = new Date();
   const diffTime = Math.abs(today - postDate);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays
-
-
-}
+  return diffDays;
+};
 
 async function getfollowerimages(list) {
   const follower = await service.getFollowers(list);
-  if(follower){
-    console.log("FOLLOWERS",follower.documents)
-    followerUsers.value = follower.documents
+  if (follower) {
+    console.log("FOLLOWERS", follower.documents);
+    followerUsers.value = follower.documents;
   }
 }
-getfollowerimages(userData.value.follow_user_id)
+getfollowerimages(userData.value.follow_user_id);
 
-async function getPosts(){
+async function getPosts() {
   const posts = await service.getPosts();
-  console.log("PAGE POSTS",posts.documents)
-  postList.value = posts.documents
-  let publictags = []
-  let val = 0
-  while(val <posts.documents.length){
-    if(val<5){
-    let item = posts.documents[val].tags[0]
-    if(!publictags.includes(item))
-    publictags.push(item)
-    val++;      
-    }
-    else{
-      //
-    }
+  console.log("PAGE POSTS", posts.documents);
+  postList.value = posts.documents;
+  let publictags = [];
 
+  let val = 0;
+
+  while (val < posts.documents.length) {
+    if (val < 5) {
+      let item = posts.documents[val].tags[0];
+      if (!publictags.includes(item)) publictags.push(item);
+      val++;
+    } else {
+      break;
+    }
   }
-  tags.value = publictags
 
-
-
+  tags.value = publictags;
 }
-getPosts()
-
+getPosts();
 </script>

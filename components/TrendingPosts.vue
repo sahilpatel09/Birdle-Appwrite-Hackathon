@@ -23,35 +23,41 @@
         </defs>
       </svg>
 
-      <h2 class="uppercase font-bold text-base">Trending on Medium</h2>
+      <h2 class="uppercase font-bold text-base">Trending on Birdle</h2>
     </div>
 
     <div class="flex flex-wrap -m-4 py-5">
-      <div class="lg:w-1/3 md:w-1/2" v-for="index in 6">
+      <div class="lg:w-1/3 md:w-1/2" v-for="(post,index) in props.posts">
         <div
           class="h-full px-8 py-5 rounded-lg overflow-hidden text-center relative"
         >
           <div class="flex gap-6">
             <div class="index">
               <h2 class="text-4xl text-gray-300 font-bold">
-                {{ "0" + index }}
+                {{ "0" + (index+1) }}
               </h2>
             </div>
 
             <div class="space-y-2 pt-3">
               <div class="flex gap-1 items-center">
-                <img src="@/assets/img/user.png" class="w-5 h-5" alt="" />
-                <h3>Dina Ley</h3>
-                <span class="text-gray-600">in</span>
-                <h4 class="text-black text-base font-semibold">
-                  Age of Awareness
-                </h4>
+
+              <div v-if="post.pubname" class="flex items-center gap-2">
+                              <UsersUserAvatar :fileid="post.pubimg" class="w-5 h-5" />
+                              <p>{{ post.username }} in {{ post.pubname }}</p>
+                            </div>
+                            <div v-else class="flex gap-2 items-center">
+                              <UsersUserAvatar :fileid="post.userimg" class="w-5 h-5" />
+                              <p>Published in {{ post.username }}.</p>
+                            </div>
+
               </div>
 
               <h2 class="font-bold text-lg capitalize text-left">
-                Teachers are done. No, Really.
+                <NuxtLink :to="post.postUrl">
+                {{post.name}}
+              </NuxtLink>
               </h2>
-              <p class="text-gray-400 text-left">Apr 5 · 3 min read</p>
+              <p class="text-gray-400 text-left">{{getDate(post.created_at)}} · {{post.readTime}} min read</p>
             </div>
           </div>
         </div>
@@ -59,3 +65,31 @@
     </div>
   </div>
 </template>
+<script setup>
+  const props = defineProps({
+    posts: {
+      type: Object,
+      required: true,
+    },
+  });
+
+  const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const getDate = (timestamp) => {
+  const d = new Date(timestamp * 1000);
+  return months[d.getMonth()] + " " + d.getDate();
+};
+</script>

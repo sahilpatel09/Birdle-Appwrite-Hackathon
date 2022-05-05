@@ -1,43 +1,60 @@
 <template>
   <div>
-    <Suspense>
-      <div>
+      <div v-if="loading">
         <NavHero />
-        <TrendingPosts />
+        <TrendingPosts :posts="randomePosts"/>
         <hr class="border border-gray-50 mb-10" />
         <LoginModel :class="{ hidden: hpToggler }" class="mb-16" />
-        <PostwithSidebar />
+        <PostwithSidebar :posts="postList" :tagList="tags"/>
       </div>
 
-      <template #fallback>
-        <Loading />
-      </template>
-    </Suspense>
+      <Loading v-else/>
   </div>
 </template>
 
 <script setup>
 definePageMeta({
   middleware: ["auth"],
-  // or middleware: 'auth'
 });
 
+const postList = ref("")
+
+const service = userService()
 const { hpToggler } = stateManager();
 const router = useRouter();
-const loggedin = ref(true);
+const loading = ref(false)
+const randomePosts = ref([])
+const tags = ref([])
 
-// const appwrite = useAppwrite();
-// let promise = appwrite.account.get();
+async function getPosts(){
+  const posts = await service.getzHomeFreePosts();
+  console.log(posts.documents)
+  postList.value = posts.documents.slice(6)
+  
+  randomePosts.value = posts.documents.slice(0,6)
+  tags.value = setTags(posts.documents)
+  loading.value = true
+}
+getPosts()
 
-// promise.then(
-//   function (response) {
-//     console.log(response); // Success
-//     router.push("/me");
-//   },
-//   function (error) {
-//     loggedin.value = true;
-//   }
-// );
+function setTags(arr){
+  let publictags = [];
+
+  let val = 0;
+
+  while (val < arr.length) {
+    if (val < 5) {
+      let item = arr[val].tags[0];
+      if (!publictags.includes(item)) publictags.push(item);
+      val++;
+    } else {
+      break;
+    }
+  }
+
+return publictags
+}
+
 </script>
 <style>
 .globalfont {

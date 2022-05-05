@@ -2,8 +2,7 @@
   <div>
     Hello
 
-
-<!--     <input
+    <!--     <input
       type="file"
       id="img"
       name="img"
@@ -15,11 +14,9 @@
 </template>
 <script setup>
 definePageMeta({
-  middleware: ["auth","pageload"],
+  middleware: ["auth", "pageload"],
   // or middleware: 'auth'
 });
-
-
 
 // const service = userService()
 //   async function currentUserData(){
@@ -60,7 +57,7 @@ definePageMeta({
 // getUser();
 
 // function send(event) {
-  
+
 //   let data = new FormData();
 //   data.append("name", "my-picture");
 //   data.append("file", event.target.files[0]);

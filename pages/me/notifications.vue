@@ -28,9 +28,8 @@
   </div>
 </template>
 <script setup>
-  definePageMeta({
-  middleware: ["auth","pageload"],
+definePageMeta({
+  middleware: ["auth", "pageload"],
   // or middleware: 'auth'
 });
-
 </script>

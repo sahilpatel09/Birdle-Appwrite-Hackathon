@@ -6,9 +6,9 @@
         <div
           class="lg:min-h-screen lg:shrink lg:w-[80px] block lg:left-0 lg:top-0 lg:bottom-0 fixed lg:py-10 lg:px-5 flex lg:flex-col lg:justify-between border-r border-gray-200 items-center justify-center bottom-0 left-0 right-0 bg-white px-2.5 py-4 shadow-2xl"
         >
-        <NuxtLink to="/me/">
-          <img src="@/assets/img/3.png" alt="" class="hidden lg:block" />
-        </NuxtLink>
+          <NuxtLink to="/me/">
+            <img src="@/assets/img/3.png" alt="" class="hidden lg:block" />
+          </NuxtLink>
           <!--  <svg viewBox="0 0 1043.63 592.71" class="jy hu hidden lg:block">
               <g data-name="Layer 2">
                 <g data-name="Layer 1">
@@ -180,13 +180,17 @@
             </NuxtLink>
 
             <div class="profile lg:hidden" @click="openIt" v-if="userData.img">
-              <UsersUserAvatar v-if="userData.img" :fileid="userData.img" class="w-10" /> 
+              <UsersUserAvatar
+                v-if="userData.img"
+                :fileid="userData.img"
+                class="w-10"
+              />
               <UsersUserNameAvatar :name="user.name" v-else />
             </div>
           </div>
 
           <div class="profile hidden lg:block" @click="openIt" v-if="userData">
-            <UsersUserAvatar v-if="userData.img" :fileid="userData.img" /> 
+            <UsersUserAvatar v-if="userData.img" :fileid="userData.img" />
             <UsersUserNameAvatar :name="user.name" v-else />
           </div>
         </div>
@@ -229,8 +233,7 @@
                 <!-- TWITTER SECTION -->
                 <section class="my-5">
                   <div class="flex gap-1 items-center justify-center">
-                    
-                    <img src="@/assets/img/1.png" class="">
+                    <img src="@/assets/img/1.png" class="" />
 
                     <svg width="19" height="19" class="ki">
                       <path
@@ -258,7 +261,7 @@
                         d="M22.05 7.54a4.47 4.47 0 0 0-3.3-1.46 4.53 4.53 0 0 0-4.53 4.53c0 .35.04.7.08 1.05A12.9 12.9 0 0 1 5 6.89a5.1 5.1 0 0 0-.65 2.26c.03 1.6.83 2.99 2.02 3.79a4.3 4.3 0 0 1-2.02-.57v.08a4.55 4.55 0 0 0 3.63 4.44c-.4.08-.8.13-1.21.16l-.81-.08a4.54 4.54 0 0 0 4.2 3.15 9.56 9.56 0 0 1-5.66 1.94l-1.05-.08c2 1.27 4.38 2.02 6.94 2.02 8.3 0 12.86-6.9 12.84-12.85.02-.24 0-.43 0-.65a8.68 8.68 0 0 0 2.26-2.34c-.82.38-1.7.62-2.6.72a4.37 4.37 0 0 0 1.95-2.51c-.84.53-1.81.9-2.83 1.13z"
                       ></path>
                     </svg>
-                    <h3 class="">Connect to Twitter</h3>
+                    <h3 class="line-through">Connect to Twitter</h3>
                   </div>
                   <hr class="my-5" />
 
@@ -319,8 +322,6 @@
 }
 </style>
 <script setup>
-
-
 const haveNotifications = ref(true);
 const menu = ref(true);
 function openIt() {
@@ -331,14 +332,13 @@ const router = useRouter();
 const errorval = ref("");
 const loggedin = ref(false);
 
-
 const { user, userData } = stateManager();
-const service = userService()
-async function setData(){
+const service = userService();
+async function setData() {
   const data = await service.currentUserData();
-  userData.value = data
+  userData.value = data;
 }
-setData()
+setData();
 
 import { Appwrite } from "appwrite";
 
@@ -351,7 +351,6 @@ sdk
 // setTimeout(()=>{
 //   console.log(user)
 // }, 500);
-
 
 function setPrefs() {
   const userPrefs = { userSet: true };
@@ -392,10 +391,10 @@ function updatePrefs() {
   const namedata = user.value.name.toString().split(" ");
   const name = namedata[0] + "+" + namedata[1];
   console.log("LOCAL NAME", user.value.name.toString());
-  
+
   if (name) {
     //ok
-  }else{
+  } else {
     user.value.name = user.value.email.split("@")[0].toString();
   }
 
@@ -438,8 +437,8 @@ function getUser(name) {
       loggedin.value = true;
       if (name) {
         user.value.name = name;
-      }else{
-        user.value.name = user.value.email.split("@")[0].toString();     
+      } else {
+        user.value.name = user.value.email.split("@")[0].toString();
       }
 
       getUserPref(updatePrefs);

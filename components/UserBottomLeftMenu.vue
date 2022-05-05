@@ -26,29 +26,25 @@
         <div class="px-8 py-8 text-sm" v-if="pubList">
           <h2 class="text-sm">Manage Publications</h2>
           <div class="flex flex-col gap-1 py-2">
-
             <div v-if="pubList == ''">
               You are not part of any publication yet.
             </div>
 
-            <div class="flex items-center px-3 py-2 gap-3" v-for="pub in pubList" :key="pub.$id">
-              <NuxtLink :to="'/'+pub.url">  
-              <div class="profile lg:block w-12" v-if="pub">
-                <UsersUserAvatar v-if="pub.img" :fileid="pub.img" /> 
-                <UsersUserNameAvatar :name="pub.name" v-else />
-                
-              </div>
-
+            <div
+              class="flex items-center px-3 py-2 gap-3"
+              v-for="pub in pubList"
+              :key="pub.$id"
+            >
+              <NuxtLink :to="'/' + pub.url">
+                <div class="profile lg:block w-12" v-if="pub">
+                  <UsersUserAvatar v-if="pub.img" :fileid="pub.img" />
+                  <UsersUserNameAvatar :name="pub.name" v-else />
+                </div>
               </NuxtLink>
-              <NuxtLink :to="'/'+pub.url">  
-              <h3>{{ pub.name }}</h3>
-            </NuxtLink>
-
+              <NuxtLink :to="'/' + pub.url">
+                <h3>{{ pub.name }}</h3>
+              </NuxtLink>
             </div>
-
-
-
-
           </div>
         </div>
 
@@ -59,11 +55,11 @@
             src="https://miro.medium.com/fit/c/32/32/1*Er7O8VRVE5TGeJfowJDM1w.png"
             class="w-10 h-10 rounded-full"
           /> -->
-          {{  }}
-          <div class="profile lg:block w-12" @click="openIt" v-if="userData">
-            <NuxtLink :to='"/@"+userData.username'>
-            <UsersUserAvatar v-if="userData.img" :fileid="userData.img" /> 
-            <UsersUserNameAvatar :name="userData.name" v-else />
+
+          <div class="profile lg:block w-12" v-if="userData">
+            <NuxtLink :to="'/@' + userData.username">
+              <UsersUserAvatar v-if="userData.img" :fileid="userData.img" />
+              <UsersUserNameAvatar :name="userData.name" v-else />
             </NuxtLink>
           </div>
 
@@ -71,14 +67,19 @@
             <h2>{{ userData.name }}</h2>
 
             <h3>
-            <a :href="'/'+userData.username" :title="userData.name">
-            @{{ userData.username }}
-            </a>
-          </h3>
+              <a :href="'/@' + userData.username" :title="userData.name">
+                @{{ userData.username }}
+              </a>
+            </h3>
           </div>
 
           <div class="flex flex-col-reverse items-center justify-center">
-            <div class="border border-gray-400 text-xs px-2 py-1" v-if="userData.member">Member</div>
+            <div
+              class="border border-gray-400 text-xs px-2 py-1"
+              v-if="userData.member"
+            >
+              Member
+            </div>
           </div>
         </div>
       </div>
@@ -88,17 +89,17 @@
 <script setup>
 const appwrite = useAppwrite();
 const router = useRouter();
-const { userData } = stateManager()
-const service = userService()
-const pubList = ref()
-async function getPubs(){
+const { userData } = stateManager();
+const service = userService();
+const pubList = ref();
+async function getPubs() {
   const pubs = await service.getPubsForAuthor(userData.value.username);
-  if(pubs){
-    pubList.value = pubs.documents
-    console.log(pubList.value)
+  if (pubs) {
+    pubList.value = pubs.documents;
+    console.log(pubList.value);
   }
 }
-getPubs()
+getPubs();
 
 function signMeOut() {
   console.log("Sign out clicked.");

@@ -2,28 +2,36 @@
   <div class="container mx-auto flex px-5 flex-wrap flex-col lg:flex-row mt-5">
     <div class="w-full lg:w-8/12 px-2 order-last lg:order-first">
       <div class="md:col-span-7 space-y-10 col-span-1">
-        <div class="flex justify-between gap-2" v-for="index in 20">
+        
+        <div class="flex justify-between gap-2" v-for="post in props.posts">
           <div class="space-y-2 pt-3">
             <div class="flex gap-1 items-center">
-              <img src="@/assets/img/user.png" class="w-5 h-5" alt="" />
-              <h3 class="text-sm">Dina Ley</h3>
-              <span class="text-gray-600 text-sm">in</span>
-              <h4 class="text-black text-sm font-semibold">Age of Awareness</h4>
+            
+              <div v-if="post.pubname" class="flex items-center gap-2">
+                              <UsersUserAvatar :fileid="post.pubimg" class="w-5 h-5" />
+                              <p>{{ post.username }} in {{ post.pubname }}</p>
+                            </div>
+                            <div v-else class="flex gap-2 items-center">
+                              <UsersUserAvatar :fileid="post.userimg" class="w-5 h-5" />
+                              <p>Published in {{ post.username }}.</p>
+                            </div>
+
+            
             </div>
 
             <h2
               class="font-bold lg:text-[22px] text-[16px] capitalize leading-5 font-bold postTitle"
             >
-              17 Questions Tech Doesn’t Want You Asking.
+          {{post.name}}
             </h2>
             <p class="hidden lg:block postDescription">
-              A practical blueprint for assessing the value, limitations and
-              quality of new technologies for ourselves and our families
-            </p>
+              {{ post.subtitle }}
+              </p>
+              
 
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center lg:w-[600px]">
               <div class="flex gap-2 items-center">
-                <p class="text-gray-400 text-left">Apr 13 · 4 min read</p>
+                <p class="text-gray-400 text-left">{{getDate(post.created_at)}} · {{post.readTime}} min read</p>
                 <button
                   class="hidden md:block py-0.5 px-2 pill rounded-full whitespace-nowrap"
                 >
@@ -60,7 +68,7 @@
           </div>
 
           <img
-            src="https://miro.medium.com/fit/c/400/268/0*3dBMpcsQMs7zRLoI"
+            :src="post.imgUrl"
             class="lg:w-[200px] lg:h-[144px] w-[110px] object-cover"
             alt=""
           />
@@ -74,23 +82,14 @@
       </h2>
 
       <div class="flex flex-wrap gap-2 my-3">
+        
         <p
           class="px-4 py-1 border border-gray-200 w-fit rounded antialiased text-gray-600"
-          v-for="item in [
-            'Data Science',
-            'Relationships',
-            'Self',
-            'Programming',
-            'Productivity',
-            'Javascript',
-            'React',
-            'Appwrite',
-            'Hackathon',
-            'Dev.to',
-          ]"
+          v-for="item in props.tagList"
         >
-          {{ item }}
+          <NuxtLink :to='"/tag/"+item'>{{ item }}</NuxtLink>
         </p>
+
       </div>
 
       <hr class="border border-gray-50 mt-10 mb-5" />
@@ -149,3 +148,35 @@
   background-color: rgba(255, 255, 255, 0.9);
 }
 </style>
+<script setup>
+  const props = defineProps({
+    posts: {
+      type: Object,
+      required: true,
+    },
+    tagList: {
+      type: Array,
+      required: true,
+    },
+  });
+
+  const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const getDate = (timestamp) => {
+  const d = new Date(timestamp * 1000);
+  return months[d.getMonth()] + " " + d.getDate();
+};
+</script>

@@ -50,7 +50,7 @@
 
         <h2 class="globalfont font-bold text-lg">{{ post.name }}</h2>
         <p class="text-gray-400 globalfont">{{ post.subtitle }}</p>
-        <p class="text-sm flex gap-1 items-center">Last Edited about 2 hours ago <span class="rm">·</span> {{post.readTime}} min read ({{extractContent(post.content)}} words) so far
+        <p class="text-sm flex gap-1 items-center">Last Edited about 2 hours ago <span class="rm">·</span> {{post.readTime}} min read ({{extractContent(post.content)}} words) so far</p>
 
           <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" 
           @click="openStoryMenuHandlerPublished(post)"
@@ -69,7 +69,6 @@
               <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white" @click="delPost(post.$id)"> Delete draft </a>
               </div>
           </div>
-        </p>
 
         
         

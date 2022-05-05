@@ -10,49 +10,10 @@
               <h3
                 class="text-gray-900 font-extrabold text-left text-5xl tracking-tight globalfont p-3 capitalize"
               >
-                {{ user.name }}
+                {{ $route.params.tagname }}
               </h3>
 
-              <div class="flex gap-4 items-center justify-center">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  @click="openDrawer"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M4.39 12c0 .55.2 1.02.59 1.41.39.4.86.59 1.4.59.56 0 1.03-.2 1.42-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.6-1.41A1.93 1.93 0 0 0 6.4 10c-.55 0-1.02.2-1.41.59-.4.39-.6.86-.6 1.41zM10 12c0 .55.2 1.02.58 1.41.4.4.87.59 1.42.59.54 0 1.02-.2 1.4-.59.4-.39.6-.86.6-1.41 0-.55-.2-1.02-.6-1.41a1.93 1.93 0 0 0-1.4-.59c-.55 0-1.04.2-1.42.59-.4.39-.58.86-.58 1.41zm5.6 0c0 .55.2 1.02.57 1.41.4.4.88.59 1.43.59.57 0 1.04-.2 1.43-.59.39-.39.57-.86.57-1.41 0-.55-.2-1.02-.57-1.41A1.93 1.93 0 0 0 17.6 10c-.55 0-1.04.2-1.43.59-.38.39-.57.86-.57 1.41z"
-                    fill="#000"
-                    data-darkreader-inline-fill=""
-                    style="--darkreader-inline-fill: #ffffff"
-                  ></path>
-                </svg>
 
-                <div
-                  class="inline-block left-48 top-28 absolute lg:relative lg:left-0 lg:top-0 fadeIn"
-                  :class="{ hidden: drawer }"
-                >
-                  <div
-                    class="absolute z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800"
-                  >
-                    <a
-                      href="#"
-                      class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                    >
-                      Edit draft
-                    </a>
-                    <a
-                      href="#"
-                      class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                    >
-                      Email to subscribers
-                    </a>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <div class="flex gap-7 p-3">
@@ -60,42 +21,21 @@
                 <h3>Home</h3>
               </div>
 
-              <div class="globalfont text-sm">
-                <h3>Lists</h3>
-              </div>
+
             </div>
 
             <hr class="bg-gray-200 w-full h-0.5" />
 
-            <div class="w-full">
-              <div class="hidden inline-block">
-                <div
-                  class="absolute z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800"
-                >
-                  <a
-                    href="#"
-                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >
-                    Edit draft
-                  </a>
-                  <a
-                    href="#"
-                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >
-                    Email to subscribers
-                  </a>
-                  <a
-                    href="#"
-                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >
-                    Delete draft
-                  </a>
-                </div>
-              </div>
-            </div>
 
+            <div v-if="postList == ''">
+              <h3>There are no posts related the tag 
+              "{{ $route.params.tagname }}".</h3>
+            </div>
             <div v-if="postList" class="w-[780px]">
+
               <div class="my-3 space-y-10" v-for="(post, index) in postList">
+                
+
                 <div class="flex justify-between gap-5" v-if="post.published">
                   <div class="space-y-4 pt-3">
                     <div
@@ -149,7 +89,7 @@
                       {{ post.subtitle }}
                     </p>
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center lg:w-[600px]">
                       <div class="flex gap-2 items-center">
                         <p class="text-gray-400 text-left text-sm">
                           {{ post.readTime }} min read
@@ -187,66 +127,9 @@
                           ></path>
                         </svg>
 
-                        <svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          @click="toggleDropDown(post)"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M4.39 12c0 .55.2 1.02.59 1.41.39.4.86.59 1.4.59.56 0 1.03-.2 1.42-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.6-1.41A1.93 1.93 0 0 0 6.4 10c-.55 0-1.02.2-1.41.59-.4.39-.6.86-.6 1.41zM10 12c0 .55.2 1.02.58 1.41.4.4.87.59 1.42.59.54 0 1.02-.2 1.4-.59.4-.39.6-.86.6-1.41 0-.55-.2-1.02-.6-1.41a1.93 1.93 0 0 0-1.4-.59c-.55 0-1.04.2-1.42.59-.4.39-.58.86-.58 1.41zm5.6 0c0 .55.2 1.02.57 1.41.4.4.88.59 1.43.59.57 0 1.04-.2 1.43-.59.39-.39.57-.86.57-1.41 0-.55-.2-1.02-.57-1.41A1.93 1.93 0 0 0 17.6 10c-.55 0-1.04.2-1.43.59-.38.39-.57.86-.57 1.41z"
-                            fill="#000"
-                            data-darkreader-inline-fill=""
-                            style="--darkreader-inline-fill: #ffffff"
-                          ></path>
-                        </svg>
+                       
 
-                        <div
-                          class="inline-block"
-                          :class="{ hidden: !post.showDropDown }"
-                        >
-                          <div
-                            class="absolute z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800"
-                          >
-                            <a
-                              href="#"
-                              class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                            >
-                              Edit story
-                            </a>
-
-                            <a
-                              href="#"
-                              class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                            >
-                              Email to subscribers
-                            </a>
-
-                            <a
-                              href="#"
-                              class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                            >
-                              Story Settings
-                            </a>
-
-                            <a
-                              href="#"
-                              class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                            >
-                              Story Stats
-                            </a>
-
-                            <a
-                              href="#"
-                              class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                            >
-                              Delete story
-                            </a>
-                          </div>
-                        </div>
+                        
                       </div>
                     </div>
                   </div>
@@ -257,6 +140,7 @@
                     alt=""
                   />
                 </div>
+
               </div>
             </div>
           </div>
@@ -290,33 +174,30 @@
             <!-- TWITTER SECTION -->
             <section class="my-5">
               <div class="dataholder">
-                <div
-                  class="profile hidden lg:block"
-                  @click="openIt"
-                  v-if="user"
-                >
-                  <UsersUserAvatar v-if="user.img" :fileid="user.img" />
-                  <UsersUserNameAvatar :name="user.name" v-else />
-                </div>
 
-                <h2 class="globalfont font-bold mt-4 capitalize">
-                  {{ user.name }}
-                </h2>
                 <h3 class="py-2 text-base text-gray-500">
-                  {{ user.followers_count }} Followers
+                  Writers in the {{ $route.params.tagname }} tag.
                 </h3>
-                <p class="text-gray-600 text-sm">{{ user.bio }}</p>
-                <!-- If use is self -->
-                <div v-if="userData">
-                  <h4
-                    class="mt-5 text-gray-700"
-                    v-if="user.$id == userData.$id"
-                  >
-                    <NuxtLink to="/me/settings"> Edit Profile </NuxtLink>
-                  </h4>
+                
+                <div class="flex flex-col gap-4">
+
+                <div v-for="item in uniqueUsers" class="flex items-center gap-3 ">
+                <div
+                  class="profile lg:block w-10"
+                  
+                >
+                  <UsersUserAvatar v-if="item.userimg" :fileid="item.userimg" />
+                  <UsersUserNameAvatar :name="item.username" v-else />
+                </div>
+                <h2>{{ item.username }}</h2>                  
                 </div>
 
-                <!-- else -->
+
+
+                  
+                </div>
+
+               <!-- else -->
 
                 <div v-if="user && following">
                   <div
@@ -390,8 +271,9 @@ const user = ref("");
 const route = useRoute();
 const router = useRouter();
 const postList = ref({});
+const uniqueUsers = ref([])
 const loading = ref(false);
-const following = ref(false);
+const following = ref([])
 const { userData } = stateManager();
 const service = userService();
 
@@ -400,13 +282,13 @@ if (userData.value) {
 }
 
 async function getStuff() {
-  const { posts, info } = await service.getUserWithPosts(route.params.username);
-
-  console.log("POSTS RECEIVED", posts, info);
-  user.value = info;
+  const posts = await service.getPostsWithTag(route.params.tagname);
   postList.value = posts.documents;
-  //   console.log(posts.documents)
+  console.log(posts.documents)
   loading.value = true;
+  if(posts){
+    setUser(postList.value);
+  }
 }
 
 getStuff();
@@ -448,33 +330,48 @@ const getDateDiff = (timestamp) => {
   return diffDays;
 };
 
-function followUser(id) {
-  if (following.value.push(id)) {
-    userData.value.followers_count = following.value.length;
-    updateData(userData.value.$id, userData.value, "increase");
-  }
+function setUser(list){
+  let userList = []
+
+  list.forEach((res)=>{
+    if(!userList.includes(res.user_id)){
+      userList.push(res)
+    }
+
+  })
+  uniqueUsers.value = userList
+
+
 }
 
-function unfollowUser(id) {
-  following.value = following.value.filter((item) => item !== id);
-  userData.value.follow_user_id = following.value;
-  userData.value.followers_count = following.value.length;
-  updateData(userData.value.$id, userData.value, "decrease");
-}
 
-async function updateData(id, obj, type) {
-  console.log("Entered UpdateData");
-  const update = await service.updateProfileDocument(id, obj);
-  const follower = await service.addFollower(user.value.$id, type);
-  console.log("UPDATE FOLLOWER", update, follower);
-  if (update && follower) {
-    console.log("ROUTING");
+// function followUser(id) {
+//   if (following.value.push(id)) {
+//     userData.value.followers_count = following.value.length;
+//     updateData(userData.value.$id, userData.value, "increase");
+//   }
+// }
 
-    setTimeout(() => {
-      router.go("");
-    }, 300);
-  }
-}
+// function unfollowUser(id) {
+//   following.value = following.value.filter((item) => item !== id);
+//   userData.value.follow_user_id = following.value;
+//   userData.value.followers_count = following.value.length;
+//   updateData(userData.value.$id, userData.value, "decrease");
+// }
+
+// async function updateData(id, obj, type) {
+//   console.log("Entered UpdateData");
+//   const update = await service.updateProfileDocument(id, obj);
+//   const follower = await service.addFollower(user.value.$id, type);
+//   console.log("UPDATE FOLLOWER", update, follower);
+//   if (update && follower) {
+//     console.log("ROUTING");
+
+//     setTimeout(() => {
+//       router.go("");
+//     }, 300);
+//   }
+// }
 </script>
 <style scoped>
 .animated {

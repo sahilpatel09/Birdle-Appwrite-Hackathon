@@ -60,8 +60,10 @@
           :disabled="toggler.usernameShow"
           :class="{ 'border-gray-700': !toggler.usernameShow }"
         />
-        <p class="text-gray-400 py-2"> The old links won't work if you change the username.</p>
-        <br>
+        <p class="text-gray-400 py-2">
+          The old links won't work if you change the username.
+        </p>
+        <br />
         <button
           v-if="!toggler.usernameShow"
           class="p-4 py-2 bg-green-700 text-white rounded"
@@ -116,16 +118,18 @@
         <img :src="userObj.img" class="rounded-full" alt="" />
 
         <div class="profile lg:block" @click="openIt" v-if="userObj">
-          <UsersUserAvatar v-if="userObj.img" :fileid="userObj.img" /> 
+          <UsersUserAvatar v-if="userObj.img" :fileid="userObj.img" />
           <UsersUserNameAvatar :name="userObj.name" v-else />
         </div>
-        <input type="file"
-      id="img"
-      name="img"
-      v-on:change="sendImage($event)"
-      accept="image/*"
-      v-if="!toggler.imgUrlShow" />
- <!--        <button
+        <input
+          type="file"
+          id="img"
+          name="img"
+          v-on:change="sendImage($event)"
+          accept="image/*"
+          v-if="!toggler.imgUrlShow"
+        />
+        <!--        <button
         v-if="!toggler.imgUrlShow"
         @click="sendImage"
         class="p-4 py-2 bg-green-700 text-white rounded"
@@ -135,12 +139,12 @@
   </div>
 </template>
 <script setup>
-  definePageMeta({
-  middleware: ["auth","pageload"],
+definePageMeta({
+  middleware: ["auth", "pageload"],
   // or middleware: 'auth'
 });
 
-const router = useRouter()
+const router = useRouter();
 
 const userObj = ref({
   name: "",
@@ -151,7 +155,6 @@ const userObj = ref({
   member: true,
 });
 
-
 const toggler = ref({
   nameShow: true,
   usernameShow: true,
@@ -159,61 +162,54 @@ const toggler = ref({
   imgUrlShow: true,
 });
 
-const imgFile = ref("")
+const imgFile = ref("");
 
+const service = userService();
 
+async function sendImage(event) {
+  console.log("BEFORE UPLOAD", userObj.value);
+  const userImage = event.target.files[0];
+  const newName = userObj.value.username + "@" + userObj.value.img;
 
-
-const service = userService()
-
-async function sendImage(event){
-  console.log("BEFORE UPLOAD", userObj.value)
-  const userImage = event.target.files[0]
-  const newName = userObj.value.username +"@"+ userObj.value.img
-
-  const newImageFile = new File([userImage], newName+"."+userImage.name.split(".")[1])
-  console.log(newImageFile)
-  const upload = await service.uploadImage(newImageFile)
-  console.log("IMAGE VALUE BEFORE", userObj.value.img)
+  const newImageFile = new File(
+    [userImage],
+    newName + "." + userImage.name.split(".")[1]
+  );
+  console.log(newImageFile);
+  const upload = await service.uploadImage(newImageFile);
+  console.log("IMAGE VALUE BEFORE", userObj.value.img);
   userObj.value.img = upload.$id;
-  console.log("NEW UPLOAD ID",upload.$id)
-  console.log("IMAGE VALUE AFTER", userObj.value.img)
-  
+  console.log("NEW UPLOAD ID", upload.$id);
+  console.log("IMAGE VALUE AFTER", userObj.value.img);
 
-
-  updateData(userObj.value.$id, userObj.value)
+  updateData(userObj.value.$id, userObj.value);
 }
 
-
-
-async function receiveData(){
-  const data = await service.currentUserData(); 
-  userObj.value = data
-  console.log("VALUES",userObj.value)
+async function receiveData() {
+  const data = await service.currentUserData();
+  userObj.value = data;
+  console.log("VALUES", userObj.value);
 }
-receiveData()
+receiveData();
 
-function updatedoc(userObj){
-  updateData(userObj.$id ,userObj)
+function updatedoc(userObj) {
+  updateData(userObj.$id, userObj);
 }
 
-async function updateData(id, obj){
-  console.log("Entered UpdateData")
-  const update = await service.updateProfileDocument(id, obj)
-  if(update){
-    console.log("ROUTING")
-    
-    setTimeout(()=>{
-      router.go('')
-    }, 1200)
+async function updateData(id, obj) {
+  console.log("Entered UpdateData");
+  const update = await service.updateProfileDocument(id, obj);
+  if (update) {
+    console.log("ROUTING");
+
+    setTimeout(() => {
+      router.go("");
+    }, 1200);
   }
-
 }
 
 function toggle(e) {
   console.log(toggler.value[e]);
   toggler.value[e] = !toggler.value[e];
 }
-
-
 </script>
