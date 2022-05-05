@@ -96,7 +96,6 @@ async function getPubs() {
   const pubs = await service.getPubsForAuthor(userData.value.username);
   if (pubs) {
     pubList.value = pubs.documents;
-    console.log(pubList.value);
   }
 }
 getPubs();
