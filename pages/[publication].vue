@@ -234,6 +234,7 @@ const route = useRoute();
 const router = useRouter();
 const errorval = ref("");
 const loggedin = ref(false);
+const userPubs = ref([])
 const service = userService();
 const { user, userData } = stateManager();
 
@@ -250,6 +251,24 @@ async function getUserData() {
 }
 
 getUserData();
+
+
+
+async function getPubs() {
+  
+  const pubs = await service.currentAuthorPubs(userData.value.$id.toString(),userData.value.username.toString())
+  if(pubs){
+    userPubs.value = pubs.documents
+  }
+
+}
+
+
+
+
+
+
+
 // setTimeout(()=>{
 //   console.log(user)
 // }, 500);

@@ -35,25 +35,34 @@
       </h3>
 
 
-      <div class="w-full h-96 bg-red-200 flex flex-col px-4">
+      <div class="w-full flex flex-col p-4 gap-4">
           
-          <div class="flex mx-3 items-center gap-4 justify-between">
+          <div class="flex justify-between" v-for="pub in userPubs">
             
-            <div class="flex gap-4 items-center">
+            <div class="flex gap-4 items-center" >
               <div>
-                <img src="https://cdn-images-1.medium.com/fit/c/60/60/1*TyRLQdZO7NdPATwSeut8gg.png" class="w-10">
+
+                <NuxtLink :to="'/'+pub.url">
+                <UsersUserAvatar v-if="pub.img" :fileid="pub.img" />
+                <UsersUserNameAvatar :name="pub.name" v-else />
+                </NuxtLink>
               </div>
 
               <div class="w-[450px]">
                 
-                <h2>Better Programing</h2>
+                <h2 class="text-gray-900 font-bold">
+                <NuxtLink :to="'/'+pub.url">
+                {{ pub.name }}
+              </NuxtLink>
+              </h2>
                 <p>Advice for programmers. Subscribe to our daily digest: https://medium.com/@BttrProgramming/subscribe</p>
 
               </div>
             </div>
 
-            <div class="text-gray-400">
-              Writer
+            <div class="text-gray-900">
+              <span v-if="pub.user_id === userData.$id">Owner</span>
+              <span v-else>Writer</span>
             </div>
 
 
@@ -72,4 +81,23 @@ definePageMeta({
   middleware: ["auth", "pageload"],
   // or middleware: 'auth'
 });
+
+
+
+const userPubs = ref([])
+const service = userService();
+const { user, userData } = stateManager();
+
+
+async function getPubs() {
+  
+  const pubs = await service.getPubsForAuthor(userData.value.username.toString())
+  if(pubs){
+    userPubs.value = pubs.documents
+    console.log(pubs.documents)
+  }
+
+}
+
+getPubs()
 </script>
