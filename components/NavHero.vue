@@ -41,7 +41,7 @@
           from writers on any topic.
         </p>
         <button
-        @click="toggleHp"
+          @click="toggleHp"
           class="px-10 py-2 font-medium text-white ctabutton rounded-full text-xl w-60"
         >
           Start Reading

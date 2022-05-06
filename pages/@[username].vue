@@ -192,7 +192,11 @@
       </div>
     </div>
 
-    <UserBottomLeftMenu :class="{ hidden: menu }" class="z-50" v-if="userData"/>
+    <UserBottomLeftMenu
+      :class="{ hidden: menu }"
+      class="z-50"
+      v-if="userData"
+    />
   </div>
   <div v-else>
     <Loading />

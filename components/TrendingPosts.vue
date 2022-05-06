@@ -27,37 +27,37 @@
     </div>
 
     <div class="flex flex-wrap -m-4 py-5">
-      <div class="lg:w-1/3 md:w-1/2" v-for="(post,index) in props.posts">
+      <div class="lg:w-1/3 md:w-1/2" v-for="(post, index) in props.posts">
         <div
           class="h-full px-8 py-5 rounded-lg overflow-hidden text-center relative"
         >
           <div class="flex gap-6">
             <div class="index">
               <h2 class="text-4xl text-gray-300 font-bold">
-                {{ "0" + (index+1) }}
+                {{ "0" + (index + 1) }}
               </h2>
             </div>
 
             <div class="space-y-2 pt-3">
               <div class="flex gap-1 items-center">
-
-              <div v-if="post.pubname" class="flex items-center gap-2">
-                              <UsersUserAvatar :fileid="post.pubimg" class="w-5 h-5" />
-                              <p>{{ post.username }} in {{ post.pubname }}</p>
-                            </div>
-                            <div v-else class="flex gap-2 items-center">
-                              <UsersUserAvatar :fileid="post.userimg" class="w-5 h-5" />
-                              <p>Published in {{ post.username }}.</p>
-                            </div>
-
+                <div v-if="post.pubname" class="flex items-center gap-2">
+                  <UsersUserAvatar :fileid="post.pubimg" class="w-5 h-5" />
+                  <p>{{ post.username }} in {{ post.pubname }}</p>
+                </div>
+                <div v-else class="flex gap-2 items-center">
+                  <UsersUserAvatar :fileid="post.userimg" class="w-5 h-5" />
+                  <p>Published in {{ post.username }}.</p>
+                </div>
               </div>
 
               <h2 class="font-bold text-lg capitalize text-left">
                 <NuxtLink :to="post.postUrl">
-                {{post.name}}
-              </NuxtLink>
+                  {{ post.name }}
+                </NuxtLink>
               </h2>
-              <p class="text-gray-400 text-left">{{getDate(post.created_at)}} · {{post.readTime}} min read</p>
+              <p class="text-gray-400 text-left">
+                {{ getDate(post.created_at) }} · {{ post.readTime }} min read
+              </p>
             </div>
           </div>
         </div>
@@ -66,14 +66,14 @@
   </div>
 </template>
 <script setup>
-  const props = defineProps({
-    posts: {
-      type: Object,
-      required: true,
-    },
-  });
+const props = defineProps({
+  posts: {
+    type: Object,
+    required: true,
+  },
+});
 
-  const months = [
+const months = [
   "January",
   "February",
   "March",

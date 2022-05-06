@@ -2,43 +2,40 @@
   <div class="container mx-auto flex px-5 flex-wrap flex-col lg:flex-row mt-5">
     <div class="w-full lg:w-8/12 px-2 order-last lg:order-first">
       <div class="md:col-span-7 space-y-10 col-span-1">
-        
         <div class="flex justify-between gap-2" v-for="post in props.posts">
           <div class="space-y-2 pt-3">
             <div class="flex gap-1 items-center">
-            
               <div v-if="post.pubname" class="flex items-center gap-2">
-                              <UsersUserAvatar :fileid="post.pubimg" class="w-5 h-5" />
-                              <p>{{ post.username }} in {{ post.pubname }}</p>
-                            </div>
-                            <div v-else class="flex gap-2 items-center">
-                              <UsersUserAvatar :fileid="post.userimg" class="w-5 h-5" />
-                              <p>Published in {{ post.username }}.</p>
-                            </div>
-
-            
+                <UsersUserAvatar :fileid="post.pubimg" class="w-5 h-5" />
+                <p>{{ post.username }} in {{ post.pubname }}</p>
+              </div>
+              <div v-else class="flex gap-2 items-center">
+                <UsersUserAvatar :fileid="post.userimg" class="w-5 h-5" />
+                <p>Published in {{ post.username }}.</p>
+              </div>
             </div>
 
             <h2
               class="font-bold lg:text-[22px] text-[16px] capitalize leading-5 font-bold postTitle"
             >
-            <NuxtLink :to="post.postUrl">
-          {{post.name}}
-        </NuxtLink>
+              <NuxtLink :to="post.postUrl">
+                {{ post.name }}
+              </NuxtLink>
             </h2>
             <p class="hidden lg:block postDescription">
               {{ post.subtitle }}
-              </p>
-              
+            </p>
 
             <div class="flex justify-between items-center lg:w-[600px]">
               <div class="flex gap-2 items-center">
-                <p class="text-gray-400 text-left">{{getDate(post.created_at)}} · {{post.readTime}} min read</p>
+                <p class="text-gray-400 text-left">
+                  {{ getDate(post.created_at) }} · {{ post.readTime }} min read
+                </p>
                 <button
                   class="hidden md:block py-0.5 px-2 pill rounded-full whitespace-nowrap"
-                > 
-                <NuxtLink :to="'/tags/'+post.tags[0]">
-                  {{ post.tags[0] }}
+                >
+                  <NuxtLink :to="'/tags/' + post.tags[0]">
+                    {{ post.tags[0] }}
                   </NuxtLink>
                 </button>
                 <span class="text-base fill-gray-400">
@@ -86,14 +83,12 @@
       </h2>
 
       <div class="flex flex-wrap gap-2 my-3">
-        
         <p
           class="px-4 py-1 border border-gray-200 w-fit rounded antialiased text-gray-600"
           v-for="item in props.tagList"
         >
-          <NuxtLink :to='"/tag/"+item'>{{ item }}</NuxtLink>
+          <NuxtLink :to="'/tag/' + item">{{ item }}</NuxtLink>
         </p>
-
       </div>
 
       <hr class="border border-gray-50 mt-10 mb-5" />
@@ -153,18 +148,18 @@
 }
 </style>
 <script setup>
-  const props = defineProps({
-    posts: {
-      type: Object,
-      required: true,
-    },
-    tagList: {
-      type: Array,
-      required: true,
-    },
-  });
+const props = defineProps({
+  posts: {
+    type: Object,
+    required: true,
+  },
+  tagList: {
+    type: Array,
+    required: true,
+  },
+});
 
-  const months = [
+const months = [
   "January",
   "February",
   "March",

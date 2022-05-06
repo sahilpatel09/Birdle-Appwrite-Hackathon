@@ -475,20 +475,19 @@ export const userService = () => {
     }
   }
 
-  async function getPostsWithTag(tagName){
-    console.log(tagName)
-    try{
-
-      const getTagPosts = await appwrite.database.listDocuments(postsCollection,
-        [Query.search("tags", tagName)]);
-      return getTagPosts
-
-    }catch(err: any){
+  async function getPostsWithTag(tagName) {
+    console.log(tagName);
+    try {
+      const getTagPosts = await appwrite.database.listDocuments(
+        postsCollection,
+        [Query.search("tags", tagName)]
+      );
+      return getTagPosts;
+    } catch (err: any) {
       alert(err.message);
       console.log(err);
       return false;
     }
-
   }
 
   async function getzHomeFreePosts() {
@@ -513,10 +512,8 @@ export const userService = () => {
   async function currentAuthorPubs(userID: string, username: string) {
     try {
       const pub = await appwrite.database.listDocuments(publicationCollection, [
-        
         Query.search("writers", [username.toString()]),
         Query.equal("user_id", userID.toString()),
-
       ]);
       return pub;
     } catch (err: any) {
@@ -525,7 +522,7 @@ export const userService = () => {
     }
   }
 
- async function uploadImagePub(file) {
+  async function uploadImagePub(file) {
     try {
       const sendImage = appwrite.storage.createFile(
         pubStorageBucket,
@@ -539,16 +536,14 @@ export const userService = () => {
     }
   }
 
-  async function createPub(
-    obj
-    ): Promise<boolean> {
+  async function createPub(obj): Promise<boolean> {
     try {
       const createPublication = appwrite.database.createDocument(
         publicationCollection,
         "unique()",
         obj
       );
-      console.log(createPublication)
+      console.log(createPublication);
 
       return true;
     } catch (err: any) {
@@ -556,7 +551,6 @@ export const userService = () => {
       return false;
     }
   }
-
 
   return {
     appwrite,

@@ -1,14 +1,14 @@
 <template>
   <div>
-      <div v-if="loading">
-        <NavHero />
-        <TrendingPosts :posts="randomePosts"/>
-        <hr class="border border-gray-50 mb-10" />
-        <LoginModel :class="{ hidden: hpToggler }" class="mb-16" />
-        <PostwithSidebar :posts="postList" :tagList="tags"/>
-      </div>
+    <div v-if="loading">
+      <NavHero />
+      <TrendingPosts :posts="randomePosts" />
+      <hr class="border border-gray-50 mb-10" />
+      <LoginModel :class="{ hidden: hpToggler }" class="mb-16" />
+      <PostwithSidebar :posts="postList" :tagList="tags" />
+    </div>
 
-      <Loading v-else/>
+    <Loading v-else />
   </div>
 </template>
 
@@ -17,27 +17,27 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const postList = ref("")
+const postList = ref("");
 
-const service = userService()
+const service = userService();
 const { hpToggler } = stateManager();
 const router = useRouter();
-const loading = ref(false)
-const randomePosts = ref([])
-const tags = ref([])
+const loading = ref(false);
+const randomePosts = ref([]);
+const tags = ref([]);
 
-async function getPosts(){
+async function getPosts() {
   const posts = await service.getzHomeFreePosts();
-  console.log(posts.documents)
-  postList.value = posts.documents.slice(6)
-  
-  randomePosts.value = posts.documents.slice(0,6)
-  tags.value = setTags(posts.documents)
-  loading.value = true
-}
-getPosts()
+  console.log(posts.documents);
+  postList.value = posts.documents.slice(6);
 
-function setTags(arr){
+  randomePosts.value = posts.documents.slice(0, 6);
+  tags.value = setTags(posts.documents);
+  loading.value = true;
+}
+getPosts();
+
+function setTags(arr) {
   let publictags = [];
 
   let val = 0;
@@ -52,9 +52,8 @@ function setTags(arr){
     }
   }
 
-return publictags
+  return publictags;
 }
-
 </script>
 <style>
 .globalfont {

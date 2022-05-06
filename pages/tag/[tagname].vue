@@ -12,30 +12,25 @@
               >
                 {{ $route.params.tagname }}
               </h3>
-
-
             </div>
 
             <div class="flex gap-7 p-3">
               <div class="globalfont text-sm underline">
                 <h3>Home</h3>
               </div>
-
-
             </div>
 
             <hr class="bg-gray-200 w-full h-0.5" />
 
-
             <div v-if="postList == ''">
-              <h3>There are no posts related the tag 
-              "{{ $route.params.tagname }}".</h3>
+              <h3>
+                There are no posts related the tag "{{
+                  $route.params.tagname
+                }}".
+              </h3>
             </div>
             <div v-if="postList" class="w-[780px]">
-
               <div class="my-3 space-y-10" v-for="(post, index) in postList">
-                
-
                 <div class="flex justify-between gap-5" v-if="post.published">
                   <div class="space-y-4 pt-3">
                     <div
@@ -126,10 +121,6 @@
                             fill="#292929"
                           ></path>
                         </svg>
-
-                       
-
-                        
                       </div>
                     </div>
                   </div>
@@ -140,7 +131,6 @@
                     alt=""
                   />
                 </div>
-
               </div>
             </div>
           </div>
@@ -174,30 +164,27 @@
             <!-- TWITTER SECTION -->
             <section class="my-5">
               <div class="dataholder">
-
                 <h3 class="py-2 text-base text-gray-500">
                   Writers in the {{ $route.params.tagname }} tag.
                 </h3>
-                
+
                 <div class="flex flex-col gap-4">
-
-                <div v-for="item in uniqueUsers" class="flex items-center gap-3 ">
-                <div
-                  class="profile lg:block w-10"
-                  
-                >
-                  <UsersUserAvatar v-if="item.userimg" :fileid="item.userimg" />
-                  <UsersUserNameAvatar :name="item.username" v-else />
-                </div>
-                <h2>{{ item.username }}</h2>                  
-                </div>
-
-
-
-                  
+                  <div
+                    v-for="item in uniqueUsers"
+                    class="flex items-center gap-3"
+                  >
+                    <div class="profile lg:block w-10">
+                      <UsersUserAvatar
+                        v-if="item.userimg"
+                        :fileid="item.userimg"
+                      />
+                      <UsersUserNameAvatar :name="item.username" v-else />
+                    </div>
+                    <h2>{{ item.username }}</h2>
+                  </div>
                 </div>
 
-               <!-- else -->
+                <!-- else -->
 
                 <div v-if="user && following">
                   <div
@@ -271,9 +258,9 @@ const user = ref("");
 const route = useRoute();
 const router = useRouter();
 const postList = ref({});
-const uniqueUsers = ref([])
+const uniqueUsers = ref([]);
 const loading = ref(false);
-const following = ref([])
+const following = ref([]);
 const { userData } = stateManager();
 const service = userService();
 
@@ -284,9 +271,9 @@ if (userData.value) {
 async function getStuff() {
   const posts = await service.getPostsWithTag(route.params.tagname);
   postList.value = posts.documents;
-  console.log(posts.documents)
+  console.log(posts.documents);
   loading.value = true;
-  if(posts){
+  if (posts) {
     setUser(postList.value);
   }
 }
@@ -330,20 +317,16 @@ const getDateDiff = (timestamp) => {
   return diffDays;
 };
 
-function setUser(list){
-  let userList = []
+function setUser(list) {
+  let userList = [];
 
-  list.forEach((res)=>{
-    if(!userList.includes(res.user_id)){
-      userList.push(res)
+  list.forEach((res) => {
+    if (!userList.includes(res.user_id)) {
+      userList.push(res);
     }
-
-  })
-  uniqueUsers.value = userList
-
-
+  });
+  uniqueUsers.value = userList;
 }
-
 
 // function followUser(id) {
 //   if (following.value.push(id)) {

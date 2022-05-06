@@ -53,8 +53,8 @@
             class="capitalize bg-gray-100 lg:px-3 lg:py-1 px-2 py-1.5 rounded-full text-sm"
             v-for="tag in tags"
           >
-           <NuxtLink :to="'/tag/'+tag">
-            {{ tag }}
+            <NuxtLink :to="'/tag/' + tag">
+              {{ tag }}
             </NuxtLink>
           </button>
         </div>
@@ -82,7 +82,7 @@
           <h3>Stories from Following</h3>
         </div>
 
-<!--         <div class="globalfont text-sm">
+        <!--         <div class="globalfont text-sm">
           <h3>Recommended</h3>
         </div> -->
       </div>
@@ -110,9 +110,6 @@
                 <span class="rm">·</span> {{ getDateDiff(post.created_at) }} day
                 ago
               </p>
-
-
-
             </div>
 
             <h2
@@ -134,9 +131,9 @@
                 <button
                   class="capitalize hidden md:block py-0.5 px-2 pill rounded-full whitespace-nowrap"
                 >
-                <NuxtLink :to="'/tag/'+post.tags[0]">
-                  {{ post.tags[0] }}
-                </NuxtLink>
+                  <NuxtLink :to="'/tag/' + post.tags[0]">
+                    {{ post.tags[0] }}
+                  </NuxtLink>
                 </button>
                 <span class="text-base fill-gray-400">
                   <svg
@@ -167,7 +164,6 @@
                 </svg>
               </div>
             </div>
-
           </div>
 
           <img

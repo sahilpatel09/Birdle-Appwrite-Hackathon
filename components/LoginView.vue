@@ -4,7 +4,7 @@
   <div class="flex flex-col gap-3 items-center justify-center py-20">
     <button
       @click="loginwithGoogle"
-      class="flex px-10 py-2 justify-center rounded-full border border-gray-400 "
+      class="flex px-10 py-2 justify-center rounded-full border border-gray-400"
     >
       <svg width="25" height="25" class="gn y">
         <g fill="none" fill-rule="evenodd">
@@ -29,7 +29,6 @@
 
       Sign up/Login with Google
     </button>
-
 
     <button
       class="flex px-10 py-2 rounded-full justify-center w-72 border border-gray-400"

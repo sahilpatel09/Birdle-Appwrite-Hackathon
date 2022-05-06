@@ -7,7 +7,7 @@
           class="lg:min-h-screen lg:shrink lg:w-[80px] block lg:left-0 lg:top-0 lg:bottom-0 fixed lg:py-10 lg:px-5 flex lg:flex-col lg:justify-between border-r border-gray-200 items-center justify-center bottom-0 left-0 right-0 bg-white px-2.5 py-4 shadow-2xl"
         >
           <NuxtLink to="/me/">
-          <img src="@/assets/img/3.png" alt="" class="hidden lg:block" />
+            <img src="@/assets/img/3.png" alt="" class="hidden lg:block" />
           </NuxtLink>
           <div
             class="leftMenu flex lg:flex-col items-center justify-around lg:justify-center lg:gap-10 w-full"
@@ -199,7 +199,11 @@
       </div>
     </div>
 
-    <UserBottomLeftMenu :class="{ hidden: menu }" class="z-50" v-if="userData"/>
+    <UserBottomLeftMenu
+      :class="{ hidden: menu }"
+      class="z-50"
+      v-if="userData"
+    />
   </div>
   <div v-else>
     <Loading />
@@ -234,7 +238,7 @@ const route = useRoute();
 const router = useRouter();
 const errorval = ref("");
 const loggedin = ref(false);
-const userPubs = ref([])
+const userPubs = ref([]);
 const service = userService();
 const { user, userData } = stateManager();
 
@@ -252,22 +256,15 @@ async function getUserData() {
 
 getUserData();
 
-
-
 async function getPubs() {
-  
-  const pubs = await service.currentAuthorPubs(userData.value.$id.toString(),userData.value.username.toString())
-  if(pubs){
-    userPubs.value = pubs.documents
+  const pubs = await service.currentAuthorPubs(
+    userData.value.$id.toString(),
+    userData.value.username.toString()
+  );
+  if (pubs) {
+    userPubs.value = pubs.documents;
   }
-
 }
-
-
-
-
-
-
 
 // setTimeout(()=>{
 //   console.log(user)
