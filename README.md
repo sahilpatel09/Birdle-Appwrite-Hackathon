@@ -1,5 +1,5 @@
 <p align="left">
-  <img width="300" height="300" src="https://res.cloudinary.com/sahil-patel/image/upload/v1650717661/finocrunch/appwritehack/3_cafwnv.png">
+  <img src="https://res.cloudinary.com/sahil-patel/image/upload/v1651819288/finocrunch/appwritehack/Birdle_2_bu33c2.png">
 </p>
 
 # Birdle - A Social Journalism Website
