@@ -40,13 +40,13 @@
                   >
                     <a
                       href="#"
-                      class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                      class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white line-through"
                     >
                       Edit draft
                     </a>
                     <a
                       href="#"
-                      class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                      class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white line-through"
                     >
                       Email to subscribers
                     </a>
@@ -60,7 +60,7 @@
                 <h3>Home</h3>
               </div>
 
-              <div class="globalfont text-sm">
+              <div class="line-through globalfont text-sm">
                 <h3>Lists</h3>
               </div>
             </div>
@@ -70,31 +70,34 @@
             <div class="w-full">
               <div class="hidden inline-block">
                 <div
-                  class="absolute z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800"
+                  class="absolute z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800 line-through"
                 >
                   <a
                     href="#"
-                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white line-through"
                   >
                     Edit draft
                   </a>
                   <a
                     href="#"
-                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white line-through"
                   >
                     Email to subscribers
                   </a>
                   <a
                     href="#"
-                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white line-through"
                   >
-                    Delete draft
+                    Delete Publication
                   </a>
                 </div>
               </div>
             </div>
 
             <div v-if="pubPost" class="w-[780px]">
+              <div v-if="pubPost == ''">
+                Nothing has been published in this publication.
+              </div>
               <div class="my-3 space-y-10" v-for="(post, index) in pubPost">
                 <div class="flex justify-between gap-5" v-if="post.published">
                   <div class="space-y-4 pt-3">

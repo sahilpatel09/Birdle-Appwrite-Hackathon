@@ -195,16 +195,13 @@ async function createPub() {
     }
   }
 
-  // const create = await service.createPub(
-  //   userData.value.$id, uploadImage.value,
-  //   name.value,desc.value,name.value.split(" ").join("-"),0,writers.value
-  //   );
-
   const create = await service.createPub(dataObject);
 
   if (create) {
     console.log("Created");
-    router.go("/" + url.value);
+    router.push("/"+dataObject.url)
+    console.log("Created After");
+    
   }
 }
 </script>
