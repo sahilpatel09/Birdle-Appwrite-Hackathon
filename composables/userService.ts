@@ -539,9 +539,10 @@ export const userService = () => {
     }
   }
 
-  async function createPub(obj) {
+  async function createPub(
+    obj
+    ): Promise<boolean> {
     try {
-      console.log("entered", obj)
       const createPublication = appwrite.database.createDocument(
         publicationCollection,
         "unique()",

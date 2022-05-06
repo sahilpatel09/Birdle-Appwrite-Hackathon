@@ -53,7 +53,9 @@
             class="capitalize bg-gray-100 lg:px-3 lg:py-1 px-2 py-1.5 rounded-full text-sm"
             v-for="tag in tags"
           >
+           <NuxtLink :to="'/tag/'+tag">
             {{ tag }}
+            </NuxtLink>
           </button>
         </div>
       </div>
@@ -77,12 +79,12 @@
 
       <div class="my-2 flex gap-3">
         <div class="globalfont text-sm">
-          <h3>Following</h3>
+          <h3>Stories from Following</h3>
         </div>
 
-        <div class="globalfont text-sm">
+<!--         <div class="globalfont text-sm">
           <h3>Recommended</h3>
-        </div>
+        </div> -->
       </div>
 
       <hr class="bg-gray-200 w-full h-0.5" />
@@ -130,9 +132,11 @@
                   {{ getDate(post.created_at) }} · {{ post.readTime }}min read
                 </p>
                 <button
-                  class="hidden md:block py-0.5 px-2 pill rounded-full whitespace-nowrap"
+                  class="capitalize hidden md:block py-0.5 px-2 pill rounded-full whitespace-nowrap"
                 >
+                <NuxtLink :to="'/tag/'+post.tags[0]">
                   {{ post.tags[0] }}
+                </NuxtLink>
                 </button>
                 <span class="text-base fill-gray-400">
                   <svg

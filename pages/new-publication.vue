@@ -153,7 +153,7 @@ definePageMeta({
     newName + "." + userImage.name.split(".")[1]
   );
   console.log(newImageFile);
-  const upload = await service.uploadImagePub(newImageFile);
+  const upload = await service.uploadImage(newImageFile);
   
   console.log("NEW UPLOAD ID", upload.$id);
   uploadImage.value = upload.$id;
@@ -172,14 +172,15 @@ definePageMeta({
   async function createPub(){
 
     const settingImage = await setImage()
+    
     const dataObject = {
-    user_id: userData.value.$id,
     img: uploadImage.value,
     name: name.value,
     subtitle: desc.value,
     url: name.value.split(" ").join("-"),
     followers_count: 0,
     writers: writers.value,
+    user_id: userData.value.$id,
   }
 
     
@@ -195,9 +196,18 @@ definePageMeta({
     }
 
 
+  // const create = await service.createPub(
+  //   userData.value.$id, uploadImage.value,
+  //   name.value,desc.value,name.value.split(" ").join("-"),0,writers.value 
+  //   );
+
   const create = await service.createPub(dataObject);
+
+
+
   if(create){
     console.log("Created")
+    router.go("/"+url.value)
   }
 }
 </script>

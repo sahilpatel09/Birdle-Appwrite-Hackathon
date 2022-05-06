@@ -22,7 +22,9 @@
             <h2
               class="font-bold lg:text-[22px] text-[16px] capitalize leading-5 font-bold postTitle"
             >
+            <NuxtLink :to="post.postUrl">
           {{post.name}}
+        </NuxtLink>
             </h2>
             <p class="hidden lg:block postDescription">
               {{ post.subtitle }}
@@ -34,8 +36,10 @@
                 <p class="text-gray-400 text-left">{{getDate(post.created_at)}} · {{post.readTime}} min read</p>
                 <button
                   class="hidden md:block py-0.5 px-2 pill rounded-full whitespace-nowrap"
-                >
-                  Politics
+                > 
+                <NuxtLink :to="'/tags/'+post.tags[0]">
+                  {{ post.tags[0] }}
+                  </NuxtLink>
                 </button>
                 <span class="text-base fill-gray-400">
                   <svg
