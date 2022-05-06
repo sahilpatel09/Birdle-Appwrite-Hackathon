@@ -30,7 +30,7 @@
       <div class="lg:w-1/3 md:w-1/2" v-for="(post, index) in props.posts">
         <div
           class="h-full px-8 py-5 rounded-lg overflow-hidden text-center relative"
-        >
+        v-if="post.published">
           <div class="flex gap-6">
             <div class="index">
               <h2 class="text-4xl text-gray-300 font-bold">

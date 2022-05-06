@@ -62,6 +62,7 @@
 
       <div class="flex my-6 gap-2" v-if="followerUsers">
         <div class="flex" v-for="user in followerUsers">
+          
           <div class="profile lg:block w-16" @click="openIt" v-if="user">
             <NuxtLink :to="'/@' + user.username">
               <UsersUserAvatar v-if="user.img" :fileid="user.img" />
@@ -74,6 +75,7 @@
           >
             {{ user.followers_count }}
           </div>
+
         </div>
       </div>
 
@@ -92,11 +94,10 @@
       <!-- PostList -->
 
       <div class="my-3 space-y-10" v-for="post in postList">
-        <div class="flex justify-between gap-5">
+        <div class="flex justify-between gap-5" v-if="post.published == 1">
           <div class="space-y-4 pt-3">
             <div
-              class="flex gap-1 items-center justify-start text-xs lg:text-sm"
-            >
+              class="flex gap-1 items-center justify-start text-xs lg:text-sm">
               <div v-if="post.pubname" class="flex gap-2">
                 <UsersUserAvatar :fileid="post.pubimg" class="w-5 h-5" />
                 <p>{{ post.username }} in {{ post.pubname }}</p>
@@ -171,9 +172,10 @@
             class="lg:w-[220px] lg:h-[160px] w-[110px] object-cover rounded mt-10"
             alt=""
           />
+          
+        <hr />
         </div>
 
-        <hr />
 
         <!-- End of PostList -->
       </div>

@@ -1,8 +1,8 @@
 <template>
   <div class="container mx-auto flex px-5 flex-wrap flex-col lg:flex-row mt-5">
-    <div class="w-full lg:w-8/12 px-2 order-last lg:order-first">
-      <div class="md:col-span-7 space-y-10 col-span-1">
-        <div class="flex justify-between gap-2" v-for="post in props.posts">
+    <div class="w-full lg:w-8/12 px-2 order-last space-y-10 lg:order-first">
+      <div class="md:col-span-7 space-y-10 col-span-1" v-for="post in props.posts">
+        <div class="flex justify-between gap-2" v-if="post.published">
           <div class="space-y-2 pt-3">
             <div class="flex gap-1 items-center">
               <div v-if="post.pubname" class="flex items-center gap-2">

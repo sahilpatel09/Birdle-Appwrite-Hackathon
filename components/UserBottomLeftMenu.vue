@@ -16,7 +16,7 @@
             <li class="line-through">Refine reccmmendations</li>
             <li class="line-through">Stats</li>
             <li>
-              <NuxtLink to="/me/settings"><button>Settings</button></NuxtLink>
+              <a href="/me/settings" title=""><button>Settings</button></a>
             </li>
           </ul>
         </div>
