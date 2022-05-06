@@ -125,12 +125,13 @@ export const userService = () => {
       const info = await getuserIdFromUsername(userName);
       const id = info.$id.toString();
       console.log(id);
-
+      console.log("USER INFO",info)
       const post = await appwrite.database.listDocuments(postsCollection, [
         Query.equal("postUrl", "/@" + userName + "/" + blogurl),
       ]);
 
       console.log("POS AFTER", post);
+      console.log("IDS", post.documents[0].user_id,id)
       if (post.documents[0].user_id === id) {
         console.log("SAME ID");
         return { post, info };

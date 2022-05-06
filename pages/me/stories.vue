@@ -15,7 +15,7 @@
          Write a story 
          </NuxtLink>
         </button>
-        <button class="border border-gray-400 px-4 py-2 rounded-full text-sm font-semibold"> Import a story </button>
+        <button class="line-through border border-gray-400 px-4 py-2 rounded-full text-sm font-semibold"> Import a story </button>
       </div>
 
       </div>
