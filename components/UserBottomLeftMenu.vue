@@ -24,7 +24,11 @@
         <hr class="w-full" />
 
         <div class="px-8 py-8 text-sm" v-if="pubList">
-          <h2 class="text-sm">Manage Publications</h2>
+          <h2 class="text-sm">
+            <NuxtLink to="/me/publications">
+            Manage Publications
+            </NuxtLink>
+          </h2>
           <div class="flex flex-col gap-1 py-2">
             <div v-if="pubList == ''">
               You are not part of any publication yet.
