@@ -28,6 +28,7 @@ export const userService = () => {
   const publicationCollection = "625a2f9bd24e2f85461b";
   const postsCollection = "625a2f5e86376aefffe6";
   const userStorageBucket = "625f78027b24b0de372e";
+  const pubStorageBucket = "6274714401569899bb9f";
 
   async function getAuthStatus(): Promise<boolean> {
     try {
@@ -524,6 +525,37 @@ export const userService = () => {
     }
   }
 
+ async function uploadImagePub(file) {
+    try {
+      const sendImage = appwrite.storage.createFile(
+        pubStorageBucket,
+        "unique()",
+        file
+      );
+      return sendImage;
+    } catch (err: any) {
+      alert(err.message);
+      return false;
+    }
+  }
+
+  async function createPub(obj) {
+    try {
+      console.log("entered", obj)
+      const createPublication = appwrite.database.createDocument(
+        publicationCollection,
+        "unique()",
+        obj
+      );
+      console.log(createPublication)
+
+      return true;
+    } catch (err: any) {
+      alert(err.message);
+      return false;
+    }
+  }
+
 
   return {
     appwrite,
@@ -551,6 +583,8 @@ export const userService = () => {
     getPostsWithTag,
     getzHomeFreePosts,
     currentAuthorPubs,
+    uploadImagePub,
+    createPub,
     test,
   };
 };
