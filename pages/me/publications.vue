@@ -12,7 +12,7 @@
 
           <div class="flex gap-4 items-center justify-center">
               <button class="bg-green-700 px-4 py-2 rounded-full text-white text-sm font-semibold">
-                <NuxtLink to="/new-story">
+                <NuxtLink to="/new-publication">
                New Publication 
                </NuxtLink>
               </button>
@@ -36,6 +36,10 @@
 
 
       <div class="w-full flex flex-col p-4 gap-4">
+
+        <div v-if="userPubs == ''">
+          You have no publication yet in your arsenal.
+        </div>
           
           <div class="flex justify-between" v-for="pub in userPubs">
             
