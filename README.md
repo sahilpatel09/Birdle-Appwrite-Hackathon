@@ -1,5 +1,5 @@
 <p align="left">
-  <img width="300" height="300" src="https://res.cloudinary.com/sahil-patel/image/upload/v1650717661/finocrunch/appwritehack/3_cafwnv.png">
+  <img src="https://res.cloudinary.com/sahil-patel/image/upload/v1651819288/finocrunch/appwritehack/Birdle_2_bu33c2.png">
 </p>
 
 # Birdle - A Social Journalism Website
@@ -8,6 +8,9 @@
 
 Birdle is a website similar to Medium.com and is built with Appwrite backend deployed on the cloud. The tech stack used here is Nuxt.js and Tailwind css on the frontend and appwrite on the backend.
 
+<p align="center">
+  <img width="400px" src="https://appwrite.io/images-ee/press/badge-pink-button.svg" alt="Built with Appwrite">
+</p>
 Birdle Screenshots:
 
 ![](https://res.cloudinary.com/sahil-patel/image/upload/v1650719814/finocrunch/appwritehack/single_post_czigaw.png "Birdle Single Post Image")
