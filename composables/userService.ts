@@ -271,6 +271,7 @@ export const userService = () => {
   async function getPostWithPubAuthorData(publication, url) {
     const urlString = "/" + publication + "/" + url;
     console.log(urlString);
+    console.log("PUB", publication)
     const pubInfo = await getPub(publication);
 
     const post = await appwrite.database.listDocuments(postsCollection, [
