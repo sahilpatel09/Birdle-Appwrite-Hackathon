@@ -201,10 +201,6 @@
 }
 </style>
 <script setup>
-definePageMeta({
-  middleware: ["auth", "pageload"],
-  // or middleware: 'auth'
-});
 const postList = ref({});
 const recommendedPostList = ref({});
 const { user, userData } = stateManager();
@@ -271,7 +267,7 @@ async function getPosts() {
 
   }
 
-  tags.value = new Set(publictags);
+  tags.value = publictags;
 }
 getPosts();
 </script>

@@ -49,9 +49,6 @@
 }
 </style>
 <script setup>
-
-
-
 const route = useRoute();
 const router = useRouter();
 const errorval = ref("");
