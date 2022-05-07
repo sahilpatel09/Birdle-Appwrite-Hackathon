@@ -181,7 +181,7 @@
                 :fileid="userData.img"
                 class="w-10"
               />
-              <UsersUserNameAvatar :name="user.name" v-else />
+              <UsersUserNameAvatar :name="userData.name" v-else />
             </div>
 
             <div class="profile lg:hidden w-6 h-6" v-else>
@@ -192,7 +192,7 @@
 
           <div class="profile hidden lg:block" @click="openIt" v-if="userData">
             <UsersUserAvatar v-if="userData.img" :fileid="userData.img" />
-            <UsersUserNameAvatar :name="user.name" v-else />
+            <UsersUserNameAvatar :name="userData.name" v-else />
           </div>
           <div class="profile lg:block w-10 h-10 rounded-full" v-else>
           
