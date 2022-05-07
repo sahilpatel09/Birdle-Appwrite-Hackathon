@@ -13,7 +13,7 @@
                 {{ user.name }}
               </h3>
 
-              <div class="flex gap-4 items-center justify-center">
+              <div class="flex gap-4 items-center justify-center" v-if="userData.$id == user.$id">
                 <svg
                   width="24"
                   height="24"
@@ -42,13 +42,16 @@
                       href="#"
                       class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                     >
-                      Edit draft
+                                        <NuxtLink to="/me/stories">
+                      Stories
+                    </NuxtLink>
                     </a>
                     <a
                       href="#"
                       class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                    >
-                      Email to subscribers
+                    >                     <NuxtLink to="/me/settings">
+                      Settings
+                    </NuxtLink>
                     </a>
                   </div>
                 </div>
@@ -73,16 +76,19 @@
                   class="absolute z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800"
                 >
                   <a
-                    href="#"
+                    
                     class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
-                    Edit draft
+                    <NuxtLink to="/me/stories">
+                    Stories
+                    </NuxtLink>
                   </a>
                   <a
-                    href="#"
+                    
                     class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >
-                    Email to subscribers
+                  >                    <NuxtLink to="/me/settings">
+                    Settings
+                  </NuxtLink>
                   </a>
                   <a
                     href="#"
@@ -139,17 +145,17 @@
 
                     <NuxtLink :to="{ path: post.postUrl }">
                       <h2
-                        class="font-bold lg:text-[22px] text-[16px] capitalize leading-5 font-bold postTitle lg:leading-7 leading-6"
+                        class="font-bold lg:text-[22px] text-[16px] capitalize leading-5 font-bold postTitle lg:leading-7 leading-6 lg:max-w-[560px]"
                       >
                         {{ post.name }}
                       </h2>
                     </NuxtLink>
 
-                    <p class="hidden lg:block postDescription">
+                    <p class="hidden lg:block postDescription lg:max-w-[560px]">
                       {{ post.subtitle }}
                     </p>
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center lg:w-[560px]">
                       <div class="flex gap-2 items-center">
                         <p class="text-gray-400 text-left text-sm">
                           {{ post.readTime }} min read
@@ -187,7 +193,7 @@
                           ></path>
                         </svg>
 
-                        <svg
+<!--                         <svg
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
@@ -202,9 +208,9 @@
                             data-darkreader-inline-fill=""
                             style="--darkreader-inline-fill: #ffffff"
                           ></path>
-                        </svg>
+                        </svg> -->
 
-                        <div
+                        <!-- <div
                           class="inline-block"
                           :class="{ hidden: !post.showDropDown }"
                         >
@@ -246,7 +252,7 @@
                               Delete story
                             </a>
                           </div>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>

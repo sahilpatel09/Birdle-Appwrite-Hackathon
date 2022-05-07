@@ -113,7 +113,7 @@
             menubar: false,
             paste_data_images: true,
             paste_as_text: true,
-            plugins: 'lists link image emoticons paste help wordcount autosave',
+            plugins: 'lists link image emoticons paste help wordcount autosave preview',
             toolbar:
               'styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link image emoticons preview',
             images_upload_handler: function (blobInfo, success, failure) {
@@ -174,7 +174,7 @@
               <select name="pubs" id="pubs" @change="printPub($event)">
                 <option value="self" selected>Self</option>
                 <option
-                  :value="pub.$id + '-' + pub.url + '-' + pub.img"
+                  :value="pub.$id + '@' + pub.url + '@' + pub.img"
                   v-for="pub in pubs"
                 >
                   {{ pub.name }}
@@ -269,7 +269,7 @@ function printPub(ev) {
   if (ev.target.value === "self") {
     console.log("NO PUB");
   } else {
-    const data = ev.target.value.split("-");
+    const data = ev.target.value.split("@");
     pub.value = data[0];
     pubName.value = data[1];
     pubImage.value = data[2];

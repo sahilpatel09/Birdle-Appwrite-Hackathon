@@ -261,14 +261,14 @@ async function getPosts() {
 
   let val = 0;
 
-  while (val < posts.documents.length) {
-    if (val < 5) {
-      let item = posts.documents[val].tags[0];
-      if (!publictags.includes(item)) publictags.push(item);
-      val++;
-    } else {
-      break;
-    }
+  while(publictags.length < 6){
+    
+        let item = posts.documents[val].tags[0];
+        if (!publictags.includes(item)) {
+          publictags.push(item);
+        }
+        val++;
+
   }
 
   tags.value = publictags;
