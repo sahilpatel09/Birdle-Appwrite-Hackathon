@@ -31,7 +31,7 @@
               </div>
               <hr class="border-gray-300" />
 
-              <div class="w-full bg-gray-100 px-3 py-2 my-2 rounded">
+              <div class="w-full bg-gray-100 px-3 py-2 my-2 rounded line-through">
                 You have <span class="text-black font-bold">2</span> free
                 member-only stories left this month. Sign up for Medium and get
                 an extra one.
@@ -41,7 +41,7 @@
               <div class="flex itens-center justify-between w-full h-14 mt-5">
                 <div class="flex items-center gap-3 globalfont">
                   <div
-                    class="profile hidden lg:block w-12"
+                    class="profile lg:block w-12"
                     @click="openIt"
                     v-if="postUser"
                   >

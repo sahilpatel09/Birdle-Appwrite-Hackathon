@@ -39,17 +39,17 @@
                     class="absolute z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800"
                   >
                     <a
-                      href="#"
-                      class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white line-through"
+                      class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white "
                     >
-                      Edit draft
+                      <NuxtLink :to="'/p/pub/'+pubInfo.$id">
+                    Edit Publication</NuxtLink>
                     </a>
-                    <a
-                      href="#"
-                      class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white line-through"
-                    >
-                      Email to subscribers
-                    </a>
+                    <button
+                      
+                      class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                     @click="delPub(pubInfo.$id)">
+                      Delete Publication
+                    </button>
                   </div>
                 </div>
               </div>
@@ -74,9 +74,12 @@
                 >
                   <a
                     href="#"
-                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white line-through"
+                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
+                    <NuxtLink :to="'/p/pub/'+pubInfo.$id">
                     Edit draft
+                    </NuxtLink>
+
                   </a>
                   <a
                     href="#"
@@ -463,6 +466,15 @@ function unfollowUser(id) {
   userData.value.follow_user_id = following.value;
   userData.value.followers_count = following.value.length;
   updateData(userData.value.$id, userData.value, "decrease");
+}
+
+async function delPub(id){
+  console.log('DELETE PUB',id)
+  const deletePub = await service.deletePub(id);
+  console.log(deletePub)
+  if(deletePub){
+    router.push("/me/publications")
+  }
 }
 
 async function updateData(id, obj, type) {

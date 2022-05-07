@@ -46,8 +46,7 @@
                 </NuxtLink>
               </h2>
               <p>
-                Advice for programmers. Subscribe to our daily digest:
-                https://medium.com/@BttrProgramming/subscribe
+                {{ pub.subtitle }}
               </p>
             </div>
           </div>

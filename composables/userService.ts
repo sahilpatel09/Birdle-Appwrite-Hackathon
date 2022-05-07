@@ -553,6 +553,49 @@ export const userService = () => {
     }
   }
 
+  async function updatePub(id,obj): Promise<boolean> {
+    try {
+      const createPublication = appwrite.database.updateDocument(
+        publicationCollection,
+        id,
+        obj
+      );
+      console.log(createPublication);
+
+      return true;
+    } catch (err: any) {
+      alert(err.message);
+      return false;
+    }
+  }
+
+    async function getPublication(id) {
+    try {
+      const getpub = appwrite.database.getDocument(
+        publicationCollection,
+        id
+      );
+      return getpub;
+
+      return true;
+    } catch (err: any) {
+      alert(err.message);
+      return false;
+    }
+  }
+
+  async function deletePub(ID: string) {
+    try {
+      const pub = await appwrite.database.deleteDocument(publicationCollection, ID);
+      return true;
+    } catch (err) {
+      alert(err.message);
+      console.log(err);
+      return false;
+    }
+  }
+  
+
   return {
     appwrite,
     getAuthStatus,
@@ -581,6 +624,9 @@ export const userService = () => {
     currentAuthorPubs,
     uploadImagePub,
     createPub,
+    updatePub,
+    getPublication,
+    deletePub,
     test,
   };
 };

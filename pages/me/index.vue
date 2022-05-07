@@ -45,7 +45,7 @@
         <h3
           class="uppercase text-gray-700 font-normal text-left text-sm tracking-wide"
         >
-          Your Topics {{ userData }}
+          Your Topics
         </h3>
 
         <div class="flex my-2 gap-1" v-if="tags">
