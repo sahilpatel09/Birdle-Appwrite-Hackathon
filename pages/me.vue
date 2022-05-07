@@ -49,10 +49,7 @@
 }
 </style>
 <script setup>
-definePageMeta({
-  middleware: ["auth", "pageload"],
-  // or middleware: 'auth'
-});
+
 
 
 const route = useRoute();
