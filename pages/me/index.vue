@@ -45,7 +45,7 @@
         <h3
           class="uppercase text-gray-700 font-normal text-left text-sm tracking-wide"
         >
-          Your Topics
+          Your Topics {{ userData }}
         </h3>
 
         <div class="flex my-2 gap-1" v-if="tags">
@@ -201,6 +201,10 @@
 }
 </style>
 <script setup>
+definePageMeta({
+  middleware: ["auth", "pageload"],
+  // or middleware: 'auth'
+});
 const postList = ref({});
 const recommendedPostList = ref({});
 const { user, userData } = stateManager();

@@ -184,7 +184,10 @@
               <UsersUserNameAvatar :name="user.name" v-else />
             </div>
 
-            <div class="profile lg:hidden lg:block bg-red-100 w-6 h-6" v-else>
+            <div class="profile lg:hidden lg:block bg-red-700 w-6 h-6" v-else>
+              {{userData}}dffsdfsdf
+
+            
             </div>
 
 
@@ -194,7 +197,8 @@
             <UsersUserAvatar v-if="userData.img" :fileid="userData.img" />
             <UsersUserNameAvatar :name="user.name" v-else />
           </div>
-          <div class="profile hidden lg:block bg-red-100 w-10 h-10" v-else>
+          <div class="profile hidden lg:block bg-red-400 w-10 h-10" v-else>
+            {{}}dfs
           </div>
 
         </div>

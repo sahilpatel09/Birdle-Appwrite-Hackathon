@@ -49,12 +49,12 @@
 }
 </style>
 <script setup>
-const haveNotifications = ref(true);
-const menu = ref(true);
+definePageMeta({
+  middleware: ["auth", "pageload"],
+  // or middleware: 'auth'
+});
 
-// function openIt() {
-//   menu.value = !menu.value;
-// }
+
 const route = useRoute();
 const router = useRouter();
 const errorval = ref("");
@@ -62,6 +62,7 @@ const loggedin = ref(false);
 
 const { user, userData, globalMenuState } = stateManager();
 const service = userService();
+
 async function setData() {
   const data = await service.currentUserData();
   userData.value = data;
@@ -214,6 +215,7 @@ const ss = route.query.secret;
 //we authenticate them and validate the user token
 
 //if no then simply get the current user
+
 if (uid && ss) {
   authenticateUser(uid, ss);
 } else {
