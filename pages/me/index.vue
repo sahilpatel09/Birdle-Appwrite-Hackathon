@@ -243,7 +243,11 @@ async function getfollowerimages(list) {
     followerUsers.value = follower.documents;
   }
 }
-getfollowerimages(userData.value.follow_user_id);
+console.log(userData.value)
+if(userData.value){
+getfollowerimages(userData.value.follow_user_id);  
+}
+
 
 async function getPosts() {
   const posts = await service.getPosts();

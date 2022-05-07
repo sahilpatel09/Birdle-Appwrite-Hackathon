@@ -11,7 +11,7 @@
         <hr class="mt-5 w-full" />
         <div class="px-8 py-8">
           <ul class="flex flex-col gap-5 text-sm leading-5">
-            <li><button @click="signMeOut">Sign out</button></li>
+            <li><button @click="signMeOut(); closeLink();">Sign out</button></li>
             <li class="line-through">Medium Partner Program</li>
             <li class="line-through">Refine reccmmendations</li>
             <li class="line-through">Stats</li>
@@ -25,7 +25,7 @@
 
         <div class="px-8 py-8 text-sm" v-if="pubList">
           <h2 class="text-sm">
-            <NuxtLink to="/me/publications"> Manage Publications </NuxtLink>
+            <NuxtLink to="/me/publications" @click="closeLink"> Manage Publications </NuxtLink>
           </h2>
           <div class="flex flex-col gap-1 py-2">
             <div v-if="pubList == ''">
@@ -43,7 +43,7 @@
                   <UsersUserNameAvatar :name="pub.name" v-else />
                 </div>
               </NuxtLink>
-              <NuxtLink :to="'/' + pub.url">
+              <NuxtLink :to="'/' + pub.url" @click="closeLink">
                 <h3>{{ pub.name }}</h3>
               </NuxtLink>
             </div>
@@ -69,7 +69,7 @@
             <h2>{{ userData.name }}</h2>
 
             <h3>
-              <a :href="'/@' + userData.username" :title="userData.name">
+              <a :href="'/@' + userData.username" :title="userData.name" @click="closeLink">
                 @{{ userData.username }}
               </a>
             </h3>
@@ -91,15 +91,27 @@
 <script setup>
 const appwrite = useAppwrite();
 const router = useRouter();
-const { userData } = stateManager();
+const { userData, globalMenuState } = stateManager();
 const service = userService();
 const pubList = ref();
+
+
+function closeLink() {
+  globalMenuState.value = !globalMenuState.value;
+}
+
+
 async function getPubs() {
   const pubs = await service.getPubsForAuthor(userData.value.username);
   if (pubs) {
     pubList.value = pubs.documents;
   }
 }
+
+
+
+
+
 getPubs();
 
 function signMeOut() {

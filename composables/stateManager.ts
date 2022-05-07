@@ -5,6 +5,7 @@ export default () => {
 
   const user = useState("user", () => null);
   const userData = useState("userdata", () => null);
+  const globalMenuState = useState("globalMenuState", () => true);
 
   const toggleHp = () => {
     if (hpToggler.value == false) {
@@ -26,5 +27,6 @@ export default () => {
     loginwith,
     user,
     userData,
+    globalMenuState,
   };
 };
