@@ -312,7 +312,8 @@ function removeItem(index) {
 
 async function printIt(publishedTag) {
   let url = "";
-  const posturl = postName.value.split(" ").join("-") + "--" + uuid.toString();
+  const posturl = postName.value.split(" ").join("-").replace(/[^a-zA-Z-]/g, "") + "--" + uuid.toString();
+  console.log(posturl)
 
   if (pub.value) {
     console.log("IS PUB");
@@ -322,7 +323,7 @@ async function printIt(publishedTag) {
     console.log("IS NOT PUB");
     url = "/@" + userData.value.username + "/" + posturl;
   }
-
+  console.log(url)
   if (img.value == "") {
     img.value =
       "https://res.cloudinary.com/sahil-patel/image/upload/v1650717661/finocrunch/appwritehack/3_cafwnv.png";
