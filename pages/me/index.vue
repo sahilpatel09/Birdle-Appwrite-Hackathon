@@ -271,7 +271,7 @@ async function getPosts() {
 
   }
 
-  tags.value = publictags;
+  tags.value = new Set(publictags);
 }
 getPosts();
 </script>
