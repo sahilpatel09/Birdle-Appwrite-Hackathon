@@ -208,7 +208,9 @@
 }
 </style>
 <script setup>
-
+definePageMeta({
+  middleware: ["data"],
+});
 const postList = ref({});
 const recommendedPostList = ref({});
 const { user, userData } = stateManager();

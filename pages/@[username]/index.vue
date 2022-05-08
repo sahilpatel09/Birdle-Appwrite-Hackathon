@@ -108,17 +108,18 @@
                       class="flex gap-1 items-center justify-start text-xs lg:text-sm"
                     >
                       <div v-if="post.pubname" class="flex gap-2">
-                        <UsersUserAvatar
-                          :fileid="post.pubimg"
-                          class="w-5 h-5"
-                        />
+                        
+                        <UsersUserAvatar v-if="post.pubimg" :fileid="post.pubimg" class="w-5 h-5"/>
+                        <UsersUserNameAvatar :name="post.pubname" v-else class="w-5 h-5"/>
+
+
                         <p>{{ post.username }} in {{ post.pubname }}</p>
                       </div>
                       <div v-else class="flex gap-2">
-                        <UsersUserAvatar
-                          :fileid="post.userimg"
-                          class="w-5 h-5"
-                        />
+
+                        <UsersUserAvatar v-if="post.userimg" :fileid="post.userimg" class="w-5 h-5"/>
+                        <UsersUserNameAvatar :name="post.username" v-else class="w-5 h-5"/>
+
                         <p>Published in {{ post.username }}.</p>
                       </div>
 

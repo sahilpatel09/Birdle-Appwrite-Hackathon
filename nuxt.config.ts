@@ -13,7 +13,9 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/css/tail.css"],
-
+   meta: [
+    { name: 'description', content: 'My amazing site.' }
+  ],
   build: {
     postcss: {
       postcssOptions: require("./postcss.config.js"),
