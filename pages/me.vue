@@ -49,6 +49,9 @@
 }
 </style>
 <script setup>
+definePageMeta({
+  middleware: ["data"],
+});
 const route = useRoute();
 const router = useRouter();
 const errorval = ref("");
@@ -82,7 +85,7 @@ function setPrefs() {
 
   promise.then(
     function (response) {
-      console.log("SET PREFS", response); // Success
+//      console.log("SET PREFS", response); // Success
     },
     function (error) {
       console.log(error); // Failure
@@ -95,10 +98,10 @@ function getUserPref(callback) {
   let data = null;
   promise.then(
     function (response) {
-      console.log("GET PREFS"); // Success
+  //    console.log("GET PREFS"); // Success
 
       if (response.userSet) {
-        console.log("PREFS NOT NULL");
+    //    console.log("PREFS NOT NULL");
       } else {
         callback();
       }
@@ -129,7 +132,7 @@ function updatePrefs() {
     member: true,
   };
 
-  console.log(payload);
+//  console.log(payload);
 
   let updateUserData = sdk.database.createDocument(
     "625a2fc009e1c2051230",
@@ -213,13 +216,13 @@ const ss = route.query.secret;
 if (uid && ss) {
   authenticateUser(uid, ss);
 } else {
-  console.log("No parameters");
+  //console.log("No parameters");
 
   let promise = sdk.account.get();
 
   promise.then(
     function (response) {
-      console.log("GOOGLE USER DATA", response); // Success
+    //  console.log("GOOGLE USER DATA", response); // Success
       getUser(response.name.toString());
     },
     function (error) {
